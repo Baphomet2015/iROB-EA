@@ -384,9 +384,11 @@ void loop(void)
 
        FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
        Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-       uf_sys.set_WATCHDOG(IDE_SYSTEM_OFF);
        uf_sys.miDelay(IDE_PAUSA_GENERAL*4);
-       while(1);
+       uf_sys.power_OFF();
+       
+       //uf_sys.set_WATCHDOG(IDE_SYSTEM_OFF);
+       //while(1);
      }
   
 }

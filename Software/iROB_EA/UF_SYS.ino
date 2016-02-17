@@ -443,17 +443,18 @@ void UF_SYS::watchDog_Sincro(void)
        Serial1.println(IDE_STR_SINCRO_WATCHDOG_1);
        while ( 1 )
              {
-               miDelay(1);
+               miDelay(500);
+               Serial1.print(".");
              } 
      }          
   else
      {
        
-       if ( get_WATCHDOG()==IDE_SYSTEM_OFF ) 
-          {
-            
-            power_OFF();
-          }
+      // if ( get_WATCHDOG()==IDE_SYSTEM_OFF ) 
+      //    {
+      //      
+      //      power_OFF();
+      //    }
    
 
        if ( get_WATCHDOG()==IDE_SYSTEM_WATCHDOG ) 
