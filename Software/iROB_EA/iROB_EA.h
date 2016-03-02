@@ -62,30 +62,44 @@
 
 #define PIN_HW_MIC_01                    A0  // Microfono
 
-#define PIN_HW_BAT_CHG_PPAK              A1  // Sensor de carga    de la Bateria PowerBank
-#define PIN_HW_BAT_CHG_LIPO              A2  // Sensor de carga    de la Bateria LiPo
+#define PIN_HW_USR_DERECHO_S             A5  // Sensor ultrasonidos derecho   salida
+#define PIN_HW_USR_CENTRAL_S             A6  // Sensor ultrasonidos central   salida
+#define PIN_HW_USR_IZQUIERDO_S           A7  // Sensor ultrasonidos izquierdo salida
+#define PIN_HW_USR_DERECHO_C             11  // Sensor ultrasonidos derecho   activacion 
+#define PIN_HW_USR_CENTRAL_C             10  // Sensor ultrasonidos central   activacion
+#define PIN_HW_USR_IZQUIERDO_C            9  // Sensor ultrasonidos izquierdo activacion 
 
-#define PIN_HW_USR_DERECHO               A5  // Sensor ultrasonidos derecho
-#define PIN_HW_USR_CENTRAL               A6  // Sensor ultrasonidos central
-#define PIN_HW_USR_IZQUIERDO             A7  // Sensor ultrasonidos izquierdo
 
 #define PIN_HW_LED_BDEL                  39  // Leds blancos delanteros
 #define PIN_HW_LED_BDET                  38  // Leds blancos traseros
 #define PIN_HW_LED_RDET                  37  // Leds rojos traseros
 
-#define PIN_HW_MDER_DIR                   0  // Motor derecho, Direccion
-#define PIN_HW_MDER_RST                   0  // Motor derecho, Reset
-#define PIN_HW_MDER_PWM                   0  // Motor derecho, PWN, velocidad/paro
-#define PIN_HW_MDER_FF1                   0  // Motor derecho, Flag estado (1)
-#define PIN_HW_MDER_FF2                   0  // Motor derecho, Flag estado (2)
+#define PIN_HW_MDER_DIR                  36  // Motor derecho, Direccion
+#define PIN_HW_MDER_RST                  35  // Motor derecho, Reset
+#define PIN_HW_MDER_PWM                   3  // Motor derecho, PWN, velocidad/paro
+#define PIN_HW_MDER_FF1                  33  // Motor derecho, Flag estado (1)
+#define PIN_HW_MDER_FF2                  34  // Motor derecho, Flag estado (2)
 #define PIN_HW_MDER_ICC                  A3  // Motor derecho, sensor de corriente (consumo)
 
-#define PIN_HW_MIZQ_DIR                   0  // Motor izquierdo, Direccion
-#define PIN_HW_MIZQ_RST                   0  // Motor izquierdo, Reset
-#define PIN_HW_MIZQ_PWM                   0  // Motor izquierdo, PWN, velocidad/paro
-#define PIN_HW_MIZQ_FF1                   0  // Motor izquierdo, Flag estado (1)
-#define PIN_HW_MIZQ_FF2                   0  // Motor izquierdo, Flag estado (2)
+#define PIN_HW_MIZQ_DIR                  32  // Motor izquierdo, Direccion
+#define PIN_HW_MIZQ_RST                  31  // Motor izquierdo, Reset
+#define PIN_HW_MIZQ_PWM                   4  // Motor izquierdo, PWN, velocidad/paro
+#define PIN_HW_MIZQ_FF1                  28  // Motor izquierdo, Flag estado (1)
+#define PIN_HW_MIZQ_FF2                  30  // Motor izquierdo, Flag estado (2)
 #define PIN_HW_MIZQ_ICC                  A4  // Motor izquierdo, sensor de corriente (consumo)
+
+#define PIN_HW_GPS_ON_OFF                26  // GPS ON /OFF
+#define PIN_HW_SEN_MET_LUZ               A9  // Estacion metereologica, sensor de luz 
+#define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, señal DTR
+
+#define PIN_HW_BAT_INBP                   8  // control de carga de bateria 
+#define PIN_HW_BAT_INB0                   5  // control de carga de bateria 
+#define PIN_HW_BAT_INB1                   6  // control de carga de bateria     
+#define PIN_HW_BAT_INB2                   7  // control de carga de bateria 
+#define PIN_HW_BAT_INBS                  A8  // control de carga de bateria 
+#define PIN_HW_BAT_CHG_PPAK              A1  // Sensor de carga    de la Bateria PowerBank
+#define PIN_HW_BAT_CHG_LIPO              A2  // Sensor de carga    de la Bateria LiPo
+#define PIN_HW_IR01                      22  // Sensor infrarojos
 
 
 // ---------------------------------------------------------

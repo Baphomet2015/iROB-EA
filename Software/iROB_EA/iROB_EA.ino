@@ -111,8 +111,16 @@ void setup(void)
   // ---------------------------------------------------------
   //
   // ATENCIÓN:
-  // Los pines de control de los motores NO se inicializan aqui
-  // porque yo lo hace el constructor de la clase MOTOR_FDS5672
+  //
+  // . Los pines de control de los motores NO se inicializan
+  //   aqui porque yo lo hace el constructor de la clase
+  //   MOTOR_FDS5672
+  //
+  // . Los pines de control del display se inicializan en el
+  //   constructor del objeto myDisplay
+  //
+  // . El pin PIN_HW_OFF_PETICION es la entrada de INT 0, no 
+  //   es necesario inicializar este pin con pinMode
   //
   // ---------------------------------------------------------
  
@@ -121,6 +129,15 @@ void setup(void)
   // Inicializacion de los pines I/O (MODO)
   //
   // ---------------------------------------------------------
+
+
+   pinMode(PIN_HW_USR_DERECHO_S  ,INPUT);
+   pinMode(PIN_HW_USR_CENTRAL_S  ,INPUT);
+   pinMode(PIN_HW_USR_IZQUIERDO_S,INPUT);
+   pinMode(PIN_HW_USR_DERECHO_C  ,OUTPUT);
+   pinMode(PIN_HW_USR_CENTRAL_C  ,OUTPUT);
+   pinMode(PIN_HW_USR_IZQUIERDO_C,OUTPUT);
+
 
   pinMode(PIN_HW_DOG_DONE ,OUTPUT);
   pinMode(PIN_HW_DOG_SFLAG,INPUT);
@@ -141,14 +158,27 @@ void setup(void)
 
   pinMode(PIN_HW_BAT_CHG_PPAK,INPUT);
   pinMode(PIN_HW_BAT_CHG_LIPO,INPUT);
-
-  pinMode(PIN_HW_USR_DERECHO,INPUT);
-  pinMode(PIN_HW_USR_CENTRAL,INPUT);
-  pinMode(PIN_HW_USR_IZQUIERDO,INPUT);
+ 
   
   pinMode(PIN_HW_LED_BDEL,OUTPUT);
   pinMode(PIN_HW_LED_BDET,OUTPUT);
   pinMode(PIN_HW_LED_RDET,OUTPUT);
+
+
+  pinMode(PIN_HW_GPS_ON_OFF  ,OUTPUT);
+  pinMode(PIN_HW_SEN_MET_LUZ ,INPUT);
+  pinMode(PIN_HW_DTR_RAZOR_1 ,OUTPUT);
+
+  pinMode(PIN_HW_BAT_INBP,OUTPUT);
+  pinMode(PIN_HW_BAT_INB0,OUTPUT);
+  pinMode(PIN_HW_BAT_INB1,OUTPUT);
+  pinMode(PIN_HW_BAT_INB2,OUTPUT);
+  pinMode(PIN_HW_BAT_INBS,INPUT);
+  pinMode(PIN_HW_BAT_CHG_PPAK,INPUT);
+  pinMode(PIN_HW_BAT_CHG_LIPO,INPUT);
+
+  pinMode(PIN_HW_IR01,INPUT);
+
 
 
   // ---------------------------------------------------------
