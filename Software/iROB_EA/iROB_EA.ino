@@ -28,6 +28,7 @@
 #include "iROB_EA.h"
 #include "UF_SYS.h"
 #include "MOTOR_FDS5672.h"
+#include "SENSOR_US.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
 
@@ -80,6 +81,14 @@ LedDisplay        myDisplay = LedDisplay( PIN_HW_HCMS_DATA  ,
                                           PIN_HW_HCMS_RESET ,
                                           4
                                         );                      // Implementa el control del display
+SENSOR_US         sensorUS  = SENSOR_US (PIN_HW_USR_DERECHO_S  ,
+                                         PIN_HW_USR_CENTRAL_S  ,
+                                         PIN_HW_USR_IZQUIERDO_S,
+                                         PIN_HW_USR_DERECHO_C  ,
+                                         PIN_HW_USR_CENTRAL_C  ,
+                                         PIN_HW_USR_IZQUIERDO_C 
+                                        );                      // Implementa el control de los sensores de ultrasonidos
+
 Adafruit_MLX90614 mlx       = Adafruit_MLX90614();              // Implementa el sensor de temperatura MELEXIS 90614
 RTC_DS1307        rtc;                                          // Reloj de tiempo real
 GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
@@ -113,11 +122,16 @@ void setup(void)
   // ATENCIÓN:
   //
   // . Los pines de control de los motores NO se inicializan
-  //   aqui porque yo lo hace el constructor de la clase
+  //   aqui porque ya lo hace el constructor de la clase
   //   MOTOR_FDS5672
   //
-  // . Los pines de control del display se inicializan en el
-  //   constructor del objeto myDisplay
+  // . Los pines de control del display NO se inicializan
+  //   aqui porque ya lo hace el constructor de la clase
+  //   ledDisplay
+  //
+  // . Los pines de control de los sensores de ultrasonidos 
+  //   NO se inicializan aqui porque ya lo hace el constructor
+  //   de la clase SENSOR_US
   //
   // . El pin PIN_HW_OFF_PETICION es la entrada de INT 0, no 
   //   es necesario inicializar este pin con pinMode
@@ -129,14 +143,6 @@ void setup(void)
   // Inicializacion de los pines I/O (MODO)
   //
   // ---------------------------------------------------------
-
-
-   pinMode(PIN_HW_USR_DERECHO_S  ,INPUT);
-   pinMode(PIN_HW_USR_CENTRAL_S  ,INPUT);
-   pinMode(PIN_HW_USR_IZQUIERDO_S,INPUT);
-   pinMode(PIN_HW_USR_DERECHO_C  ,OUTPUT);
-   pinMode(PIN_HW_USR_CENTRAL_C  ,OUTPUT);
-   pinMode(PIN_HW_USR_IZQUIERDO_C,OUTPUT);
 
 
   pinMode(PIN_HW_DOG_DONE ,OUTPUT);
@@ -204,12 +210,11 @@ void setup(void)
   // ---------------------------------------------------------
   // Inicio:
   // .  Wire.begin()
-  // .  RTC.begin()
+  // .  rtc.begin()
   // .  mlx.begin()
+  // .  sensorUS.inicio()
   // .  myDisplay.begin()
   // .  flgPower_OFF
-  // .  mDer.inicio()
-  //  . mIzq.inicio()
   //
   // ---------------------------------------------------------
      
@@ -218,6 +223,7 @@ void setup(void)
   rtc.begin();
   mlx.begin();  
    gc.begin();
+  sensorUS.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
