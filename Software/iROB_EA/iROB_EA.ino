@@ -29,6 +29,7 @@
 #include "UF_SYS.h"
 #include "MOTOR_FDS5672.h"
 #include "SENSOR_US.h"
+#include "SENSOR_BAT.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
 
@@ -82,10 +83,8 @@ LedDisplay        myDisplay = LedDisplay( PIN_HW_HCMS_DATA  ,
                                           4
                                         );                      // Implementa el control del display
 SENSOR_US         sensorUS  = SENSOR_US (PIN_HW_USR_DERECHO_S  ,
-                                         PIN_HW_USR_CENTRAL_S  ,
                                          PIN_HW_USR_IZQUIERDO_S,
                                          PIN_HW_USR_DERECHO_C  ,
-                                         PIN_HW_USR_CENTRAL_C  ,
                                          PIN_HW_USR_IZQUIERDO_C 
                                         );                      // Implementa el control de los sensores de ultrasonidos
 
@@ -170,8 +169,6 @@ void setup(void)
   pinMode(PIN_HW_LED_BDET,OUTPUT);
   pinMode(PIN_HW_LED_RDET,OUTPUT);
 
-
-  pinMode(PIN_HW_GPS_ON_OFF  ,OUTPUT);
   pinMode(PIN_HW_SEN_MET_LUZ ,INPUT);
   pinMode(PIN_HW_DTR_RAZOR_1 ,OUTPUT);
 

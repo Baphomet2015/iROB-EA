@@ -58,17 +58,18 @@
 #define PIN_HW_HCMS_CE                   42  // the display's chip enable pin
 #define PIN_HW_HCMS_RESET                40  // the display's reset pin
 
-#define PIN_HW_CNX_DEBUG                 13  // Indicador de conector de DEBUG conectado
+#define PIN_HW_CNX_DEBUG                 26  // Indicador de conector de DEBUG conectado
 
 #define PIN_HW_MIC_01                    A0  // Microfono
 
 #define PIN_HW_USR_DERECHO_S             A5  // Sensor ultrasonidos derecho   salida
-#define PIN_HW_USR_CENTRAL_S             A6  // Sensor ultrasonidos central   salida
 #define PIN_HW_USR_IZQUIERDO_S           A7  // Sensor ultrasonidos izquierdo salida
 #define PIN_HW_USR_DERECHO_C             11  // Sensor ultrasonidos derecho   activacion 
-#define PIN_HW_USR_CENTRAL_C             10  // Sensor ultrasonidos central   activacion
 #define PIN_HW_USR_IZQUIERDO_C            9  // Sensor ultrasonidos izquierdo activacion 
 
+
+#define PIN_HW_SERVO_HOR                 13  // Servo horizontal
+#define PIN_HW_SERVO_VER                 10  // Servo vertical
 
 #define PIN_HW_LED_BDEL                  39  // Leds blancos delanteros
 #define PIN_HW_LED_BDET                  38  // Leds blancos traseros
@@ -88,7 +89,6 @@
 #define PIN_HW_MIZQ_FF2                  30  // Motor izquierdo, Flag estado (2)
 #define PIN_HW_MIZQ_ICC                  A4  // Motor izquierdo, sensor de corriente (consumo)
 
-#define PIN_HW_GPS_ON_OFF                26  // GPS ON /OFF
 #define PIN_HW_SEN_MET_LUZ               A9  // Estacion metereologica, sensor de luz 
 #define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, señal DTR
 

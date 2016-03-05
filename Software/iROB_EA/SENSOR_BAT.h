@@ -2,20 +2,20 @@
 //
 // Proyecto:       iROB-EA
 // Version:        1.0
-// Fichero:        SNESOR_US.h
+// Fichero:        SNESOR_BAT.h
 // Autor:
 // Hardware:       Arduino MEGA 2560
 // Fecha:          Abril 2015
 //
-// Funcionalidad:  Definicion de la clase SENSOR_US
+// Funcionalidad:  Definicion de la clase SENSOR_BAT
 //
 // Notas:          
 //
 // ---------------------------------------------------------
 
 
-#ifndef SENSOR_US_H
-#define SENSOR_US_H
+#ifndef SENSOR_BAT_H
+#define SENSOR_BAT_H
 
 
 // ---------------------------------------------------------
@@ -29,11 +29,11 @@
 
 // ---------------------------------------------------------
 //
-// Definicion de la Clase SENSOR_US
+// Definicion de la Clase SENSOR_BAT
 //
 // ---------------------------------------------------------
 
-class SENSOR_US 
+class SENSOR_BAT 
 {
   
   // ---------------------------------------------------------
@@ -41,7 +41,7 @@ class SENSOR_US
   // ---------------------------------------------------------
   public:
           
-          SENSOR_US    (int pin_USD_S,int pin_USI_S,int pin_USD_C,int pin_USI_C);
+          SENSOR_BAT    ();
           void         inicio (void);
 
   // ---------------------------------------------------------
