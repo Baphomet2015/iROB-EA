@@ -276,10 +276,10 @@ void setup(void)
  
   uf_sys.watchDog_Sincro();                 // IMPORTANTE: Esta funcion se DEBE llamar en este orden, no mover  
                                             // Si sale de esta funcion es porque el arranque ha sido correcto
-                                            //  A) Watchdog uf_sys.get_MOD_INI() = IDE_INICIO_WATCHDOG
-                                            //  B) Power ON uf_sys.get_MOD_INI() = IDE_INICIO_POWER_ON 
-                                            // Si NO sale de esta funcion es porque no se ha introducido la clave correcta o porque 
-                                            // esta bloqueado y por eso se ha auto-apagado
+                                            // Si NO sale de esta funcion es porque:
+                                            // A) NO se ha introducido la clave correcta
+                                            // B) Esta bloqueado y por eso se ha auto-apagado
+                                            // C) Se ha pulsado el boton de OFF
   uf_sys.inicio();                                          
 
   // QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
@@ -417,11 +417,9 @@ void loop(void)
 
        FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
        Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-       uf_sys.miDelay(IDE_PAUSA_GENERAL*4);
-       uf_sys.power_OFF();
-       
-       //uf_sys.set_WATCHDOG(IDE_SYSTEM_OFF);
-       //while(1);
+       uf_sys.set_WATCHDOG(IDE_SYSTEM_OFF);
+     //uf_sys.miDelay(IDE_PAUSA_GENERAL*4);
+       while(1);
      }
   
 }

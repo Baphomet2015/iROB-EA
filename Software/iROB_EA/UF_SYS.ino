@@ -427,14 +427,14 @@ void UF_SYS::watchDog_DONE(void)
 void UF_SYS::watchDog_Sincro(void)
 {
 
-  
+  FNG_DisplayMsg(IDE_MSG_DISPLAY_CLS,0);
+
   if ( digitalRead(PIN_HW_DOG_SFLAG)==LOW )
      {
-
+       // ---------------------------------------------------------
+       //  Arranque normal, espera a sincronizar el watchdog
+       // ---------------------------------------------------------
        set_WATCHDOG(IDE_SYSTEM_WATCHDOG);
-       // ---------------------------------------------------------
-       //  Arranque normal, esepera a sincronizar el watchdog
-       // ---------------------------------------------------------
        FNG_DisplayMsg(IDE_MSG_DISPLAY_INI,0);
        Serial1.println("");
        Serial1.println("");
@@ -449,26 +449,28 @@ void UF_SYS::watchDog_Sincro(void)
      }          
   else
      {
-       
-      // if ( get_WATCHDOG()==IDE_SYSTEM_OFF ) 
-      //    {
-      //      
-      //      power_OFF();
-      //    }
-   
+       // ---------------------------------------------------------
+       //  Arranque por Watchdog
+       // ---------------------------------------------------------
+       watchDog_DONE();
 
-       if ( get_WATCHDOG()==IDE_SYSTEM_WATCHDOG ) 
-          {
-            set_WATCHDOG(IDE_SYSTEM_OK);
-            watchDog_DONE();
-            // ---------------------------------------------------------
-            // 
-            // ---------------------------------------------------------
-            Serial1.println(IDE_STR_SINCRO_WATCHDOG_2);
-          }
+       switch (get_WATCHDOG())
+              {
+                case (IDE_SYSTEM_OFF):
+                     {
+                       power_OFF();
+                       break;
+                     }
+
+                case(IDE_SYSTEM_WATCHDOG): 
+                    {
+                      set_WATCHDOG(IDE_SYSTEM_OK);
+                      Serial1.println(IDE_STR_SINCRO_WATCHDOG_2);
+                      break;
+                    }
+              }
      }  
-
-  FNG_DisplayMsg(IDE_MSG_DISPLAY_CLS,0);
+  
 }
 
 
