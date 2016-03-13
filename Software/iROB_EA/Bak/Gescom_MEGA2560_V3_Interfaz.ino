@@ -680,15 +680,8 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
                       // ---------------------------------------------------------
                       switch(gd->cnv_Param02)
                             {
-                              case (IDE_PARAM_SSA):
-                                   { sprintf( gd->buffRespCmd,"%03d",mlx.readAmbientTempC());
-                                     break;
-                                   }
-                              case (IDE_PARAM_SSB):
-                                   { 
-                                     sprintf( gd->buffRespCmd,"%03d",mlx.readObjectTempC());
-                                     break;
-                                   }
+                              case (IDE_PARAM_SSA): { sprintf( gd->buffRespCmd,"%03d",mlx.readAmbientTempC()); break; }
+                              case (IDE_PARAM_SSB): { sprintf( gd->buffRespCmd,"%03d",mlx.readObjectTempC());  break; }
                               default:              { resultado = false;                                       break; }
                             }
                       break;

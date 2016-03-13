@@ -52,56 +52,40 @@
 #define PIN_HW_DTMF_D3                   52  // D3, Decodificador DTMF
 #define PIN_HW_DTMF_DV                   48  // DV, Decodificador DTMF, dato valido
 
-
-#define PIN_HW_HCMS_RESET                40  // the display's reset pin
-#define PIN_HW_HCMS_RS                   41  // the display's register select pin 
-#define PIN_HW_HCMS_CE                   42  // the display's chip enable pin
-#define PIN_HW_HCMS_CLK                  43  // the display's clock pin
 #define PIN_HW_HCMS_DATA                 44  // connects to the display's data in
+#define PIN_HW_HCMS_RS                   41  // the display's register select pin 
+#define PIN_HW_HCMS_CLK                  43  // the display's clock pin
+#define PIN_HW_HCMS_CE                   42  // the display's chip enable pin
+#define PIN_HW_HCMS_RESET                40  // the display's reset pin
 
-
-#define PIN_HW_CNX_DEBUG                 26  // Indicador de conector de DEBUG conectado
+#define PIN_HW_CNX_DEBUG                 13  // Indicador de conector de DEBUG conectado
 
 #define PIN_HW_MIC_01                    A0  // Microfono
 
-#define PIN_HW_USR_DERECHO_S             A5  // Sensor ultrasonidos derecho   salida
-#define PIN_HW_USR_IZQUIERDO_S           A7  // Sensor ultrasonidos izquierdo salida
-#define PIN_HW_USR_DERECHO_C             11  // Sensor ultrasonidos derecho   activacion 
-#define PIN_HW_USR_IZQUIERDO_C            9  // Sensor ultrasonidos izquierdo activacion 
+#define PIN_HW_BAT_CHG_PPAK              A1  // Sensor de carga    de la Bateria PowerBank
+#define PIN_HW_BAT_CHG_LIPO              A2  // Sensor de carga    de la Bateria LiPo
 
-
-#define PIN_HW_SERVO_HOR                 13  // Servo horizontal
-#define PIN_HW_SERVO_VER                 10  // Servo vertical
+#define PIN_HW_USR_DERECHO               A5  // Sensor ultrasonidos derecho
+#define PIN_HW_USR_CENTRAL               A6  // Sensor ultrasonidos central
+#define PIN_HW_USR_IZQUIERDO             A7  // Sensor ultrasonidos izquierdo
 
 #define PIN_HW_LED_BDEL                  39  // Leds blancos delanteros
 #define PIN_HW_LED_BDET                  38  // Leds blancos traseros
 #define PIN_HW_LED_RDET                  37  // Leds rojos traseros
 
-#define PIN_HW_MDER_DIR                  36  // Motor derecho, Direccion
-#define PIN_HW_MDER_RST                  35  // Motor derecho, Reset
-#define PIN_HW_MDER_PWM                   3  // Motor derecho, PWN, velocidad/paro
-#define PIN_HW_MDER_FF1                  33  // Motor derecho, Flag estado (1)
-#define PIN_HW_MDER_FF2                  34  // Motor derecho, Flag estado (2)
+#define PIN_HW_MDER_DIR                   0  // Motor derecho, Direccion
+#define PIN_HW_MDER_RST                   0  // Motor derecho, Reset
+#define PIN_HW_MDER_PWM                   0  // Motor derecho, PWN, velocidad/paro
+#define PIN_HW_MDER_FF1                   0  // Motor derecho, Flag estado (1)
+#define PIN_HW_MDER_FF2                   0  // Motor derecho, Flag estado (2)
 #define PIN_HW_MDER_ICC                  A3  // Motor derecho, sensor de corriente (consumo)
 
-#define PIN_HW_MIZQ_DIR                  32  // Motor izquierdo, Direccion
-#define PIN_HW_MIZQ_RST                  31  // Motor izquierdo, Reset
-#define PIN_HW_MIZQ_PWM                   4  // Motor izquierdo, PWN, velocidad/paro
-#define PIN_HW_MIZQ_FF1                  28  // Motor izquierdo, Flag estado (1)
-#define PIN_HW_MIZQ_FF2                  30  // Motor izquierdo, Flag estado (2)
+#define PIN_HW_MIZQ_DIR                   0  // Motor izquierdo, Direccion
+#define PIN_HW_MIZQ_RST                   0  // Motor izquierdo, Reset
+#define PIN_HW_MIZQ_PWM                   0  // Motor izquierdo, PWN, velocidad/paro
+#define PIN_HW_MIZQ_FF1                   0  // Motor izquierdo, Flag estado (1)
+#define PIN_HW_MIZQ_FF2                   0  // Motor izquierdo, Flag estado (2)
 #define PIN_HW_MIZQ_ICC                  A4  // Motor izquierdo, sensor de corriente (consumo)
-
-#define PIN_HW_SEN_MET_LUZ               A9  // Estacion metereologica, sensor de luz 
-#define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, señal DTR
-
-#define PIN_HW_BAT_INBP                   8  // control de carga de bateria 
-#define PIN_HW_BAT_INB0                   5  // control de carga de bateria 
-#define PIN_HW_BAT_INB1                   6  // control de carga de bateria     
-#define PIN_HW_BAT_INB2                   7  // control de carga de bateria 
-#define PIN_HW_BAT_INBS                  A8  // control de carga de bateria 
-#define PIN_HW_BAT_CHG_PPAK              A1  // Sensor de carga    de la Bateria PowerBank
-#define PIN_HW_BAT_CHG_LIPO              A2  // Sensor de carga    de la Bateria LiPo
-#define PIN_HW_IR01                      22  // Sensor infrarojos
 
 
 // ---------------------------------------------------------

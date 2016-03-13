@@ -62,6 +62,7 @@
 #define IDE_STR_SINCRO_WATCHDOG_2            "Watchdog sincronizado"
 
 #define IDE_SYSTEM_OK                    0x00
+#define IDE_SYSTEM_OFF                   0xF0
 #define IDE_SYSTEM_WATCHDOG              0x0F
 
 

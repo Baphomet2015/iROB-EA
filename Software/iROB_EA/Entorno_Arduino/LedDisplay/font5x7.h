@@ -1,5 +1,5 @@
 /*! \file font5x7.h \brief Graphic LCD Font (Ascii Characters). */
-//*****************************************************************************
+// ------------------------------------------------------------------
 //
 // File Name	: 'font5x7.h'
 // Title		: Graphic LCD Font (Ascii Charaters)
@@ -10,14 +10,24 @@
 // Target MCU	: Atmel AVR
 // Editor Tabs	: 4
 //
-//*****************************************************************************
+//     !!!!!!!!!!!!!!!!!!!!IMPORTANTE !!!!!!!!!!!!!!!!!!!!!!
+//
+// ADAPTADO PARA LA VERSION 1.6.4 DE ARDUINO IDE
+//
+// ANTES:
+//  static unsigned char __attribute__ ((progmem)) Font5x7[] = {
+// AHORA:
+//  const unsigned char Font5x7[] PROGMEM = {
+//
+// ------------------------------------------------------------------
 
 #ifndef FONT5X7_H
 #define FONT5X7_H 
 
 // standard ascii 5x7 font
 // defines ascii characters 0x20-0x7F (32-127)
-static unsigned char __attribute__ ((progmem)) Font5x7[] = {
+const unsigned char  Font5x7[] PROGMEM = {
+
 	0x00, 0x00, 0x00, 0x00, 0x00,// (space)
 	0x00, 0x00, 0x5F, 0x00, 0x00,// !
 	0x00, 0x07, 0x00, 0x07, 0x00,// "

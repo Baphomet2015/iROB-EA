@@ -8,8 +8,6 @@
 // Hardware:       Arduino MEGA 2560
 // Fecha:          Abril 2015
 //
-// Version de IDE Arduino: 1.6.4
-//
 // Leitmotiv:      "Toda Bestia necesita un Cerebro..."  
 //                  Dr. Frankenstein, en su laboratorio
 //
@@ -23,21 +21,15 @@
 #include <stdlib.h>
 #include <WString.h> 
 #include <Wire.h>
+#include <LedDisplay.h>
 #include <RTClib.h>
 #include <Adafruit_MLX90614.h>
 #include <EEPROM.h>
-#include <LedDisplay.h>
 #include "iROB_EA.h"
 #include "UF_SYS.h"
 #include "MOTOR_FDS5672.h"
-#include "SENSOR_US.h"
-#include "SENSOR_BAT.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
-
-
-
-
 
 
 
@@ -81,21 +73,13 @@ MOTOR_FDS5672     mIzq      = MOTOR_FDS5672( PIN_HW_MIZQ_DIR ,
                                              PIN_HW_MIZQ_FF2 ,
                                              PIN_HW_MIZQ_ICC
                                            );                   // Implementa el control del motor izquierdo
-
 LedDisplay        myDisplay = LedDisplay( PIN_HW_HCMS_DATA  ,
                                           PIN_HW_HCMS_RS    ,
                                           PIN_HW_HCMS_CLK   ,
                                           PIN_HW_HCMS_CE    ,
                                           PIN_HW_HCMS_RESET ,
                                           4
-                                        );                     // Implementa el control del display
-                                        
-SENSOR_US         sensorUS  = SENSOR_US (PIN_HW_USR_DERECHO_S  ,
-                                         PIN_HW_USR_IZQUIERDO_S,
-                                         PIN_HW_USR_DERECHO_C  ,
-                                         PIN_HW_USR_IZQUIERDO_C 
-                                        );                      // Implementa el control de los sensores de ultrasonidos
-
+                                        );                      // Implementa el control del display
 Adafruit_MLX90614 mlx       = Adafruit_MLX90614();              // Implementa el sensor de temperatura MELEXIS 90614
 RTC_DS1307        rtc;                                          // Reloj de tiempo real
 GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
@@ -104,6 +88,7 @@ GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
                                        IDE_SERIAL_TRX_9600
                                      );                         // Gestor de comandos
 volatile byte     flgPower_OFF;                                 // Flag actualizado desde la funcion asociada a la INT 0 ( Boton de OFF) 
+
 
 
 
@@ -126,21 +111,8 @@ void setup(void)
   // ---------------------------------------------------------
   //
   // ATENCIÓN:
-  //
-  // . Los pines de control de los motores NO se inicializan
-  //   aqui porque ya lo hace el constructor de la clase
-  //   MOTOR_FDS5672
-  //
-  // . Los pines de control del display NO se inicializan
-  //   aqui porque ya lo hace el constructor de la clase
-  //   ledDisplay
-  //
-  // . Los pines de control de los sensores de ultrasonidos 
-  //   NO se inicializan aqui porque ya lo hace el constructor
-  //   de la clase SENSOR_US
-  //
-  // . El pin PIN_HW_OFF_PETICION es la entrada de INT 0, no 
-  //   es necesario inicializar este pin con pinMode
+  // Los pines de control de los motores NO se inicializan aqui
+  // porque yo lo hace el constructor de la clase MOTOR_FDS5672
   //
   // ---------------------------------------------------------
  
@@ -149,7 +121,6 @@ void setup(void)
   // Inicializacion de los pines I/O (MODO)
   //
   // ---------------------------------------------------------
-
 
   pinMode(PIN_HW_DOG_DONE ,OUTPUT);
   pinMode(PIN_HW_DOG_SFLAG,INPUT);
@@ -170,25 +141,14 @@ void setup(void)
 
   pinMode(PIN_HW_BAT_CHG_PPAK,INPUT);
   pinMode(PIN_HW_BAT_CHG_LIPO,INPUT);
- 
+
+  pinMode(PIN_HW_USR_DERECHO,INPUT);
+  pinMode(PIN_HW_USR_CENTRAL,INPUT);
+  pinMode(PIN_HW_USR_IZQUIERDO,INPUT);
   
   pinMode(PIN_HW_LED_BDEL,OUTPUT);
   pinMode(PIN_HW_LED_BDET,OUTPUT);
   pinMode(PIN_HW_LED_RDET,OUTPUT);
-
-  pinMode(PIN_HW_SEN_MET_LUZ ,INPUT);
-  pinMode(PIN_HW_DTR_RAZOR_1 ,OUTPUT);
-
-  pinMode(PIN_HW_BAT_INBP,OUTPUT);
-  pinMode(PIN_HW_BAT_INB0,OUTPUT);
-  pinMode(PIN_HW_BAT_INB1,OUTPUT);
-  pinMode(PIN_HW_BAT_INB2,OUTPUT);
-  pinMode(PIN_HW_BAT_INBS,INPUT);
-  pinMode(PIN_HW_BAT_CHG_PPAK,INPUT);
-  pinMode(PIN_HW_BAT_CHG_LIPO,INPUT);
-
-  pinMode(PIN_HW_IR01,INPUT);
-
 
 
   // ---------------------------------------------------------
@@ -214,11 +174,12 @@ void setup(void)
   // ---------------------------------------------------------
   // Inicio:
   // .  Wire.begin()
-  // .  rtc.begin()
+  // .  RTC.begin()
   // .  mlx.begin()
-  // .  sensorUS.inicio()
   // .  myDisplay.begin()
   // .  flgPower_OFF
+  // .  mDer.inicio()
+  //  . mIzq.inicio()
   //
   // ---------------------------------------------------------
      
@@ -227,7 +188,6 @@ void setup(void)
   rtc.begin();
   mlx.begin();  
    gc.begin();
-  sensorUS.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
@@ -280,15 +240,13 @@ void setup(void)
   //       uf_sys.watchDog_Sincro();
   //
   // ---------------------------------------------------------  
-   
  
   uf_sys.watchDog_Sincro();                 // IMPORTANTE: Esta funcion se DEBE llamar en este orden, no mover  
                                             // Si sale de esta funcion es porque el arranque ha sido correcto
-                                            // Si NO sale de esta funcion es porque:
-                                            // A) NO se ha introducido la clave correcta
-                                            // B) Esta bloqueado y por eso se ha auto-apagado
-                                            // C) Se ha pulsado el boton de OFF
-
+                                            //  A) Watchdog uf_sys.get_MOD_INI() = IDE_INICIO_WATCHDOG
+                                            //  B) Power ON uf_sys.get_MOD_INI() = IDE_INICIO_POWER_ON 
+                                            // Si NO sale de esta funcion es porque no se ha introducido la clave correcta o porque 
+                                            // esta bloqueado y por eso se ha auto-apagado
   uf_sys.inicio();                                          
 
   // QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
@@ -426,8 +384,9 @@ void loop(void)
 
        FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
        Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-       uf_sys.miDelay(IDE_OFF_PAUSA);
-       uf_sys.power_OFF();
+       uf_sys.set_WATCHDOG(IDE_SYSTEM_OFF);
+       uf_sys.miDelay(IDE_PAUSA_GENERAL*4);
+       while(1);
      }
   
 }
@@ -465,11 +424,10 @@ byte FNG_DisplayMsg(char* msg,unsigned int pausa)
   resultado = false;
 
   if ( strlen(msg)<=IDE_MAX_DISPLAY_CAR)
-     {    
+     {
        myDisplay.home();
        myDisplay.print(msg);
        resultado = true;
-       
        if ( pausa>0 )
           {
             FNG_Pausa(pausa); 
