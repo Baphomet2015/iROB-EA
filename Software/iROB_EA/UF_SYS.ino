@@ -63,6 +63,13 @@ void UF_SYS::inicio(void)
   //
   // ---------------------------------------------------------
   
+  #ifdef APP_MODO_DEBUG
+  Serial1.println("DEBUG Inicializar LEDs");
+  #endif
+
+  setLed(IDE_LED_BDEL,LOW);
+  setLed(IDE_LED_BDET,LOW);
+  setLed(IDE_LED_RDET,HIGH);
 
   // ---------------------------------------------------------
   //
@@ -122,7 +129,8 @@ void UF_SYS::inicio(void)
 
           }
      }
-     
+  
+  setLed(IDE_LED_RDET,LOW);   
 }
 
 
@@ -991,6 +999,43 @@ void UF_SYS::recarga_Bateria(void)
 
 
 
+// ---------------------------------------------------------
+//
+// byte UF_SYS::setLed(byte ledID,byte modo)
+//         
+//
+// ---------------------------------------------------------
 
+byte UF_SYS::setLed(byte ledID,byte modo)
+{
+   
+  switch(ledID)
+        { 
+           case(IDE_LED_BDEL):
+               { // ---------------------------------------------------------
+                 //
+                 // ---------------------------------------------------------
+                 digitalWrite(PIN_HW_LED_BDEL,modo);
+                 break;
+               }
+           case(IDE_LED_BDET):
+               { // ---------------------------------------------------------
+                 //
+                 // ---------------------------------------------------------
+                 digitalWrite(PIN_HW_LED_BDET,modo);
+                 break;
+               } 
+
+           case(IDE_LED_RDET):
+               { // ---------------------------------------------------------
+                 //
+                 // ---------------------------------------------------------
+                 digitalWrite(PIN_HW_LED_RDET,modo);
+                 break;
+               } 
+        }
+
+  return(modo);
+}
 
 

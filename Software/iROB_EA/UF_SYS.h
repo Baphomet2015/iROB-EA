@@ -48,6 +48,10 @@
 #define IDE_RELE_CAMARA                      2  // Rele para alimentar la camara
 #define IDE_RELE_MOTORES                     3  // Rele para alimentar los motores
 
+#define IDE_LED_BDEL                         0  // Leds traseros rojos
+#define IDE_LED_BDET                         1  // Leds traseros blancos
+#define IDE_LED_RDET                         2  // Leds delanteros blancos
+
 #define IDE_RELE_SYS_PAUSA                 250  // Pausa (ms) para activar/Desactivar los reles RE1, RE2, RE3 y RE4 
 #define IDE_RELE_ACTIVAR                     1
 #define IDE_RELE_DESACTIVAR                  0
@@ -118,6 +122,8 @@ class UF_SYS
      void          set_MOD_INI          (byte  valor);
      void          set_WATCHDOG         (byte  valor);
      void          set_RECARGAS         (int   valor);
+
+     byte          setLed               (byte ledID,byte modo);
 
      void          calibra_SensoresIcc  (void);
      void          recarga_Bateria      (void);

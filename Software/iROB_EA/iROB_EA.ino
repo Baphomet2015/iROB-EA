@@ -198,11 +198,7 @@ void setup(void)
   // ---------------------------------------------------------
  
   digitalWrite(PIN_HW_DOG_DONE,LOW);
-  
-  digitalWrite(PIN_HW_LED_BDEL,LOW);
-  digitalWrite(PIN_HW_LED_BDET,LOW);
-  digitalWrite(PIN_HW_LED_RDET,LOW);
-
+ 
   // ---------------------------------------------------------
   //
   // Inicializacion de variables, objetos Globales y elementos

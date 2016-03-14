@@ -73,8 +73,8 @@
 #define PIN_HW_SERVO_HOR                 13  // Servo horizontal
 #define PIN_HW_SERVO_VER                 10  // Servo vertical
 
-#define PIN_HW_LED_BDEL                  39  // Leds blancos delanteros
-#define PIN_HW_LED_BDET                  38  // Leds blancos traseros
+#define PIN_HW_LED_BDEL                  39  // Leds blancos traseros
+#define PIN_HW_LED_BDET                  38  // Leds blancos delanteros
 #define PIN_HW_LED_RDET                  37  // Leds rojos traseros
 
 #define PIN_HW_MDER_DIR                  36  // Motor derecho, Direccion
