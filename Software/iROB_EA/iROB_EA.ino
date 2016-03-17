@@ -311,9 +311,12 @@ void loop(void)
   byte vAux;
   
   // ---------------------------------------------------------
-  // Generacion del pulso de latido, reset del watchDog
+  // A) Generacion del pulso de latido, reset del watchDog
+  // B) Actualizacion de Timers etc de uf_sys
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
+  uf_sys.timers();
+
   
   if ( flgPower_OFF==false )
      { // ---------------------------------------------------------

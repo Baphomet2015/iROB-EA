@@ -576,7 +576,7 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
 void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 {
-  int pinID;
+  int ledID;
   int resultado;
  
 
@@ -601,10 +601,10 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
           {
             switch(gd->cnv_Param01)
                   {
-                    case (IDE_PARAM_LD1): { pinID = PIN_HW_LED_BDEL; break; }
-                    case (IDE_PARAM_LD2): { pinID = PIN_HW_LED_BDET; break; }
-                    case (IDE_PARAM_LD3): { pinID = PIN_HW_LED_RDET; break; }
-                    default:              { resultado = false;       break; }
+                    case (IDE_PARAM_LD1): { ledID = IDE_LED_BDEL; break; }
+                    case (IDE_PARAM_LD2): { ledID = IDE_LED_BDET; break; }
+                    case (IDE_PARAM_LD3): { ledID = IDE_LED_RDET; break; }
+                    default:              { resultado = false;    break; }
                   }
           } 
 
@@ -612,10 +612,10 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
           {
             switch(gd->cnv_Param02)
                   {
-                    case (IDE_PARAM_OFF): { digitalWrite(pinID,LOW);  break; }
-                    case (IDE_PARAM__ON): { digitalWrite(pinID,HIGH); break; }
-                    case (IDE_PARAM_BLK): { digitalWrite(pinID,HIGH); break; }
-                    default:              { resultado = false;        break; }
+                    case (IDE_PARAM_OFF): { uf_sys.setLed(ledID,IDE_LED_OFF); break; }
+                    case (IDE_PARAM__ON): { uf_sys.setLed(ledID,IDE_LED_ON);  break; }
+                    case (IDE_PARAM_BLK): { uf_sys.setLed(ledID,IDE_LED_BLK); break; }
+                    default:              { resultado = false;                break; }
                   }
           }
      }

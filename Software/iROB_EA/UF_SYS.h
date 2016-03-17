@@ -52,6 +52,13 @@
 #define IDE_LED_BDET                         1  // Leds traseros blancos
 #define IDE_LED_RDET                         2  // Leds delanteros blancos
 
+#define IDE_LED_OFF                          10 // Led apagado
+#define IDE_LED_ON                           11 // Led encendido
+#define IDE_LED_BLK                          12 // Led blinking
+
+#define IDE_LED_TIMER                      500L // Contador para generar intermitencias con los leds
+
+
 #define IDE_RELE_SYS_PAUSA                 250  // Pausa (ms) para activar/Desactivar los reles RE1, RE2, RE3 y RE4 
 #define IDE_RELE_ACTIVAR                     1
 #define IDE_RELE_DESACTIVAR                  0
@@ -96,6 +103,7 @@ class UF_SYS
   
                    UF_SYS               (void);
      void          inicio               (void);
+     void          timers               (void);
   
      void          watchDog_DONE        (void);
      void          watchDog_Sincro      (void);
@@ -143,6 +151,13 @@ class UF_SYS
 
      unsigned long timeExe;      // variable para medir el tiempo de ejecucion del bloque principal del programa
                                  // Reloj de Tiempo Real
+
+     unsigned long led_Timer;    // Para generar intermitencia en los leds 
+     byte          led_Blk;      // Para generar intermitencia en los leds
+
+     byte     led_LED_BDEL;      // Modo de funcionamiento de los leds balncos delanteros
+     byte     led_LED_BDET;      // Modo de funcionamiento de los leds blancos traseros
+     byte     led_LED_RDET;      // Modo de funcionamiento de los leds rojos traseros
 
      int numRecargas;
      int offsetIcc_CHG_PPAK;     // Offset para la lectura del sensor de corriente de entrada al PowerBank

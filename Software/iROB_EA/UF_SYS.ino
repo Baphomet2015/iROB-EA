@@ -63,14 +63,16 @@ void UF_SYS::inicio(void)
   //
   // ---------------------------------------------------------
   
-  #ifdef APP_MODO_DEBUG
-  Serial1.println("DEBUG Inicializar LEDs");
-  #endif
+  // ---------------------------------------------------------
+  // Inicio del sistema de encendido/intermitencias de los leds
+  // ---------------------------------------------------------
+  led_Timer    = IDE_LED_TIMER;
+  led_Blk      = LOW;
+  led_LED_BDEL = IDE_LED_OFF;     // Led apagado
+  led_LED_BDET = IDE_LED_OFF;     // Led apagado
+  led_LED_RDET = IDE_LED_OFF;     // Led apagado
 
-  setLed(IDE_LED_BDEL,LOW);
-  setLed(IDE_LED_BDET,LOW);
-  setLed(IDE_LED_RDET,HIGH);
-
+ 
   // ---------------------------------------------------------
   //
   //
@@ -130,9 +132,52 @@ void UF_SYS::inicio(void)
           }
      }
   
-  setLed(IDE_LED_RDET,LOW);   
+  
 }
 
+
+
+// ---------------------------------------------------------
+//
+// byte UF_SYS::secuenciaInicio(void)
+// Mantiene actualizados los diferentes timers implementados
+// en el objeto
+// ---------------------------------------------------------
+
+void UF_SYS::timers(void)
+{
+
+ led_Timer--;
+ 
+ if ( led_Timer==0L )
+    {
+      led_Timer = IDE_LED_TIMER;
+      if ( led_Blk==LOW ) { led_Blk = HIGH;}
+      else                { led_Blk = LOW;}
+    } 
+
+ switch (led_LED_BDEL)
+        { 
+          case(IDE_LED_OFF): { digitalWrite(PIN_HW_LED_BDEL,LOW);     break; }
+          case(IDE_LED_ON):  { digitalWrite(PIN_HW_LED_BDEL,HIGH);    break; }
+          case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_BDEL,led_Blk); break; }
+        }
+
+ switch (led_LED_BDET)
+        { 
+          case(IDE_LED_OFF): { digitalWrite(PIN_HW_LED_BDET,LOW);     break; }
+          case(IDE_LED_ON):  { digitalWrite(PIN_HW_LED_BDET,HIGH);    break; }
+          case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_BDET,led_Blk); break; }
+        }
+
+ switch (led_LED_RDET)
+        { 
+          case(IDE_LED_OFF): { digitalWrite(PIN_HW_LED_RDET,LOW);     break; }
+          case(IDE_LED_ON):  { digitalWrite(PIN_HW_LED_RDET,HIGH);    break; }
+          case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_RDET,led_Blk); break; }
+        }
+
+}
 
 
 // ---------------------------------------------------------
@@ -1008,31 +1053,11 @@ void UF_SYS::recarga_Bateria(void)
 
 byte UF_SYS::setLed(byte ledID,byte modo)
 {
-   
   switch(ledID)
         { 
-           case(IDE_LED_BDEL):
-               { // ---------------------------------------------------------
-                 //
-                 // ---------------------------------------------------------
-                 digitalWrite(PIN_HW_LED_BDEL,modo);
-                 break;
-               }
-           case(IDE_LED_BDET):
-               { // ---------------------------------------------------------
-                 //
-                 // ---------------------------------------------------------
-                 digitalWrite(PIN_HW_LED_BDET,modo);
-                 break;
-               } 
-
-           case(IDE_LED_RDET):
-               { // ---------------------------------------------------------
-                 //
-                 // ---------------------------------------------------------
-                 digitalWrite(PIN_HW_LED_RDET,modo);
-                 break;
-               } 
+           case(IDE_LED_BDEL): { led_LED_BDEL = modo; break; }
+           case(IDE_LED_BDET): { led_LED_BDET = modo; break; } 
+           case(IDE_LED_RDET): { led_LED_RDET = modo; break; } 
         }
 
   return(modo);
