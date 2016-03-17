@@ -430,7 +430,14 @@ void loop(void)
 
        
 
-
+       
+       // ---------------------------------------------------------
+       // Mensaje de sistema --> Down
+       // ---------------------------------------------------------
+    
+       //FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
+       //Serial1.println(IDE_STR_INICIO_POWER_DOWN);
+       //uf_sys.miDelay(IDE_OFF_PAUSA);
 
 
        uf_sys.power_OFF();

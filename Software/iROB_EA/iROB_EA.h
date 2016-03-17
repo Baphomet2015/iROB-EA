@@ -18,7 +18,7 @@
 #ifndef iROB_EA
 #define iROB_EA
 
-
+#include <avr/pgmspace.h>
 
 // ---------------------------------------------------------
 //
@@ -127,7 +127,7 @@
 //
 // ---------------------------------------------------------
 
-#define IDE_MSG_DISPLAY_OK            " OK "
+char  const IDE_MSG_DISPLAY_OK[] PROGMEM = " OK ";          
 #define IDE_MSG_DISPLAY_ER            " ER "
 #define IDE_MSG_DISPLAY_ON            " ON "
 #define IDE_MSG_DISPLAY_OFF           " OFF"

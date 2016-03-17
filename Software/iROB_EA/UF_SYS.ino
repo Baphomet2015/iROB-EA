@@ -557,20 +557,7 @@ void UF_SYS::watchDog_Sincro(void)
 void UF_SYS::power_OFF(void)
 {
 
-  // ---------------------------------------------------------
-  // Como  medida  de  seguridad  se  desactiva  el   rele  de 
-  // alimentacion de los motores antes del power OFF
-  // ---------------------------------------------------------
-  rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
-
-  // ---------------------------------------------------------
-  // Mensaje de sistema --> Down
-  // ---------------------------------------------------------
-    
-  FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
-  Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-  miDelay(IDE_OFF_PAUSA);
-
+   
   // ---------------------------------------------------------
   // Mensaje de sistema --> OFF
   // ---------------------------------------------------------
@@ -578,6 +565,12 @@ void UF_SYS::power_OFF(void)
   FNG_DisplayMsg(IDE_MSG_DISPLAY_OFF,0);
   Serial1.println(IDE_STR_INICIO_POWER_OFF);
   miDelay(IDE_OFF_PAUSA);
+
+  // ---------------------------------------------------------
+  // Como  medida  de  seguridad  se  desactiva  el   rele  de 
+  // alimentacion de los motores antes del power OFF
+  // ---------------------------------------------------------
+  uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
 
   // ---------------------------------------------------------
   // Apagado fisico
@@ -945,7 +938,7 @@ void UF_SYS::miDelay(unsigned long int retardo)
 
   while ( (millis()-mTime)<retardo ) 
         {
-       
+       //watchDog_DONE();
         }
 }
 
