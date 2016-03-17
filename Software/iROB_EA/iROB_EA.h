@@ -101,6 +101,7 @@
 #define PIN_HW_BAT_INBS                  A8  // control de carga de bateria 
 #define PIN_HW_BAT_CHG_PPAK              A1  // Sensor de carga    de la Bateria PowerBank
 #define PIN_HW_BAT_CHG_LIPO              A2  // Sensor de carga    de la Bateria LiPo
+
 #define PIN_HW_IR01                      22  // Sensor infrarojos
 
 

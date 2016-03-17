@@ -147,9 +147,15 @@ void UF_SYS::inicio(void)
 void UF_SYS::timers(void)
 {
 
+ // ---------------------------------------------------------
+ //
+ // Control de los leds
+ //
+ // ---------------------------------------------------------
+
  led_Timer--;
  
- if ( led_Timer==0L )
+ if ( led_Timer<=0L )
     {
       led_Timer = IDE_LED_TIMER;
       if ( led_Blk==LOW ) { led_Blk = HIGH;}
@@ -177,7 +183,20 @@ void UF_SYS::timers(void)
           case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_RDET,led_Blk); break; }
         }
 
+
+ // ---------------------------------------------------------
+ //
+ // 
+ //
+ // ---------------------------------------------------------
+
+
+
+
+
+
 }
+
 
 
 // ---------------------------------------------------------
@@ -217,7 +236,8 @@ byte UF_SYS::secuenciaInicio(void)
 
          if ( nIntentos<IDE_CLV_MAX_INTENTOS )
             { // ---------------------------------------------------------
-              // No se ha alcanzado el numero maximo de reintentos
+              // No se ha alcanzado el numero maximo de reintentos,
+              // visualiza en el display nº de intentos
               // ---------------------------------------------------------
 
               buff[0] = 32;
@@ -536,9 +556,33 @@ void UF_SYS::watchDog_Sincro(void)
 
 void UF_SYS::power_OFF(void)
 {
+
+  // ---------------------------------------------------------
+  // Como  medida  de  seguridad  se  desactiva  el   rele  de 
+  // alimentacion de los motores antes del power OFF
+  // ---------------------------------------------------------
+  rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+
+  // ---------------------------------------------------------
+  // Mensaje de sistema --> Down
+  // ---------------------------------------------------------
+    
+  FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
+  Serial1.println(IDE_STR_INICIO_POWER_DOWN);
+  miDelay(IDE_OFF_PAUSA);
+
+  // ---------------------------------------------------------
+  // Mensaje de sistema --> OFF
+  // ---------------------------------------------------------
+  
   FNG_DisplayMsg(IDE_MSG_DISPLAY_OFF,0);
   Serial1.println(IDE_STR_INICIO_POWER_OFF);
   miDelay(IDE_OFF_PAUSA);
+
+  // ---------------------------------------------------------
+  // Apagado fisico
+  // ---------------------------------------------------------
+  
   rele(IDE_RELE_SYS_OFF,true);      
 }
 
@@ -1008,14 +1052,14 @@ void UF_SYS::calibra_SensoresIcc(void)
   offsetIcc_MIZQ_ICC = vConversor;                // Offset para la lectura del sensor de corriente del motor izquierdo
   
   
-  #ifdef APP_MODO_DEBUG
-  Serial1.print("DEBUG Offset Icc PowerBank: ");
+  #ifdef APP_MODO_
+  Serial1.print("DEBUG Offset Icc PowerBank: ");DEBUG
   Serial1.println(offsetIcc_CHG_PPAK,DEC);
   Serial1.print("DEBUG Offset Icc LiPo: ");
   Serial1.println(offsetIcc_CHG_LIPO,DEC);
-  Serial1.print("DEBUG Offset Icc MotDer: ");
+  Serial1.print("DEBUG Offset Icc Motor Der: ");
   Serial1.println(offsetIcc_MDER_ICC,DEC);
-  Serial1.print("DEBUG Offset Icc MotIzq: ");
+  Serial1.print("DEBUG Offset Icc Motor Izq: ");
   Serial1.println(offsetIcc_MIZQ_ICC,DEC);
   #endif
 }
@@ -1055,9 +1099,9 @@ byte UF_SYS::setLed(byte ledID,byte modo)
 {
   switch(ledID)
         { 
-           case(IDE_LED_BDEL): { led_LED_BDEL = modo; break; }
-           case(IDE_LED_BDET): { led_LED_BDET = modo; break; } 
-           case(IDE_LED_RDET): { led_LED_RDET = modo; break; } 
+          case(IDE_LED_BDEL): { led_LED_BDEL = modo; break; }
+          case(IDE_LED_BDET): { led_LED_BDET = modo; break; } 
+          case(IDE_LED_RDET): { led_LED_RDET = modo; break; } 
         }
 
   return(modo);

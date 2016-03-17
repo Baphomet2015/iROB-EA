@@ -41,8 +41,9 @@ class SENSOR_BAT
   // ---------------------------------------------------------
   public:
           
-          SENSOR_BAT    ();
-          void         inicio (void);
+                SENSOR_BAT       (int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int pin_INBS,int pin_CHG_PPAK,int pin_CHG_LIPO);
+          void  inicio           (void);
+          byte  getLedCargaLiPo  (void);
 
   // ---------------------------------------------------------
   //
@@ -50,10 +51,14 @@ class SENSOR_BAT
   // ---------------------------------------------------------
   private:
 
-     int pinUSD_S;
-     int pinUSI_S;
-     int pinUSD_C;
-     int pinUSI_C;
+     int pinINBP;
+     int pinINB0;
+     int pinINB1;
+     int pinINB2;
+     int pinINBS;
+     int pinCHG_PPAK;
+     int pinCHG_LIPO;
+
 
 
 

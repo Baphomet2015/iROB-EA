@@ -13,6 +13,10 @@
 // Leitmotiv:      "Toda Bestia necesita un Cerebro..."  
 //                  Dr. Frankenstein, en su laboratorio
 //
+//                 "¡Larga y próspera vida!."   
+//                  Sr. Spock 
+//
+//
 // Funcionalidad:  Modulo principal de la Aplicacion
 //
 // Notas:          
@@ -67,6 +71,7 @@
 // ---------------------------------------------------------
 
 UF_SYS            uf_sys    = UF_SYS();                         // Implementa la funcionalidad relacionada con la UF_SYS
+
 MOTOR_FDS5672     mDer      = MOTOR_FDS5672( PIN_HW_MDER_DIR ,
                                              PIN_HW_MDER_PWM ,
                                              PIN_HW_MDER_RST ,
@@ -95,6 +100,16 @@ SENSOR_US         sensorUS  = SENSOR_US (PIN_HW_USR_DERECHO_S  ,
                                          PIN_HW_USR_DERECHO_C  ,
                                          PIN_HW_USR_IZQUIERDO_C 
                                         );                      // Implementa el control de los sensores de ultrasonidos
+
+SENSOR_BAT        sensorBAT = SENSOR_BAT(PIN_HW_BAT_INBP    ,
+                                         PIN_HW_BAT_INB0    ,
+                                         PIN_HW_BAT_INB1    ,
+                                         PIN_HW_BAT_INB2    ,
+                                         PIN_HW_BAT_INBS    ,
+                                         PIN_HW_BAT_CHG_PPAK,
+                                         PIN_HW_BAT_CHG_LIPO
+                                        );
+
 
 Adafruit_MLX90614 mlx       = Adafruit_MLX90614();              // Implementa el sensor de temperatura MELEXIS 90614
 RTC_DS1307        rtc;                                          // Reloj de tiempo real
@@ -139,6 +154,11 @@ void setup(void)
   //   NO se inicializan aqui porque ya lo hace el constructor
   //   de la clase SENSOR_US
   //
+  // . Los pines de control de los sensores de baterias
+  //   NO se inicializan aqui porque ya lo hace el constructor
+  //   de la clase SENSOR_BAT
+  //
+  //
   // . El pin PIN_HW_OFF_PETICION es la entrada de INT 0, no 
   //   es necesario inicializar este pin con pinMode
   //
@@ -179,14 +199,7 @@ void setup(void)
   pinMode(PIN_HW_SEN_MET_LUZ ,INPUT);
   pinMode(PIN_HW_DTR_RAZOR_1 ,OUTPUT);
 
-  pinMode(PIN_HW_BAT_INBP,OUTPUT);
-  pinMode(PIN_HW_BAT_INB0,OUTPUT);
-  pinMode(PIN_HW_BAT_INB1,OUTPUT);
-  pinMode(PIN_HW_BAT_INB2,OUTPUT);
-  pinMode(PIN_HW_BAT_INBS,INPUT);
-  pinMode(PIN_HW_BAT_CHG_PPAK,INPUT);
-  pinMode(PIN_HW_BAT_CHG_LIPO,INPUT);
-
+  
   pinMode(PIN_HW_IR01,INPUT);
 
 
@@ -224,6 +237,7 @@ void setup(void)
   mlx.begin();  
    gc.begin();
   sensorUS.inicio();
+  sensorBAT.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
@@ -260,6 +274,7 @@ void setup(void)
     
   
   #ifdef APP_MODO_DEBUG
+  Serial1.println(" ");
   Serial1.print("DEBUG Tiempo de ejecucion setup: ");
   Serial1.print(millis()-t,DEC);
   Serial1.println(" mseg.");
@@ -402,20 +417,10 @@ void loop(void)
        //
        //                          POWER OFF
        //
-       // Se ha solicitado  el APAGADO (power OFF) , indica  en  la
-       // variable EEPROM  de  control  modo  Salir  y  provoca  un
-       // watchdog.
        // ANTES se DEBE hacer  todo  lo que proceda antes de apagar
        // Rsapberry etc
        // ---------------------------------------------------------    
-
-
-       // ---------------------------------------------------------
-       // Como  medida  de  seguridad  se  desactiva  el   rele  de 
-       // alimentacion de los motores antes del power OFF
-       // ---------------------------------------------------------
-       uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
-  
+      
 
        // ---------------------------------------------------------
        //
@@ -423,9 +428,11 @@ void loop(void)
        //
        // ---------------------------------------------------------
 
-       FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
-       Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-       uf_sys.miDelay(IDE_OFF_PAUSA);
+       
+
+
+
+
        uf_sys.power_OFF();
      }
   

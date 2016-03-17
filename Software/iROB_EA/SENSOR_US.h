@@ -41,8 +41,8 @@ class SENSOR_US
   // ---------------------------------------------------------
   public:
           
-          SENSOR_US    (int pin_USD_S,int pin_USI_S,int pin_USD_C,int pin_USI_C);
-          void         inicio (void);
+                SENSOR_US (int pin_USD_S,int pin_USI_S,int pin_USD_C,int pin_USI_C);
+          void  inicio    (void);
 
   // ---------------------------------------------------------
   //
