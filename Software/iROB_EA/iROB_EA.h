@@ -127,23 +127,23 @@
 //
 // ---------------------------------------------------------
 
-char  const IDE_MSG_DISPLAY_OK[] PROGMEM = " OK ";          
-#define IDE_MSG_DISPLAY_ER            " ER "
-#define IDE_MSG_DISPLAY_ON            " ON "
-#define IDE_MSG_DISPLAY_OFF           " OFF"
-#define IDE_MSG_DISPLAY_DOWN          "DOWN"
-#define IDE_MSG_DISPLAY_PWD           "****"
-#define IDE_MSG_DISPLAY_CLS           "    "
-#define IDE_MSG_DISPLAY_BLK           "LOCK"
-#define IDE_MSG_DISPLAY_INI           ".ON."
+const char IDE_MSG_DISPLAY_OK     [] PROGMEM = " OK ";
+const char IDE_MSG_DISPLAY_ER     [] PROGMEM = " ER ";
+const char IDE_MSG_DISPLAY_ON     [] PROGMEM = " ON ";
+const char IDE_MSG_DISPLAY_OFF    [] PROGMEM = " OFF";
+const char IDE_MSG_DISPLAY_DOWN   [] PROGMEM = "DOWN";
+const char IDE_MSG_DISPLAY_PWD    [] PROGMEM = "****";
+const char IDE_MSG_DISPLAY_CLS    [] PROGMEM = "    ";
+const char IDE_MSG_DISPLAY_BLK    [] PROGMEM = "LOCK";
+const char IDE_MSG_DISPLAY_INI    [] PROGMEM = ".ON.";
 
-#define IDE_MSG_DISPLAY_ER_000        "E000"  // NO se utiliza 
-#define IDE_MSG_DISPLAY_ER_001        "E001"  // NO se utiliza 
-#define IDE_MSG_DISPLAY_ER_002        "E002"  // NO se utiliza 
-#define IDE_MSG_DISPLAY_ER_003        "E003"  // NO se utiliza 
-#define IDE_MSG_DISPLAY_ER_004        "E004"  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_000 [] PROGMEM = "E000";  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_001 [] PROGMEM = "E001";  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_002 [] PROGMEM = "E002";  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_003 [] PROGMEM = "E003";  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_004 [] PROGMEM = "E004";  // NO se utiliza 
 
-#define IDE_MAX_DISPLAY_CAR           4       // Numero de caracteres del display
+#define IDE_MAX_DISPLAY_CAR       4                     // Numero de caracteres del display
 
 
 // ---------------------------------------------------------
@@ -153,8 +153,9 @@ char  const IDE_MSG_DISPLAY_OK[] PROGMEM = " OK ";
 // ---------------------------------------------------------
 
 
-byte FNG_DisplayMsg (char* msg,unsigned int pausa);
-void FNG_Pausa      (unsigned int pausa);
+byte FNG_DisplayMsgPROGMEM (const char* msgP,unsigned int pausa);
+byte FNG_DisplayMsg        (      char* msg ,unsigned int pausa);
+void FNG_Pausa             (unsigned int pausa);
 
 
 

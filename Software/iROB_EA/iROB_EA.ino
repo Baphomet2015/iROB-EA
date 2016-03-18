@@ -275,9 +275,9 @@ void setup(void)
   
   #ifdef APP_MODO_DEBUG
   Serial1.println(" ");
-  Serial1.print("DEBUG Tiempo de ejecucion setup: ");
+  Serial1.print(F("DEBUG Tiempo de ejecucion setup: "));
   Serial1.print(millis()-t,DEC);
-  Serial1.println(" mseg.");
+  Serial1.println(F(" mseg."));
   #endif
        
 
@@ -306,9 +306,9 @@ void setup(void)
   uf_sys.set_RECARGAS(0);
   
   #ifdef APP_MODO_DEBUG
-  Serial1.print("DEBUG Tiempo de ejecucion setup + Inicio: ");
+  Serial1.print(F("DEBUG Tiempo de ejecucion setup + Inicio: "));
   Serial1.print(millis()-t,DEC);
-  Serial1.println(" mseg.");
+  Serial1.println(F(" mseg."));
   #endif
 }
 
@@ -435,9 +435,9 @@ void loop(void)
        // Mensaje de sistema --> Down
        // ---------------------------------------------------------
     
-       //FNG_DisplayMsg(IDE_MSG_DISPLAY_DOWN,0);
-       //Serial1.println(IDE_STR_INICIO_POWER_DOWN);
-       //uf_sys.miDelay(IDE_OFF_PAUSA);
+       FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_DOWN,0);
+       Serial1.println(IDE_STR_INICIO_POWER_DOWN);
+       uf_sys.miDelay(IDE_OFF_PAUSA);
 
 
        uf_sys.power_OFF();
@@ -466,15 +466,60 @@ void INT_power_OFF(void)
 
 // ---------------------------------------------------------
 //
+// byte FNG_DisplayMsgPROGMEM(const char* msg,unsigned int pausa)
+//
+// Ver "https://www.arduino.cc/en/Reference/PROGMEM"
+// 
+// ---------------------------------------------------------
+ 
+byte FNG_DisplayMsgPROGMEM( const char* msgP,unsigned int pausa)
+{
+  byte resultado;
+  char buff [IDE_MAX_DISPLAY_CAR+1];
+  char c;
+  byte ind;
+  byte max;
+
+
+  resultado = false;
+  max       = strlen_P(msgP); 
+  ind       = 0;
+
+  if ( max<=IDE_MAX_DISPLAY_CAR)
+     {  
+
+       for ( ;ind<max; )
+           {
+             c = pgm_read_byte_near(msgP + ind);
+             buff[ind++] = c;
+             buff[ind  ] = '\0';
+           }
+
+       myDisplay.home();
+       myDisplay.print(buff);
+       resultado = true;
+       
+       if ( pausa>0 )
+          {
+            FNG_Pausa(pausa); 
+          }
+     }
+     
+  return (resultado) ;  
+}
+
+
+// ---------------------------------------------------------
+//
 // byte FNG_DisplayMsg(char* msg,unsigned int pausa)
 // 
 // ---------------------------------------------------------
  
 byte FNG_DisplayMsg(char* msg,unsigned int pausa)
 {
-  byte resultado;
-
+  byte  resultado;
   
+
   resultado = false;
 
   if ( strlen(msg)<=IDE_MAX_DISPLAY_CAR)

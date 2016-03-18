@@ -1,4 +1,3 @@
-
 // ---------------------------------------------------------
 //
 // Proyecto:       iROB-EA
@@ -261,8 +260,8 @@ byte UF_SYS::secuenciaInicio(void)
                         resultado  = true;             
                         flgProceso = true;
                         set_NUM_RC(0);
-                        FNG_DisplayMsg(IDE_MSG_DISPLAY_OK,(IDE_PAUSA_GENERAL*4));
-                        FNG_DisplayMsg(IDE_MSG_DISPLAY_ON,(IDE_PAUSA_GENERAL*2));
+                        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OK,(IDE_PAUSA_GENERAL*4));
+                        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_ON,(IDE_PAUSA_GENERAL*2));
                       }
                    else
                       { // ---------------------------------------------------------
@@ -276,7 +275,7 @@ byte UF_SYS::secuenciaInicio(void)
                            }
                         else
                            {   
-                             FNG_DisplayMsg(IDE_MSG_DISPLAY_ER,(IDE_PAUSA_GENERAL*4));                
+                             FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_ER,(IDE_PAUSA_GENERAL*4));                
                            }
                       }   
                  }
@@ -286,7 +285,7 @@ byte UF_SYS::secuenciaInicio(void)
                   //
                   // ---------------------------------------------------------
                   flgProceso = true; 
-                  FNG_DisplayMsg(IDE_MSG_DISPLAY_OFF,(IDE_PAUSA_GENERAL*4));
+                  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OFF,(IDE_PAUSA_GENERAL*4));
                 }
             }
          else
@@ -313,12 +312,12 @@ byte UF_SYS::secuenciaInicio(void)
                    // ---------------------------------------------------------
                    resultado  = false;
                    flgProceso = true;
-                   FNG_DisplayMsg(IDE_MSG_DISPLAY_BLK,(IDE_PAUSA_GENERAL*6));
+                   FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_BLK,(IDE_PAUSA_GENERAL*6));
                  }
             }
        }
  
-  FNG_DisplayMsg(IDE_MSG_DISPLAY_CLS,0);
+  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,0);
   return( resultado );
 }
 
@@ -500,7 +499,7 @@ void UF_SYS::watchDog_DONE(void)
 void UF_SYS::watchDog_Sincro(void)
 {
 
-  FNG_DisplayMsg(IDE_MSG_DISPLAY_CLS,0);
+  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,0);
 
   if ( digitalRead(PIN_HW_DOG_SFLAG)==LOW )
      {
@@ -509,7 +508,7 @@ void UF_SYS::watchDog_Sincro(void)
        // ---------------------------------------------------------
 
        set_WATCHDOG(IDE_SYSTEM_WATCHDOG);
-       FNG_DisplayMsg(IDE_MSG_DISPLAY_INI,0);
+       FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_INI,0);
        Serial1.println("");
        Serial1.println("");
        Serial1.println("");
@@ -562,7 +561,7 @@ void UF_SYS::power_OFF(void)
   // Mensaje de sistema --> OFF
   // ---------------------------------------------------------
   
-  FNG_DisplayMsg(IDE_MSG_DISPLAY_OFF,0);
+  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OFF,0);
   Serial1.println(IDE_STR_INICIO_POWER_OFF);
   miDelay(IDE_OFF_PAUSA);
 
