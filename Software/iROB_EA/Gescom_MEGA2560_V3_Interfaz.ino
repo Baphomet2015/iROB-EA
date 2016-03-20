@@ -22,10 +22,12 @@
 #include <inttypes.h>
 #include <Arduino.h>
 #include "UF_SYS.h"
-#include <Gescom_MEGA2560_V3.h>
-#include <Gescom_MEGA2560_V3_CMD.h>
+//#include <Gescom_MEGA2560_V3.h>
+#//include <Gescom_MEGA2560_V3_CMD.h>
 
 
+#include "Gescom_MEGA2560_V3.h"
+#include "Gescom_MEGA2560_V3_CMD.h"
   
 
 
@@ -72,6 +74,7 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
+
 
 
 
@@ -587,7 +590,7 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
 
-
+  
   resultado = true;
 
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )

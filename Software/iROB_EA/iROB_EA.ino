@@ -49,7 +49,6 @@
 
 
 
-
 // ---------------------------------------------------------
 //
 //         Definicion de Clases y variable GLOBALES
@@ -490,9 +489,10 @@ byte FNG_DisplayMsgPROGMEM( const char* msgP,unsigned int pausa)
 
        for ( ;ind<max; )
            {
-             c = pgm_read_byte_near(msgP + ind);
+             c = pgm_read_byte_near(msgP);
              buff[ind++] = c;
              buff[ind  ] = '\0';
+             msgP++;
            }
 
        myDisplay.home();

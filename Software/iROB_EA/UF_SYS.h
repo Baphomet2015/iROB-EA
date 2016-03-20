@@ -56,7 +56,7 @@
 #define IDE_LED_ON                           11 // Led encendido
 #define IDE_LED_BLK                          12 // Led blinking
 
-#define IDE_LED_TIMER                      500L // Contador para generar intermitencias con los leds
+#define IDE_LED_TIMER                      100L // Contador para generar intermitencias con los leds
 
 
 #define IDE_RELE_SYS_PAUSA                 250  // Pausa (ms) para activar/Desactivar los reles RE1, RE2, RE3 y RE4 
@@ -64,13 +64,13 @@
 #define IDE_RELE_DESACTIVAR                  0
 
                                             // Usar MEMPROG
-#define IDE_STR_INICIO_VERSION               "iROB_EA, version 1.00, Junio 2015" 
-#define IDE_STR_INICIO_WATCHDOG              "Arranque por Watchdog"
-#define IDE_STR_INICIO_POWER_ON              "Arranque por Power ON"
-#define IDE_STR_INICIO_POWER_OFF             "Apagando Sistema (Power OFF)..."
-#define IDE_STR_INICIO_POWER_DOWN            "Iniciando Apagado (Power OFF)..."
-#define IDE_STR_SINCRO_WATCHDOG_1            "Sincronizando el watchdog..."
-#define IDE_STR_SINCRO_WATCHDOG_2            "Watchdog sincronizado"
+#define IDE_STR_INICIO_VERSION               F("iROB_EA, version 1.00, Junio 2015")
+#define IDE_STR_INICIO_WATCHDOG              F("Arranque por Watchdog")
+#define IDE_STR_INICIO_POWER_ON              F("Arranque por Power ON")
+#define IDE_STR_INICIO_POWER_OFF             F("Apagando Sistema (Power OFF)...")
+#define IDE_STR_INICIO_POWER_DOWN            F("Iniciando Apagado (Power OFF)...")
+#define IDE_STR_SINCRO_WATCHDOG_1            F("Sincronizando el watchdog...")
+#define IDE_STR_SINCRO_WATCHDOG_2            F("Watchdog sincronizado")
 
 #define IDE_SYSTEM_OK                    0x00
 #define IDE_SYSTEM_WATCHDOG              0x0F

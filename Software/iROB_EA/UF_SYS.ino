@@ -70,6 +70,7 @@ void UF_SYS::inicio(void)
   led_LED_BDEL = IDE_LED_OFF;     // Led apagado
   led_LED_BDET = IDE_LED_OFF;     // Led apagado
   led_LED_RDET = IDE_LED_OFF;     // Led apagado
+  
 
  
   // ---------------------------------------------------------
@@ -506,7 +507,6 @@ void UF_SYS::watchDog_Sincro(void)
        // ---------------------------------------------------------
        //  Arranque normal, espera a sincronizar el watchdog
        // ---------------------------------------------------------
-
        set_WATCHDOG(IDE_SYSTEM_WATCHDOG);
        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_INI,0);
        Serial1.println("");
@@ -864,8 +864,8 @@ void UF_SYS::display_Datos_EEPROM(void)
   Serial1.print("Clave EEPROM: ");
   get_CLV_AE(buff);
   Serial1.println(buff);
-  Serial1.print("Modo inicio: ");
-  Serial1.println(get_MOD_INI());
+  //Serial1.print("Modo inicio: ");
+  //Serial1.println(get_MOD_INI());
   Serial1.flush();
 }
 
@@ -884,7 +884,7 @@ void UF_SYS::display_Modo(void)
   
   modo = get_MOD_INI();
   
-  Serial1.print("Modo inicio: "); 
+  Serial1.print("Modo inicio: ");
   if ( modo==IDE_INICIO_WATCHDOG ){ Serial1.println(IDE_STR_INICIO_WATCHDOG); }
   else                            { Serial1.println(IDE_STR_INICIO_POWER_ON); }
   Serial1.flush();
