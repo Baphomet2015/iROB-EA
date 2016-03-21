@@ -22,15 +22,9 @@
 #include <inttypes.h>
 #include <Arduino.h>
 #include "UF_SYS.h"
-//#include <Gescom_MEGA2560_V3.h>
-#//include <Gescom_MEGA2560_V3_CMD.h>
-
-
 #include "Gescom_MEGA2560_V3.h"
 #include "Gescom_MEGA2560_V3_CMD.h"
   
-
-
 
 
 
@@ -259,6 +253,10 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                     {
                       iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_LIPO);
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("iMedida: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
                       break;
                     }
 
@@ -388,8 +386,9 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
        //
        //
        // ---------------------------------------------------------
-       if ( uf_sys.get_FlgDebug()==true) { sprintf(gd->buffRespCmd,"01"); }
-       else                              { sprintf(gd->buffRespCmd,"00"); }
+       if ( uf_sys.get_FlgDebug()==true) { sprintf(gd->buffRespCmd,"%04u",1); }
+    // else                              { sprintf(gd->buffRespCmd,"00"); }
+       else                              { sprintf(gd->buffRespCmd,"%04u",0); }
      }
   else
      {
@@ -417,7 +416,7 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 //
 // Retorna:
 //          "00"              Error de comando
-//          "01"              Comando ejecutado
+//         I"01"              Comando ejecutado
 //          "AAAAMMDD HHMMSS" La fecha/hora actual
 // 
 // ---------------------------------------------------------
@@ -481,7 +480,7 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                       // SET: Establecer Fecha y Hora del RTC
                       //      Espera un string en la forma: "AAAAMMDD HHMMSS"
                       //      Retorna  "00" Error
-                      //                "01" Ok se ha establecido los nueva fecha/hora
+                      //               "01" Ok se ha establecido los nueva fecha/hora
                       // ---------------------------------------------------------
 
                       v = gd->cnv_Param02;
@@ -511,7 +510,7 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                     { // ---------------------------------------------------------
                       // CHK: Comprobar funcionamiento del RTC
                       //      Retorna  "00" No se esta ejecutando
-                      //               "01" si se esta ejecutando   
+                      //               "01" Si se esta ejecutando   
                       // ---------------------------------------------------------
                       
                       if (!rtc.isrunning() )
@@ -525,7 +524,7 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                case ( IDE_PARAM_INI ):
                     { // ---------------------------------------------------------
                       // INI: Iniciar RTC
-                      //      Retorna "01"
+                      //      Retorna IDE_CMD_RETORNO_1
                       // ---------------------------------------------------------
                       rtc.begin();
                       break;
@@ -692,7 +691,10 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
                                      sprintf( gd->buffRespCmd,"%03d",mlx.readObjectTempC());
                                      break;
                                    }
-                              default:              { resultado = false;                                       break; }
+                              default:
+                                   { resultado = false;
+                                     break;
+                                   }
                             }
                       break;
                     }

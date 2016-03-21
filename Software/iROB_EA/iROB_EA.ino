@@ -223,8 +223,10 @@ void setup(void)
   // Inicio:
   // .  Wire.begin()
   // .  rtc.begin()
+  // .   gc.begin()
   // .  mlx.begin()
   // .  sensorUS.inicio()
+  // .  sensorBAT.inicio()
   // .  myDisplay.begin()
   // .  flgPower_OFF
   //
@@ -251,7 +253,7 @@ void setup(void)
 
 
   // ---------------------------------------------------------
-  // Resto:
+  // Resto: Desactivar todos los reles
   //
   // ---------------------------------------------------------
 
@@ -301,8 +303,8 @@ void setup(void)
 
   uf_sys.inicio();                                          
 
-  // QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
-  uf_sys.set_RECARGAS(0);
+  //QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
+  //uf_sys.set_RECARGAS(0);
   
   #ifdef APP_MODO_DEBUG
   Serial1.print(F("DEBUG Tiempo de ejecucion setup + Inicio: "));
@@ -438,7 +440,9 @@ void loop(void)
        Serial1.println(IDE_STR_INICIO_POWER_DOWN);
        uf_sys.miDelay(IDE_OFF_PAUSA);
 
-
+       // ---------------------------------------------------------
+       // Apagado físico (power OFF)
+       // ---------------------------------------------------------
        uf_sys.power_OFF();
      }
   
@@ -449,8 +453,8 @@ void loop(void)
 // ---------------------------------------------------------
 //
 // void INT_power_OFF(void)
-// Funcion conectada a la interrupcion 0 para capturar el 
-// evento de pulsador pulsado para apagar
+// Funcion conectada a  la  interrupcion 0 para  capturar el 
+// evento de pulsador ON/OFF pulsado para apagar
 //
 // ---------------------------------------------------------
 
@@ -466,6 +470,9 @@ void INT_power_OFF(void)
 // ---------------------------------------------------------
 //
 // byte FNG_DisplayMsgPROGMEM(const char* msg,unsigned int pausa)
+//
+// Funcion para mostrar mensajes en  el  display  cuando los 
+// mensajes son CONSTANTES de memoria
 //
 // Ver "https://www.arduino.cc/en/Reference/PROGMEM"
 // 
@@ -512,6 +519,9 @@ byte FNG_DisplayMsgPROGMEM( const char* msgP,unsigned int pausa)
 // ---------------------------------------------------------
 //
 // byte FNG_DisplayMsg(char* msg,unsigned int pausa)
+//
+// Funcion para mostrar mensajes en  el  display  cuando los 
+// mensajes son creados dinamicamente durante la ejecucion
 // 
 // ---------------------------------------------------------
  
