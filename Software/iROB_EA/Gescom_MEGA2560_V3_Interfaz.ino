@@ -361,9 +361,9 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 //           parametro2: IDE_PARAM_NOP
 //
 // Retorna:
-//          "00" NO esta conectado
-//          "01" SI esta conectado
-//          "02" Error de comando
+//          "0" NO esta conectado
+//          "1" SI esta conectado
+//          "2" Error de comando
 // 
 // ---------------------------------------------------------
 
@@ -386,15 +386,21 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
        //
        //
        // ---------------------------------------------------------
-       if ( uf_sys.get_FlgDebug()==true) { sprintf(gd->buffRespCmd,"%04u",1); }
+    //   if ( uf_sys.get_FlgDebug()==true) { sprintf(gd->buffRespCmd,"%04u",1); }
     // else                              { sprintf(gd->buffRespCmd,"00"); }
-       else                              { sprintf(gd->buffRespCmd,"%04u",0); }
+    //   else                              { sprintf(gd->buffRespCmd,"%04u",0); }
+       if ( uf_sys.get_FlgDebug()==true) { strcpy(gd->buffRespCmd,"1"); }
+       else                              { strcpy(gd->buffRespCmd,"0"); }
      }
   else
      {
-       sprintf(gd->buffRespCmd,"02");
+       strcpy(gd->buffRespCmd,"2");
      }
       
+  #ifdef APP_MODO_DEBUG
+  Serial1.print(F("CDBG: "));
+  Serial1.println(gd->buffRespCmd);
+  #endif
 }
 
 
@@ -415,8 +421,8 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 //                       valor
 //
 // Retorna:
-//          "00"              Error de comando
-//         I"01"              Comando ejecutado
+//          "0"              Error de comando
+//         I"1"              Comando ejecutado
 //          "AAAAMMDD HHMMSS" La fecha/hora actual
 // 
 // ---------------------------------------------------------
@@ -472,6 +478,12 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                                 now.second()
                              );
                       flg = true;  
+
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("RTC: "));
+                      Serial1.println(gd->buffRespCmd );
+                      #endif
+
                       break;
                     }
 
@@ -545,8 +557,8 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
   if (flg==false)
      {
-       if (resultado==false) { sprintf(gd->buffRespCmd,"00"); }   
-       else                  { sprintf(gd->buffRespCmd,"01"); }    
+       if (resultado==false) { strcpy(gd->buffRespCmd,"0"); }   
+       else                  { strcpy(gd->buffRespCmd,"1"); }    
      }
   
 }
@@ -570,8 +582,8 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 //                       IDE_PARAM_BLK
 //
 // Retorna:
-//          "00" Error de comando
-//          "01" Comando ejecutado
+//          "0" Error de comando
+//          "1" Comando ejecutado
 //
 // 
 // ---------------------------------------------------------
@@ -626,8 +638,8 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { sprintf(gd->buffRespCmd,"00"); }
-  else                   { sprintf(gd->buffRespCmd,"01"); }
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
+  else                   { strcpy(gd->buffRespCmd,"1"); }
 
 }
 
@@ -663,6 +675,7 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
+
 
 
   resultado = true;
@@ -711,7 +724,7 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { sprintf(gd->buffRespCmd,"000"); }
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
   
 }
 
@@ -781,8 +794,8 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { sprintf(gd->buffRespCmd,"000"); }
-
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
+  else                   { strcpy(gd->buffRespCmd,"1"); }
 }
 
 
@@ -853,8 +866,8 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { sprintf(gd->buffRespCmd,"000"); }
-
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
+  else                   { strcpy(gd->buffRespCmd,"1"); }
 }
 
 
@@ -921,7 +934,7 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { sprintf(gd->buffRespCmd,"000"); }
-
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
+  else                   { strcpy(gd->buffRespCmd,"1"); }
 }
 
