@@ -64,7 +64,7 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
 {
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -99,7 +99,7 @@ void cmd_Comando_CM_RET(GESCOM_DATA* gd)
 {
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida   de  seguridad   todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE(); 
@@ -132,7 +132,7 @@ void cmd_Comando_CM_RSV(GESCOM_DATA* gd)
 {
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE(); 
@@ -167,7 +167,7 @@ void cmd_Comando_S_MDER(GESCOM_DATA* gd)
 {
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -199,7 +199,7 @@ void cmd_Comando_S_MIZQ(GESCOM_DATA* gd)
 {
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -232,7 +232,7 @@ void cmd_Comando_S_MIZQ(GESCOM_DATA* gd)
 void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 {
   double iMedida;
-  double tiempo;
+  byte   carga;
 
 
   // ---------------------------------------------------------
@@ -250,24 +250,34 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
        switch(gd->cnv_Param02)
              {
                case (IDE_PARAM_CHG):
-                    {
-                      iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_LIPO);
+                    { // ---------------------------------------------------------
+                      // Corriente que esta concumiendo la bateria cuando esta EN
+                      // CARGA.
+                      // ---------------------------------------------------------
+                      iMedida = sensorBAT.getIccChgLiPo();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
+                      
                       #ifdef APP_MODO_DEBUG
-                      Serial1.print(F("iMedida: "));
+                      Serial1.print(F("LiPo iMedida: "));
                       Serial1.println(gd->buffRespCmd);
                       #endif
+                      
                       break;
                     }
 
                case (IDE_PARAM_POW):
                     { // ---------------------------------------------------------
-                      // El consumo de la bateria se obtiene de  la  suma  de  los
-                      // consumos de cada motor por eso NO hay un sensor específico
-                      // para medir este consumo.
+                      // Estado del led de carga de la bateria de LiPo
+                      // carga = 1 --> Bateria cargada
+                      // carga = 0 --> Bateria en carga
                       // ---------------------------------------------------------
+                      carga = sensorBAT.getLedChgLiPo();
+                      sprintf(gd->buffRespCmd,"%d",carga); 
 
-
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("LiPo Carga: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
 
 
                       break;
@@ -304,16 +314,15 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 {
   double iMedida;
-  double tiempo;
-
+  byte   carga;
+  
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
-
   
   if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
      { // ---------------------------------------------------------
@@ -324,17 +333,39 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
        switch(gd->cnv_Param02)
              { 
                case (IDE_PARAM_CHG):
-                    {
-                      iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_PPAK);
+                    { // ---------------------------------------------------------
+                      // Corriente que esta consumiendo la bateria cuando esta EN
+                      // CARGA.
+                      // ---------------------------------------------------------
+                      iMedida = sensorBAT.getIccChgPpak();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
+
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("Power Bank iMedida: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
+
                       break;
                     }
 
                case (IDE_PARAM_POW):
-                    {  
-                      iMedida  = uf_sys.get_Corriente(PIN_HW_BAT_CHG_PPAK);
-                      tiempo   = (IDE_CAPACIDAD_BAT_PPAK/iMedida) * 0.7;
-                      dtostrf(tiempo, 4, 1, gd->buffRespCmd);     
+                    { // ---------------------------------------------------------
+                      // Estado de los leds de carga del PPAK
+                      // carga = 100 --> 100% de carga.
+                      // carga =  75 -->  75% de carga.
+                      // carga =  50 -->  50% de carga.
+                      // carga =  25 -->  25% de carga.
+                      // carga =   0 -->   0% de carga ????.
+                      // ---------------------------------------------------------
+                     
+                      carga = sensorBAT.getLedChgPpak();
+                      sprintf(gd->buffRespCmd,"%d",carga); 
+
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("Power Bank Carga: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
+
                       break;
                     }
 
@@ -374,7 +405,7 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -386,9 +417,6 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
        //
        //
        // ---------------------------------------------------------
-    //   if ( uf_sys.get_FlgDebug()==true) { sprintf(gd->buffRespCmd,"%04u",1); }
-    // else                              { sprintf(gd->buffRespCmd,"00"); }
-    //   else                              { sprintf(gd->buffRespCmd,"%04u",0); }
        if ( uf_sys.get_FlgDebug()==true) { strcpy(gd->buffRespCmd,"1"); }
        else                              { strcpy(gd->buffRespCmd,"0"); }
      }
@@ -443,11 +471,10 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
-
 
   resultado = true;
   flg       = false;
@@ -596,7 +623,7 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -671,7 +698,7 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -760,7 +787,7 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 
 // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -832,7 +859,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
@@ -903,7 +930,7 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
-  // medidad  de  seguridad   todas  las  implementaciones  de 
+  // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();

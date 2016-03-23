@@ -968,7 +968,7 @@ double UF_SYS::get_Corriente(byte pinID)
   char   tmpBuff[IDE_MAXBUFF_GENERICO+1];
 
 
-  analogReference(DEFAULT);             // Fija referencia interna ADC = 5V
+  //analogReference(DEFAULT);           // Fija referencia interna ADC = 5V, comentado ya se fija en el setup()
        
   vConversor = analogRead(pinID);       // Lee sensor
                                         // ATENCION:  

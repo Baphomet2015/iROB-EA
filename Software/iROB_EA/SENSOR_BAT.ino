@@ -77,32 +77,181 @@ void SENSOR_BAT::inicio(void)
 
 // ---------------------------------------------------------
 //
-// byte SENSOR_BAT::getLedCargaLiPo(void)
+// byte SENSOR_BAT::getLedChgLiPo(void)
 //         
 // Retorna:
-// True  El led de carga del cargador LiPo esta encendido
-//       indica bateria cargada         
-// False El led de carga del cargador LiPo esta apagado
-//       indica bateria  en carga
+//   1  El led de carga del cargador LiPo esta encendido
+//      indica bateria cargada         
+//   0  El led de carga del cargador LiPo esta apagado
+//      indica bateria en carga
 //
 // ---------------------------------------------------------
 
-byte SENSOR_BAT::getLedCargaLiPo(void)
+byte SENSOR_BAT::getLedChgLiPo(void)
 {
   byte valor; 
 
   // ---------------------------------------------------------  
   // La señal del sensor que  detecta  el  led  de  carga  del 
-  // cargador LiPo se encuentra en el canal 5 del MUX 4015
+  // cargador LiPo se encuentra en el canal 5 del MUX 4051
   // ---------------------------------------------------------  
   digitalWrite(pinINB0,HIGH); 
   digitalWrite(pinINB1,LOW);
   digitalWrite(pinINB2,HIGH);
 
   valor = analogRead(pinINBS);
-  if ( valor>0 ) { valor = true;  }
-  else           { valor = false; }
+  if ( valor>0 ) { valor = 1; }
+  else           { valor = 0; }
 
   return(valor);
 }
 
+
+
+// ---------------------------------------------------------
+//
+// byte SENSOR_BAT::getLedChgPpak(void)
+//         
+// Retorna:
+// Un valor que indica el % de carga de la bateria PPAK
+//   0  PPAK al   0% Jaaaaa, esta muerto
+//  25  PPAK al  25% de carga
+//  50  PPAK al  50% de carga
+//  75  PPAK al  75% de carga
+//  100 PPAK al 100% de carga
+//
+// ---------------------------------------------------------
+
+byte SENSOR_BAT::getLedChgPpak(void)
+{
+  byte valor; 
+  byte carga;
+  byte flgTest;
+ 
+
+  flgTest = true;
+  carga   = 0;
+
+  // ---------------------------------------------------------  
+  // Compruebe el estado del led que indica 100% de carga 
+  // cargador LiPo se encuentra en el canal 1 del MUX 4051
+  // ---------------------------------------------------------  
+  if ( flgTest==true)
+     {
+       digitalWrite(pinINB0,HIGH); 
+       digitalWrite(pinINB1,LOW);
+       digitalWrite(pinINB2,LOW);
+  
+       valor = analogRead(pinINBS);
+
+       if (valor>0)
+          {
+            carga   = 100;
+            flgTest = false;
+          }
+     }
+
+  // ---------------------------------------------------------  
+  // Compruebe el estado del led que indica 75% de carga 
+  // cargador LiPo se encuentra en el canal 2 del MUX 4051
+  // ---------------------------------------------------------  
+  if ( flgTest==true)
+     {
+       digitalWrite(pinINB0,LOW); 
+       digitalWrite(pinINB1,HIGH);
+       digitalWrite(pinINB2,LOW);
+  
+       valor = analogRead(pinINBS);
+
+       if (valor>0)
+          {
+            carga   = 75;
+            flgTest = false;
+          }
+     }
+
+  // ---------------------------------------------------------  
+  // Compruebe el estado del led que indica 50% de carga 
+  // cargador LiPo se encuentra en el canal 3 del MUX 4051
+  // ---------------------------------------------------------  
+  if ( flgTest==true)
+     {
+       digitalWrite(pinINB0,HIGH); 
+       digitalWrite(pinINB1,HIGH);
+       digitalWrite(pinINB2,LOW);
+  
+       valor = analogRead(pinINBS);
+
+       if (valor>0)
+          {
+            carga   = 50;
+            flgTest = false;
+          }
+     }
+
+  // ---------------------------------------------------------  
+  // Compruebe el estado del led que indica 25% de carga 
+  // cargador LiPo se encuentra en el canal 4 del MUX 4051
+  // ---------------------------------------------------------  
+  if ( flgTest==true)
+     {
+       digitalWrite(pinINB0,LOW); 
+       digitalWrite(pinINB1,LOW);
+       digitalWrite(pinINB2,HIGH);
+  
+       valor = analogRead(pinINBS);
+
+       if (valor>0)
+          {
+            carga   = 25;
+            flgTest = false;
+          }
+     }
+
+
+  return(carga);
+}
+
+
+
+// ---------------------------------------------------------
+//
+// double SENSOR_BAT::getIccChgLiPo(void)
+//         
+// Retorna:
+//
+// ---------------------------------------------------------
+
+double SENSOR_BAT::getIccChgLiPo(void)
+{
+  double iMedida;
+  double tiempo;
+  
+
+  iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_LIPO);
+  tiempo  = (IDE_CAPACIDAD_BAT_LIPO/iMedida) * 0.7;
+
+  return( iMedida);
+}
+
+
+
+// ---------------------------------------------------------
+//
+// double SENSOR_BAT::getIccChgPpak(void)
+//         
+// Retorna:
+//
+// ---------------------------------------------------------
+
+double SENSOR_BAT::getIccChgPpak(void)
+{
+  double iMedida;
+  double tiempo;
+  
+  
+  iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_PPAK);
+  tiempo  = (IDE_CAPACIDAD_BAT_PPAK/iMedida) * 0.7;
+
+  return( iMedida);
+}
