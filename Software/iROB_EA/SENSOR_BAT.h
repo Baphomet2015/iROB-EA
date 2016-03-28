@@ -43,8 +43,8 @@ class SENSOR_BAT
           
                  SENSOR_BAT    (int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int pin_INBS,int pin_CHG_PPAK,int pin_CHG_LIPO);
           void   inicio        (void);
-          byte   getLedChgLiPo (void);
-          byte   getLedChgPpak (void);
+          int    getLedChgLiPo (void);
+          int    getLedChgPpak (void);
           double getIccChgLiPo (void);
           double getIccChgPpak (void);
 

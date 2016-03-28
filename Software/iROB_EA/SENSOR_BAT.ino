@@ -77,7 +77,7 @@ void SENSOR_BAT::inicio(void)
 
 // ---------------------------------------------------------
 //
-// byte SENSOR_BAT::getLedChgLiPo(void)
+// int SENSOR_BAT::getLedChgLiPo(void)
 //         
 // Retorna:
 //   1  El led de carga del cargador LiPo esta encendido
@@ -87,9 +87,9 @@ void SENSOR_BAT::inicio(void)
 //
 // ---------------------------------------------------------
 
-byte SENSOR_BAT::getLedChgLiPo(void)
+int SENSOR_BAT::getLedChgLiPo(void)
 {
-  byte valor; 
+  int valor; 
 
   // ---------------------------------------------------------  
   // La señal del sensor que  detecta  el  led  de  carga  del 
@@ -100,8 +100,14 @@ byte SENSOR_BAT::getLedChgLiPo(void)
   digitalWrite(pinINB2,HIGH);
 
   valor = analogRead(pinINBS);
-  if ( valor>0 ) { valor = 1; }
-  else           { valor = 0; }
+  
+  // ---------------------------------------------------------  
+  // Un valor  por encima de 45 (aproximadamente)  indica  que 
+  // el  led  de "bateria cargada" del  cargador LiPo NO  esta 
+  // encendido, se pone 200 por seguridad
+  // ---------------------------------------------------------  
+  if ( valor>200 ) { valor = 0; }
+  else             { valor = 1; }
 
   return(valor);
 }
@@ -110,7 +116,7 @@ byte SENSOR_BAT::getLedChgLiPo(void)
 
 // ---------------------------------------------------------
 //
-// byte SENSOR_BAT::getLedChgPpak(void)
+// int SENSOR_BAT::getLedChgPpak(void)
 //         
 // Retorna:
 // Un valor que indica el % de carga de la bateria PPAK
@@ -122,10 +128,10 @@ byte SENSOR_BAT::getLedChgLiPo(void)
 //
 // ---------------------------------------------------------
 
-byte SENSOR_BAT::getLedChgPpak(void)
+int SENSOR_BAT::getLedChgPpak(void)
 {
-  byte valor; 
-  byte carga;
+  int  valor; 
+  int  carga;
   byte flgTest;
  
 

@@ -968,9 +968,9 @@ double UF_SYS::get_Corriente(byte pinID)
   char   tmpBuff[IDE_MAXBUFF_GENERICO+1];
 
 
-  //analogReference(DEFAULT);           // Fija referencia interna ADC = 5V, comentado ya se fija en el setup()
+  analogReference(DEFAULT);             // Fija referencia interna ADC = 5V, comentado ya se fija en el setup()
        
-  vConversor = analogRead(pinID);       // Lee sensor
+  vConversor = analogRead(pinID) - 10;  // Lee sensor
                                         // ATENCION:  
                                         // En vez de usar "2500" utilizar lo que de de hacer:
                                         // offsetIcc_CHG_PPAK * 4.9;
@@ -978,25 +978,25 @@ double UF_SYS::get_Corriente(byte pinID)
                                         // offsetIcc_MDER_ICC * 4.9;
                                         // offsetIcc_MIZQ_ICC * 4.9; 
 
-  vMedida = vConversor * 4.9;           // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
+  vMedida = vConversor * (double)4.88;  // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
   vRango  = vMedida - 2500;             // Mapea tension medida al rango del sensor ( 5000mV/2 = 2500mV )
   iMedida = vRango / 66;                // Calcula Corriente medida (A) 
   
-  //Serial1.println("");
-  //Serial1.println("");
+  Serial1.println("");
+  Serial1.println("");
        
-  //Serial1.print("ADC: ");
-  //Serial1.println(vConversor);
+  Serial1.print("ADC: ");
+  Serial1.println(vConversor);
 
-  //Serial1.print("vMedida: ");
-  //dtostrf(vMedida, 4, 1, tmpBuff);
-  //Serial1.print(tmpBuff);
-  //Serial1.println("mV");
+  Serial1.print("vMedida: ");
+  dtostrf(vMedida, 4, 1, tmpBuff);
+  Serial1.print(tmpBuff);
+  Serial1.println("mV");
 
-  //Serial1.print("vRango: ");
-  //dtostrf(vRango, 4, 1, tmpBuff);
-  //Serial1.print(tmpBuff);
-  //Serial1.println("mV");
+  Serial1.print("vRango: ");
+  dtostrf(vRango, 4, 1, tmpBuff);
+  Serial1.print(tmpBuff);
+  Serial1.println("mV");
 
   //Serial1.print("iMedida: ");
   //Serial1.print(iMedida);
