@@ -961,50 +961,67 @@ void UF_SYS::miDelay(unsigned long int retardo)
 double UF_SYS::get_Corriente(byte pinID)
 {
 
-  int    vConversor;
-  double vRango;
-  double vMedida;
-  double iMedida;
+
+
   char   tmpBuff[IDE_MAXBUFF_GENERICO+1];
+  int    Sensitivity    = 66; // mV/A
+  long   InternalVcc    = get_InternalVcc();
+  int    RawADC = analogRead(pinID); 
+  double ZeroCurrentVcc = InternalVcc / 2;
+  double SensedVoltage  = (RawADC * InternalVcc) / 1024;
+  double Difference     = SensedVoltage - ZeroCurrentVcc;
+  double SensedCurrent  = Difference / Sensitivity;
 
+  Serial.print("ADC: ");
+  Serial.print(RawADC);
+  Serial.print("/1024");
 
-  //analogReference(DEFAULT);           // Fija referencia interna ADC = 5V, comentado ya se fija en el setup()
-       
-  vConversor = analogRead(pinID);       // Lee sensor
-                                        // ATENCION:  
-                                        // En vez de usar "2500" utilizar lo que de de hacer:
-                                        // offsetIcc_CHG_PPAK * 4.9;
-                                        // offsetIcc_CHG_LIPO * 4.9;
-                                        // offsetIcc_MDER_ICC * 4.9;
-                                        // offsetIcc_MIZQ_ICC * 4.9; 
+  Serial.print(", Sensed Voltage: ");
+  dtostrf(SensedVoltage, 4, 1, tmpBuff);
+  Serial.print("mV");
 
-  vMedida = vConversor * 4.9;           // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
-  vRango  = vMedida - 2500;             // Mapea tension medida al rango del sensor ( 5000mV/2 = 2500mV )
-  iMedida = vRango / 66;                // Calcula Corriente medida (A) 
-  
-  //Serial1.println("");
-  //Serial1.println("");
-       
-  //Serial1.print("ADC: ");
-  //Serial1.println(vConversor);
+  Serial.print(", 0A at: ");
+  dtostrf(ZeroCurrentVcc, 4, 1, tmpBuff);
+  Serial.print("mV");
 
-  //Serial1.print("vMedida: ");
-  //dtostrf(vMedida, 4, 1, tmpBuff);
-  //Serial1.print(tmpBuff);
-  //Serial1.println("mV");
-
-  //Serial1.print("vRango: ");
-  //dtostrf(vRango, 4, 1, tmpBuff);
-  //Serial1.print(tmpBuff);
-  //Serial1.println("mV");
-
-  //Serial1.print("iMedida: ");
-  //Serial1.print(iMedida);
-  //dtostrf(iMedida, 4, 1, tmpBuff);
-  //Serial1.println("Amp");
-
-  return (iMedida);
+  return (SensedCurrent);
 }
+
+
+
+// ---------------------------------------------------------
+//
+// long UF_SYS::get_InternalVcc(void)
+// Retorna:
+//
+
+//
+//
+// Codigo obtenido de:
+// 
+//
+//
+//
+// ---------------------------------------------------------
+
+long UF_SYS::get_InternalVcc(void)
+{ 
+
+  long result;
+
+  ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  delay(2);                                                    // Wait for Vref to settle
+  ADCSRA |= _BV(ADSC);                                         // Convert
+  while (bit_is_set(ADCSRA,ADSC));
+  result = ADCL;
+  result |= ADCH<<8;
+  result = 1126400L / result;                                  // Back-calculate AVcc in mV
+ 
+  return(result);
+}
+
+
+
 
 
 

@@ -121,6 +121,7 @@ class UF_SYS
 
      byte          get_CodigoDTMF       (char* buff);
      double        get_Corriente        (byte pinID);
+     long          get_InternalVcc      (void);
      byte          get_NivelPPbank      (void);
      byte          get_NivelLiPo        (void);
      byte          get_FlgDebug         (void); 
