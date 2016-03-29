@@ -136,6 +136,7 @@ const char IDE_MSG_DISPLAY_PWD    [] PROGMEM = "****";
 const char IDE_MSG_DISPLAY_CLS    [] PROGMEM = "    ";
 const char IDE_MSG_DISPLAY_BLK    [] PROGMEM = "LOCK";
 const char IDE_MSG_DISPLAY_INI    [] PROGMEM = ".ON.";
+const char IDE_MSG_DISPLAY_WAIT   [] PROGMEM = "WAIT";
 
 const char IDE_MSG_DISPLAY_ER_000 [] PROGMEM = "E000";  // NO se utiliza 
 const char IDE_MSG_DISPLAY_ER_001 [] PROGMEM = "E001";  // NO se utiliza 

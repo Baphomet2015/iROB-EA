@@ -1,0 +1,41 @@
+int    vConversor;
+  double vRango;
+  double vMedida;
+  double iMedida;
+  char   tmpBuff[IDE_MAXBUFF_GENERICO+1];
+
+
+  //analogReference(DEFAULT);           // Fija referencia interna ADC = 5V, comentado ya se fija en el setup() 
+
+
+
+
+
+
+
+
+
+  vMedida = vConversor * 4.9;           // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
+  vRango  = vMedida - 2500;             // Mapea tension medida al rango del sensor ( 5000mV/2 = 2500mV )
+  iMedida = vRango / 66;                // Calcula Corriente medida (A) 
+  
+  //Serial1.println("");
+  //Serial1.println("");
+       
+  //Serial1.print("ADC: ");
+  //Serial1.println(vConversor);
+
+  //Serial1.print("vMedida: ");
+  //dtostrf(vMedida, 4, 1, tmpBuff);
+  //Serial1.print(tmpBuff);
+  //Serial1.println("mV");
+
+  //Serial1.print("vRango: ");
+  //dtostrf(vRango, 4, 1, tmpBuff);
+  //Serial1.print(tmpBuff);
+  //Serial1.println("mV");
+
+  //Serial1.print("iMedida: ");
+  //Serial1.print(iMedida);
+  //dtostrf(iMedida, 4, 1, tmpBuff);
+  //Serial1.println("Amp");

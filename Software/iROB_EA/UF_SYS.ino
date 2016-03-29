@@ -126,7 +126,11 @@ void UF_SYS::inicio(void)
           { // ---------------------------------------------------------
             // Operaciones de inicializacion
             // ---------------------------------------------------------
+          
+            FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_WAIT,(IDE_PAUSA_GENERAL*4));
             calibra_SensoresIcc();
+            FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,(IDE_PAUSA_GENERAL*0));
+
 
 
           }
@@ -261,8 +265,7 @@ byte UF_SYS::secuenciaInicio(void)
                         resultado  = true;             
                         flgProceso = true;
                         set_NUM_RC(0);
-                        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OK,(IDE_PAUSA_GENERAL*4));
-                        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_ON,(IDE_PAUSA_GENERAL*2));
+                        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OK  ,(IDE_PAUSA_GENERAL*4));
                       }
                    else
                       { // ---------------------------------------------------------
@@ -319,6 +322,8 @@ byte UF_SYS::secuenciaInicio(void)
        }
  
   FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,0);
+  watchDog_DONE();
+
   return( resultado );
 }
 
@@ -913,7 +918,7 @@ unsigned long UF_SYS::getTimeExe(byte modo)
      {
        mTime = millis() - timeExe;  
        Serial1.println(mTime);
-       Serial1.print(" ms");
+       Serial1.print(IDE_STR_MSEG);
      }
 
    return( mTime);
@@ -937,7 +942,8 @@ void UF_SYS::miDelay(unsigned long int retardo)
 
   while ( (millis()-mTime)<retardo ) 
         {
-       //watchDog_DONE();
+          
+
         }
 }
 
@@ -961,51 +967,43 @@ void UF_SYS::miDelay(unsigned long int retardo)
 double UF_SYS::get_Corriente(byte pinID)
 {
 
-  int    vConversor;
   double vRango;
   double vMedida;
   double iMedida;
   char   tmpBuff[IDE_MAXBUFF_GENERICO+1];
+  int    vConversor;
+  int    offset;
+
+  //analogReference(DEFAULT);           // Fija referencia interna ADC = 5V, comentado ya se fija en el setup() 
 
 
-  analogReference(DEFAULT);             // Fija referencia interna ADC = 5V, comentado ya se fija en el setup()
-       
-  vConversor = analogRead(pinID) - 10;  // Lee sensor
-                                        // ATENCION:  
-                                        // En vez de usar "2500" utilizar lo que de de hacer:
-                                        // offsetIcc_CHG_PPAK * 4.9;
-                                        // offsetIcc_CHG_LIPO * 4.9;
-                                        // offsetIcc_MDER_ICC * 4.9;
-                                        // offsetIcc_MIZQ_ICC * 4.9; 
-
-  vMedida = vConversor * (double)4.88;  // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
-  vRango  = vMedida - 2500;             // Mapea tension medida al rango del sensor ( 5000mV/2 = 2500mV )
-  iMedida = vRango / 66;                // Calcula Corriente medida (A) 
+  switch(pinID)
+        {
+          case ( PIN_HW_BAT_CHG_PPAK ): { offset = offsetIcc_CHG_PPAK; break; }
+          case ( PIN_HW_BAT_CHG_LIPO ): { offset = offsetIcc_CHG_LIPO; break; }
+          case ( PIN_HW_MDER_ICC     ): { offset = offsetIcc_MDER_ICC; break; }
+          case ( PIN_HW_MIZQ_ICC     ): { offset = offsetIcc_MIZQ_ICC; break; }
+          default:                      { offset = 0;                  break; }
+        }
   
-  Serial1.println("");
-  Serial1.println("");
-       
-  Serial1.print("ADC: ");
-  Serial1.println(vConversor);
 
-  Serial1.print("vMedida: ");
-  dtostrf(vMedida, 4, 1, tmpBuff);
-  Serial1.print(tmpBuff);
-  Serial1.println("mV");
+  vConversor = analogRead(pinID);
+  vMedida    = vConversor * IDE_ADC_CONVERSION_MV;   // Calcula tension medida ( Referencia ADC:5V --> 5000mV/1024 = 4.9mV por paso)
+  vRango     = vMedida - offset;                     // Mapea tension medida al rango del sensor ( 5000mV/2 = 2500mV )
 
-  Serial1.print("vRango: ");
-  dtostrf(vRango, 4, 1, tmpBuff);
-  Serial1.print(tmpBuff);
-  Serial1.println("mV");
+  if ( vRango>0 )
+     {
+       iMedida = vRango / 66;                     // Calcula Corriente medida (mA) 
+     }
+  else
+     {
+       iMedida = 0;
+       vRango  = 0;
+     }
 
-  //Serial1.print("iMedida: ");
-  //Serial1.print(iMedida);
-  //dtostrf(iMedida, 4, 1, tmpBuff);
-  //Serial1.println("Amp");
 
   return (iMedida);
 }
-
 
 
 
@@ -1028,31 +1026,73 @@ double UF_SYS::get_Corriente(byte pinID)
 
 void UF_SYS::calibra_SensoresIcc(void)
 {
-  int vConversor;
+  int  mConversor;
+  byte nMedidas;
+  int  vMedida;
 
-    
-  vConversor = analogRead(PIN_HW_BAT_CHG_PPAK);
-  offsetIcc_CHG_PPAK = vConversor;                // Offset para la lectura del sensor de corriente de entrada al PowerBank
   
-  vConversor = analogRead(PIN_HW_BAT_CHG_LIPO);
-  offsetIcc_CHG_LIPO = vConversor;                // Offset para la lectura del sensor de corriente de entrada a la bateria LiPo
+
+  #ifdef APP_MODO_DEBUG
+  Serial1.print(IDE_STR_CALIBRAR_SENS_ICC);
+  #endif
+
+
+  offsetIcc_CHG_PPAK = 0; 
+  offsetIcc_CHG_LIPO = 0; 
+  offsetIcc_MDER_ICC = 0; 
+  offsetIcc_MIZQ_ICC = 0; 
+
+  // ---------------------------------------------------------
+  // Obtencion del offset del sensor e corriente de la bateria
+  // LiPo
+  // ---------------------------------------------------------
+  for( nMedidas=0;nMedidas<IDE_ICC_NUN_MEDIDAS;nMedidas++ )
+     {
+
+
+       miDelay(IDE_ICC_PAUSA);
+       watchDog_DONE();
+       mConversor = analogRead(PIN_HW_BAT_CHG_PPAK);
+       vMedida    = mConversor * IDE_ADC_CONVERSION_MV;   
+       if ( vMedida>offsetIcc_CHG_PPAK )
+          {
+            offsetIcc_CHG_PPAK = vMedida;
+          }
+       
+       miDelay(IDE_ICC_PAUSA);
+       watchDog_DONE();
+       mConversor = analogRead(PIN_HW_BAT_CHG_LIPO);
+       vMedida    = mConversor * IDE_ADC_CONVERSION_MV;   
+       if ( vMedida>offsetIcc_CHG_LIPO )
+          {
+            offsetIcc_CHG_LIPO = vMedida;
+          }
+       
+       miDelay(IDE_ICC_PAUSA);
+       watchDog_DONE();
+       mConversor = analogRead(PIN_HW_MDER_ICC);
+       vMedida    = mConversor * IDE_ADC_CONVERSION_MV;   
+       if ( vMedida>offsetIcc_MDER_ICC )
+          {
+            offsetIcc_MDER_ICC = vMedida;
+          }
+
+       miDelay(IDE_ICC_PAUSA);
+       watchDog_DONE();
+       mConversor = analogRead(PIN_HW_MIZQ_ICC);
+       vMedida    = mConversor * IDE_ADC_CONVERSION_MV;   
+       if ( vMedida>offsetIcc_MIZQ_ICC )
+          {
+            offsetIcc_MIZQ_ICC = vMedida;
+          }
+
+       #ifdef APP_MODO_DEBUG
+       Serial1.print(IDE_STR_PUNTO);
+       #endif
+     } 
   
-  vConversor = analogRead(PIN_HW_MDER_ICC);
-  offsetIcc_MDER_ICC = vConversor;                // Offset para la lectura del sensor de corriente del motor derecho
-  
-  vConversor = analogRead(PIN_HW_MIZQ_ICC);
-  offsetIcc_MIZQ_ICC = vConversor;                // Offset para la lectura del sensor de corriente del motor izquierdo
-  
-  
-  #ifdef APP_MODO_
-  Serial1.print("DEBUG Offset Icc PowerBank: ");DEBUG
-  Serial1.println(offsetIcc_CHG_PPAK,DEC);
-  Serial1.print("DEBUG Offset Icc LiPo: ");
-  Serial1.println(offsetIcc_CHG_LIPO,DEC);
-  Serial1.print("DEBUG Offset Icc Motor Der: ");
-  Serial1.println(offsetIcc_MDER_ICC,DEC);
-  Serial1.print("DEBUG Offset Icc Motor Izq: ");
-  Serial1.println(offsetIcc_MIZQ_ICC,DEC);
+  #ifdef APP_MODO_DEBUG
+  Serial1.println(IDE_STR_PUNTO);
   #endif
 }
 

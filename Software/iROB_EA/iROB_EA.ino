@@ -210,7 +210,18 @@ void setup(void)
   // ---------------------------------------------------------
  
   digitalWrite(PIN_HW_DOG_DONE,LOW);
- 
+
+  digitalWrite(A0,LOW);
+  digitalWrite(A1,LOW); 
+  digitalWrite(A2,LOW);
+  digitalWrite(A3,LOW);
+  digitalWrite(A4,LOW);
+  digitalWrite(A5,LOW);
+  digitalWrite(A6,LOW);
+  digitalWrite(A7,LOW);
+  digitalWrite(A8,LOW);
+  digitalWrite(A9,LOW);
+
   // ---------------------------------------------------------
   //
   // Inicializacion de variables, objetos Globales y elementos
@@ -273,14 +284,7 @@ void setup(void)
   
   Serial1.begin(IDE_SERIAL_TRX_9600);   // Puerto de DEBUG
     
-  
-  #ifdef APP_MODO_DEBUG
-  Serial1.println(" ");
-  Serial1.print(F("DEBUG Tiempo de ejecucion setup: "));
-  Serial1.print(millis()-t,DEC);
-  Serial1.println(F(" mseg."));
-  #endif
-       
+ 
 
   // ---------------------------------------------------------
   //                        IMPORTANTE
@@ -306,12 +310,18 @@ void setup(void)
   //QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
   //uf_sys.set_RECARGAS(0);
   
+
+
   #ifdef APP_MODO_DEBUG
-  Serial1.print(F("DEBUG Tiempo de ejecucion setup + Inicio: "));
-  Serial1.print(millis()-t,DEC);
-  Serial1.println(F(" mseg."));
+  t = millis() - t;
+  Serial1.print(IDE_STR_DEBUG_EXE);
+  Serial1.print(t,DEC);
+  Serial1.println(IDE_STR_MSEG);
   #endif
-}
+       
+ }
+
+
 
 
 
@@ -326,6 +336,7 @@ void loop(void)
 {
   byte vAux;
   
+
   // ---------------------------------------------------------
   // A) Generacion del pulso de latido, reset del watchDog
   // B) Actualizacion de Timers etc de uf_sys
@@ -405,11 +416,16 @@ void loop(void)
        //uf_sys.getTimeExe(false);
        //#endif
        
-       
-       
-       
-       
-  
+     
+
+
+
+
+
+     
+
+      //uf_sys.get_Corriente(A1); 
+      //delay(1000);
        
   
      }

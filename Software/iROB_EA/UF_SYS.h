@@ -71,19 +71,28 @@
 #define IDE_STR_INICIO_POWER_DOWN            F("Iniciando Apagado (Power OFF)...")
 #define IDE_STR_SINCRO_WATCHDOG_1            F("Sincronizando el watchdog...")
 #define IDE_STR_SINCRO_WATCHDOG_2            F("Watchdog sincronizado")
+#define IDE_STR_CALIBRAR_SENS_ICC            F("Calibrando Sensores Icc")
+#define IDE_STR_PUNTO                        F(".")
+#define IDE_STR_MSEG                         F(" ms")
+#define IDE_STR_DEBUG_EXE                    F("Tiempo de ejecucion setup: ")
+
 
 #define IDE_SYSTEM_OK                    0x00
 #define IDE_SYSTEM_WATCHDOG              0x0F
 
 
 #define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
-#define IDE_OFF_PAUSA                    2000  // Pausa antes de apagar el Robot
+#define IDE_OFF_PAUSA                    4000  // Pausa antes de apagar el Robot
+#define IDE_ICC_PAUSA                     500  // Pausa para medir los sensores de Icc durante su calibracion
+
+#define IDE_ICC_NUN_MEDIDAS                10  // Numero de medidas realizadas para calibrar los sensores de Icc
 
 #define IDE_MAXBUFF_GENERICO               50  // Tamaño para un buffer temporal generico
 
 #define IDE_CAPACIDAD_BAT_LIPO           6500  // Capacidad en miliamperios de la Bateria LiPoPack equipada
 #define IDE_CAPACIDAD_BAT_PPAK          10400  // Capacidad en miliamperios de la Bateria PowerPack equipada
 
+#define IDE_ADC_CONVERSION_MV           (double)4.88;
 
 
 
