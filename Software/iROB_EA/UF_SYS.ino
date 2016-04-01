@@ -1100,28 +1100,6 @@ void UF_SYS::calibra_SensoresIcc(void)
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::recarga_Bateria(void)
-//
-//
-//
-// ---------------------------------------------------------
-
-void UF_SYS::recarga_Bateria(void)
-{
-  int nRecargas;
-
-               // incrementar el contador de recargas (se guarda en EEPROM)
-
-
- nRecargas = get_RECARGAS() + 1;
- set_RECARGAS(nRecargas);
-
-}
-
-
-
-// ---------------------------------------------------------
-//
 // byte UF_SYS::setLed(byte ledID,byte modo)
 //         
 //

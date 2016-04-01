@@ -83,14 +83,10 @@
 
 #define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
 #define IDE_OFF_PAUSA                    4000  // Pausa antes de apagar el Robot
-#define IDE_ICC_PAUSA                     500  // Pausa para medir los sensores de Icc durante su calibracion
 
-#define IDE_ICC_NUN_MEDIDAS                10  // Numero de medidas realizadas para calibrar los sensores de Icc
 
 #define IDE_MAXBUFF_GENERICO               50  // Tamaño para un buffer temporal generico
 
-#define IDE_CAPACIDAD_BAT_LIPO           6500  // Capacidad en miliamperios de la Bateria LiPoPack equipada
-#define IDE_CAPACIDAD_BAT_PPAK          10400  // Capacidad en miliamperios de la Bateria PowerPack equipada
 
 #define IDE_ADC_CONVERSION_MV           (double)4.88;
 
@@ -143,8 +139,7 @@ class UF_SYS
      byte          setLed               (byte ledID,byte modo);
 
      void          calibra_SensoresIcc  (void);
-     void          recarga_Bateria      (void);
-     
+          
      void          display_Datos_EEPROM (void);
      void          display_Modo         (void);
      unsigned long getTimeExe           (byte modo);

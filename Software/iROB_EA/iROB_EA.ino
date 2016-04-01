@@ -35,7 +35,7 @@
 #include "UF_SYS.h"
 #include "MOTOR_FDS5672.h"
 #include "SENSOR_US.h"
-#include "SENSOR_BAT.h"
+#include "UF_BAT.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
 
@@ -55,9 +55,11 @@
 //
 //
 // . uf_sys       Objeto de manejo de  funcionalidades basicas
-// . uf_mDer      Objeto de manejo del motor derecho
-// . uf_mIzq      Objeto de manejo del motor izquierdo
+// . mDer         Objeto de manejo del motor derecho
+// . mIzq         Objeto de manejo del motor izquierdo
 // . myDisplay    Objeto para manejear el display de estado
+// . sensorUS     Objeto para manejo de los sensores de US
+// . uf_bat       Objeto para manejo de funcionalidades bateria
 // . mlx          Objeto para manejar el sensor MLX90614
 // . rtc          Objeto para manejar el reloj de tiempo real 
 // . gc           Objeto que implementa el gestor de comandos
@@ -100,7 +102,7 @@ SENSOR_US         sensorUS  = SENSOR_US (PIN_HW_USR_DERECHO_S  ,
                                          PIN_HW_USR_IZQUIERDO_C 
                                         );                      // Implementa el control de los sensores de ultrasonidos
 
-SENSOR_BAT        sensorBAT = SENSOR_BAT(PIN_HW_BAT_INBP    ,
+UF_BAT               uf_bat = UF_BAT    (PIN_HW_BAT_INBP    ,
                                          PIN_HW_BAT_INB0    ,
                                          PIN_HW_BAT_INB1    ,
                                          PIN_HW_BAT_INB2    ,
@@ -249,7 +251,7 @@ void setup(void)
   mlx.begin();  
    gc.begin();
   sensorUS.inicio();
-  sensorBAT.inicio();
+  uf_bat.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
@@ -366,11 +368,11 @@ void loop(void)
        //
        //                            1
        //
-       //                      RECARGA BATERIA
+       //                   CONTROL DE LAS BATERIAS
        //
        // ---------------------------------------------------------
 
-       uf_sys.recarga_Bateria();
+       uf_bat.ctrl_Baterias();
 
        // ---------------------------------------------------------
        //

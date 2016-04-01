@@ -251,16 +251,19 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
              {
                case (IDE_PARAM_CHG):
                     { // ---------------------------------------------------------
-                      // Corriente que esta concumiendo la bateria cuando esta EN
+                      // Corriente que esta consumiendo la bateria cuando esta EN
                       // CARGA.
                       // ---------------------------------------------------------
-                      iMedida = sensorBAT.getIccChgLiPo();
+                      
+                      iMedida = uf_bat.get_IccChgLiPo();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
                       
                       #ifdef APP_MODO_DEBUG
                       Serial1.print(F("LiPo iMedida: "));
                       Serial1.println(gd->buffRespCmd);
                       #endif
+
+
                       
                       break;
                     }
@@ -271,7 +274,7 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                       // carga = 1 --> Bateria cargada
                       // carga = 0 --> Bateria en carga
                       // ---------------------------------------------------------
-                      carga = sensorBAT.getLedChgLiPo();
+                      carga = uf_bat.get_LedChgLiPo();
                       sprintf(gd->buffRespCmd,"%d",carga); 
 
                       #ifdef APP_MODO_DEBUG
@@ -337,7 +340,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                       // Corriente que esta consumiendo la bateria cuando esta EN
                       // CARGA.
                       // ---------------------------------------------------------
-                      iMedida = sensorBAT.getIccChgPpak();
+                      iMedida = uf_bat.get_IccChgPpak();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
 
                       #ifdef APP_MODO_DEBUG
@@ -358,7 +361,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                       // carga =   0 -->   0% de carga ????.
                       // ---------------------------------------------------------
                      
-                      carga = sensorBAT.getLedChgPpak();
+                      carga = uf_bat.get_LedChgPpak();
                       sprintf(gd->buffRespCmd,"%d",carga); 
 
                       #ifdef APP_MODO_DEBUG
@@ -427,6 +430,59 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
       
   #ifdef APP_MODO_DEBUG
   Serial1.print(F("CDBG: "));
+  Serial1.println(gd->buffRespCmd);
+  #endif
+}
+
+
+
+// ---------------------------------------------------------
+//
+// void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
+//
+// Uso:       Retorna valor del flag hardware que indica si 
+//            se esta recibiendo tension de recaarga
+// Sintaxis: 
+//           comando:    IDE_CMD_S_VCHG
+//           parametro1: IDE_PARAM_GET
+//           parametro2: IDE_PARAM_NOP
+//
+// Retorna:
+//          "0" NO esta recibiendo
+//          "1" SI esta recibiendo
+//          "2" Error de comando
+// 
+// ---------------------------------------------------------
+
+void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
+{
+  int v;
+
+
+  // ---------------------------------------------------------
+  // Generacion  del  pulso de latido, reset del watchDog como 
+  // medida    de  seguridad  todas  las  implementaciones  de 
+  // comandos lo ejecutan al entrar
+  // ---------------------------------------------------------
+  uf_sys.watchDog_DONE();
+  
+
+  if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
+     { // ---------------------------------------------------------
+       //
+       //
+       //
+       // ---------------------------------------------------------
+       if ( uf_bat.get_FlgCarga()==true) { strcpy(gd->buffRespCmd,"1"); }
+       else                              { strcpy(gd->buffRespCmd,"0"); }
+     }
+  else
+     {
+       strcpy(gd->buffRespCmd,"2");
+     }
+      
+  #ifdef APP_MODO_DEBUG
+  Serial1.print(F("CARGA: "));
   Serial1.println(gd->buffRespCmd);
   #endif
 }

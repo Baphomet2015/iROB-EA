@@ -3,12 +3,12 @@
 //
 // Proyecto:       iROB-EA
 // Version:        1.0
-// Fichero:        SENSOR_BAT.ino
+// Fichero:        UF_BAT.ino
 // Autor:
 // Hardware:       Arduino MEGA 2560
 // Fecha:          Marzo 2016
 //
-// Funcionalidad:  Implmentacion de la clase SENSOR_BAT
+// Funcionalidad:  Implmentacion de la clase UF_BAT
 //
 // Notas:          
 //
@@ -18,19 +18,19 @@
 #include <stdlib.h>
 #include <WString.h> 
 #include "iROB_EA.h"
-#include "SENSOR_BAT.h"
+#include "UF_BAT.h"
 
 
 
 
 // ---------------------------------------------------------
 //
-// UF_SYS::SENSOR_BAT()
+// UF_SYS::UF_BAT()
 //         Constructor
 //
 // ---------------------------------------------------------
 
-SENSOR_BAT::SENSOR_BAT(int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int pin_INBS,int pin_CHG_PPAK,int pin_CHG_LIPO)
+UF_BAT::UF_BAT(int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int pin_INBS,int pin_CHG_PPAK,int pin_CHG_LIPO)
 {
    pinINBP     = pin_INBP;
    pinINB0     = pin_INB0;
@@ -60,12 +60,12 @@ SENSOR_BAT::SENSOR_BAT(int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int p
 
 // ---------------------------------------------------------
 //
-// void SENSOR_BAT::inicio(void)
+// void UF_BAT::inicio(void)
 //         
 //
 // ---------------------------------------------------------
 
-void SENSOR_BAT::inicio(void)
+void UF_BAT::inicio(void)
 {
   digitalWrite(pinINBP,LOW);
   digitalWrite(pinINB0,LOW);
@@ -77,7 +77,7 @@ void SENSOR_BAT::inicio(void)
 
 // ---------------------------------------------------------
 //
-// int SENSOR_BAT::getLedChgLiPo(void)
+// int UF_BAT::get_LedChgLiPo(void)
 //         
 // Retorna:
 //   1  El led de carga del cargador LiPo esta encendido
@@ -87,13 +87,13 @@ void SENSOR_BAT::inicio(void)
 //
 // ---------------------------------------------------------
 
-int SENSOR_BAT::getLedChgLiPo(void)
+int UF_BAT::get_LedChgLiPo(void)
 {
   int valor; 
 
   // ---------------------------------------------------------  
   // La señal del sensor que  detecta  el  led  de  carga  del 
-  // cargador LiPo se encuentra en el canal 5 del MUX 4051
+  // cargador LiPo se encuentra en el CANAL 5 del MUX 4051
   // ---------------------------------------------------------  
   digitalWrite(pinINB0,HIGH); 
   digitalWrite(pinINB1,LOW);
@@ -116,7 +116,7 @@ int SENSOR_BAT::getLedChgLiPo(void)
 
 // ---------------------------------------------------------
 //
-// int SENSOR_BAT::getLedChgPpak(void)
+// int UF_BAT::get_LedChgPpak(void)
 //         
 // Retorna:
 // Un valor que indica el % de carga de la bateria PPAK
@@ -128,7 +128,7 @@ int SENSOR_BAT::getLedChgLiPo(void)
 //
 // ---------------------------------------------------------
 
-int SENSOR_BAT::getLedChgPpak(void)
+int UF_BAT::get_LedChgPpak(void)
 {
   int  valor; 
   int  carga;
@@ -139,8 +139,8 @@ int SENSOR_BAT::getLedChgPpak(void)
   carga   = 0;
 
   // ---------------------------------------------------------  
-  // Compruebe el estado del led que indica 100% de carga 
-  // cargador LiPo se encuentra en el canal 1 del MUX 4051
+  // Comprueba el estado del led que indica 100% de carga 
+  // cargador LiPo se encuentra en el CANAL 1 del MUX 4051
   // ---------------------------------------------------------  
   if ( flgTest==true)
      {
@@ -159,7 +159,7 @@ int SENSOR_BAT::getLedChgPpak(void)
 
   // ---------------------------------------------------------  
   // Compruebe el estado del led que indica 75% de carga 
-  // cargador LiPo se encuentra en el canal 2 del MUX 4051
+  // cargador LiPo se encuentra en el CANAL 2 del MUX 4051
   // ---------------------------------------------------------  
   if ( flgTest==true)
      {
@@ -178,7 +178,7 @@ int SENSOR_BAT::getLedChgPpak(void)
 
   // ---------------------------------------------------------  
   // Compruebe el estado del led que indica 50% de carga 
-  // cargador LiPo se encuentra en el canal 3 del MUX 4051
+  // cargador LiPo se encuentra en el CANAL 3 del MUX 4051
   // ---------------------------------------------------------  
   if ( flgTest==true)
      {
@@ -197,7 +197,7 @@ int SENSOR_BAT::getLedChgPpak(void)
 
   // ---------------------------------------------------------  
   // Compruebe el estado del led que indica 25% de carga 
-  // cargador LiPo se encuentra en el canal 4 del MUX 4051
+  // cargador LiPo se encuentra en el CANAL 4 del MUX 4051
   // ---------------------------------------------------------  
   if ( flgTest==true)
      {
@@ -222,21 +222,20 @@ int SENSOR_BAT::getLedChgPpak(void)
 
 // ---------------------------------------------------------
 //
-// double SENSOR_BAT::getIccChgLiPo(void)
+// double UF_BAT::get_IccChgLiPo(void)
 //         
 // Retorna:
 //
 // ---------------------------------------------------------
 
-double SENSOR_BAT::getIccChgLiPo(void)
+double UF_BAT::get_IccChgLiPo(void)
 {
   double iMedida;
-  double tiempo;
+  
   
 
   iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_LIPO);
-  tiempo  = (IDE_CAPACIDAD_BAT_LIPO/iMedida) * 0.7;
-
+  
   return( iMedida);
 }
 
@@ -244,20 +243,93 @@ double SENSOR_BAT::getIccChgLiPo(void)
 
 // ---------------------------------------------------------
 //
-// double SENSOR_BAT::getIccChgPpak(void)
+// double UF_BAT::get_IccChgPpak(void)
 //         
 // Retorna:
 //
 // ---------------------------------------------------------
 
-double SENSOR_BAT::getIccChgPpak(void)
+double UF_BAT::get_IccChgPpak(void)
 {
   double iMedida;
-  double tiempo;
-  
+    
   
   iMedida = uf_sys.get_Corriente(PIN_HW_BAT_CHG_PPAK);
-  tiempo  = (IDE_CAPACIDAD_BAT_PPAK/iMedida) * 0.7;
-
+  
   return( iMedida);
+}
+
+
+
+
+// ---------------------------------------------------------
+//
+// int UF_BAT::get_FlgCarga(void)
+// 
+//
+// Retorna:
+//   1  SI Se esta recibiendo tension de recarga
+//   0  NO Se esta recibiendo tension de recarga
+//
+// ---------------------------------------------------------
+
+int UF_BAT::get_FlgCarga(void)
+{
+  int valor;
+
+  // ---------------------------------------------------------  
+  // La señal del sensor que  detecta  si se esta recibiendo 
+  // tension de recarga se encuentra en el CANAL 6 del MUX 4051
+  // ---------------------------------------------------------  
+  digitalWrite(pinINB0,LOW); 
+  digitalWrite(pinINB1,HIGH);
+  digitalWrite(pinINB2,HIGH);
+  
+  valor = analogRead(pinINBS);
+
+  // ---------------------------------------------------------  
+  // Un valor  por encima de 0  indica  que se este recibiendo
+  // tension de recarga, se pone 50 por seguridad, para asegurar
+  // que se lee un valor bueno, no ruido
+  // ---------------------------------------------------------  
+  if (valor>50)    { valor = 1; }
+  else             { valor = 0; }
+
+
+  return(valor);
+}
+
+
+
+
+// ---------------------------------------------------------
+//
+// void UF_BAT:ctrl_Baterias(void)
+//
+//
+//
+// ---------------------------------------------------------
+
+void UF_BAT::ctrl_Baterias(void)
+{
+  int nRecargas;
+
+          
+  if ( get_FlgCarga()==1 )
+     {
+
+
+
+
+
+
+
+
+       // nRecargas = get_RECARGAS() + 1; // incrementar el contador de recargas (se guarda en EEPROM)
+       // set_RECARGAS(nRecargas);
+
+
+
+     }
+
 }
