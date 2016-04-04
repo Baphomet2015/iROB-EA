@@ -83,6 +83,7 @@
 
 #define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
 #define IDE_OFF_PAUSA                    4000  // Pausa antes de apagar el Robot
+#define IDE_SINCROWATCHDOG_PAUSA          500  // Pausa usada duranrte el sincronismo del watchdog
 
 
 #define IDE_MAXBUFF_GENERICO               50  // Tamaño para un buffer temporal generico

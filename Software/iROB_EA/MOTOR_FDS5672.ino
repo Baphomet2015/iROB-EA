@@ -39,26 +39,40 @@
 
 MOTOR_FDS5672::MOTOR_FDS5672(int pin_DIR,int pin_PWM,int pin_RST,int pin_FF1,int pin_FF2,int pin_ICC)
 {
-   pinDIR = pin_DIR;        // 1º Esto
+   pinDIR = pin_DIR;        
    pinPWM = pin_PWM;
    pinRST = pin_RST;
    pinFF1 = pin_FF1;
    pinFF2 = pin_FF2;
    pinICC = pin_ICC;
 
-   vVelocidad  = 0;         // 2º Esto
-   flgInhibir  = false;
-
-                            // 3º Esto
    pinMode(pin_DIR,OUTPUT); // Motor derecho, Direccion
    pinMode(pin_RST,OUTPUT); // Motor derecho, Reset
    pinMode(pin_FF1,INPUT);  // Motor derecho, Flag estado (1)
    pinMode(pin_FF2,INPUT);  // Motor derecho, Flag estado (2)
    pinMode(pin_ICC,INPUT);  // Motor derecho, sensor de corriente (consumo)
-  
-   inhibir(flgInhibir);               // 4º Esto
-   velocidad(vVelocidad);
+
+   inicio();
    
+   
+}
+
+
+
+// ---------------------------------------------------------
+//
+// void MOTOR_FDS5672::inicio(void)
+//         
+//
+// ---------------------------------------------------------
+
+void MOTOR_FDS5672::inicio (void)
+{
+   vVelocidad  = IDE_MOTOR_FDS5672_VELDEFECTO;         // 1º Esto
+   flgInhibir  = false;
+  
+   inhibir(flgInhibir);                               // 2º Esto
+   velocidad(vVelocidad);
 }
 
 
@@ -158,8 +172,9 @@ void MOTOR_FDS5672::inhibir(byte modo)
 
 void MOTOR_FDS5672::setValores(void)
 {
+  uf_sys.watchDog_DONE();
   digitalWrite(pinRST,HIGH); 
-  delayMicroseconds(IDE_MOTOR_FDS5672_PULSO_VAL);
+  uf_sys.miDelay(IDE_MOTOR_FDS5672_PULSO_VAL);
   digitalWrite(pinRST,LOW); 
 }
 

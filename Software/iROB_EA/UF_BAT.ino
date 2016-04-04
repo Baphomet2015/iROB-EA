@@ -139,6 +139,15 @@ int UF_BAT::get_LedChgPpak(void)
   carga   = 0;
 
   // ---------------------------------------------------------  
+  // Activa el pulsador de lectura de estado del Pbank
+  // ---------------------------------------------------------  
+
+ digitalWrite(pinINBP,HIGH);
+ uf_sys.miDelay(250);
+ digitalWrite(pinINBP,LOW);
+
+
+  // ---------------------------------------------------------  
   // Comprueba el estado del led que indica 100% de carga 
   // cargador LiPo se encuentra en el CANAL 1 del MUX 4051
   // ---------------------------------------------------------  

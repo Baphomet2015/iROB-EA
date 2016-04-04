@@ -310,7 +310,7 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 //           parametro2: IDE_PARAM_CHG
 //                       IDE_PARAM_POW
 // Retorna:
-// . Valor en hexadecimal solicitado
+// . Valor  solicitado
 // 
 // ---------------------------------------------------------
 
@@ -822,18 +822,18 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 //           comando:    IDE_CMD_C_MIZQ    
 //
 //           parametro1: IDE_PARAM_INI
-//                       IDE_PARAM_GDE
 //                       IDE_PARAM_AVA
-//                       IDE_PARAM_SVE
+//                       IDE_PARAM_RET
 //                       IDE_PARAM_STO
-//                       IDE_PARAM_GIZ
+//                       IDE_PARAM_SVE
+//                       IDE_PARAM_GCO
 //
 //           parametro2: IDE_PARAM_NOP
 //                       valor
 //
 // Retorna:
-//
-// 
+//     0: Error de comando
+//     1: Ejecucion correcta
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
@@ -865,6 +865,7 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                case (IDE_PARAM_RET): { mIzq.retroceso();  break; }
                case (IDE_PARAM_STO): { mIzq.paro();       break; }
                case (IDE_PARAM_SVE): {                    break; }
+               case (IDE_PARAM_GCO): {                    break; }
                default:              { resultado = false; break; }
              }
 
@@ -893,19 +894,19 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 //           comando:    IDE_CMD_C_MDER    
 //
 //           parametro1: IDE_PARAM_INI
-//                       IDE_PARAM_GDE
 //                       IDE_PARAM_AVA
-//                       IDE_PARAM_SVE
+//                       IDE_PARAM_RET
 //                       IDE_PARAM_STO
-//                       IDE_PARAM_GIZ
+//                       IDE_PARAM_SVE
+//                       IDE_PARAM_GCO
 //
 //           parametro2: IDE_PARAM_NOP
 //                       valor
 //
 //
 // Retorna:
-//
-// 
+//     0: Error de comando
+//     1: Ejecucion correcta
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MDER(GESCOM_DATA* gd)
@@ -937,6 +938,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
                case (IDE_PARAM_RET): { mDer.retroceso();  break; }
                case (IDE_PARAM_STO): { mDer.paro();       break; }
                case (IDE_PARAM_SVE): {                    break; }
+               case (IDE_PARAM_GCO): {                    break; }
                default:              { resultado = false; break; }
              }
 
@@ -1004,10 +1006,12 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
        switch(gd->cnv_Param01)
              {
                case (IDE_PARAM_INI): { mDer.paro();      mIzq.paro();      break; }
+               case (IDE_PARAM_GDE): { mDer.avance();    mIzq.retroceso(); break; }
                case (IDE_PARAM_AVA): { mDer.avance();    mIzq.avance();    break; }
                case (IDE_PARAM_RET): { mDer.retroceso(); mIzq.retroceso(); break; }
                case (IDE_PARAM_STO): { mDer.paro();      mIzq.paro();      break; }
                case (IDE_PARAM_SVE): {                                     break; }
+               case (IDE_PARAM_GIZ): { mDer.retroceso(); mIzq.avance();    break; }
                default:              { resultado = false;                  break; }
              }
 

@@ -521,7 +521,7 @@ void UF_SYS::watchDog_Sincro(void)
        Serial1.println(IDE_STR_SINCRO_WATCHDOG_1);
        while ( 1 )
              {
-               miDelay(500);
+               miDelay(IDE_SINCROWATCHDOG_PAUSA);
                Serial1.print(".");
              } 
      }          
