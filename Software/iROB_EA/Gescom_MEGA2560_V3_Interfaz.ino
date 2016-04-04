@@ -504,9 +504,9 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 //           parametro2: IE_PARAM_NOP
 //                       valor
 //
-// Retorna:
-//          "0"              Error de comando
-//         I"1"              Comando ejecutado
+// Retorna: 
+//          "0"               Error de comando
+//          "1"               Comando ejecutado
 //          "AAAAMMDD HHMMSS" La fecha/hora actual
 // 
 // ---------------------------------------------------------
@@ -580,24 +580,34 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
                       v = gd->cnv_Param02;
                       
-                      if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
-                         {
-                           sscanf( gd->buffRespCmd             ,
-                                   "%04d%02d%02d %02d%02d%02d" , 
-                                   &vAnno                      ,
-                                   &vMes                       ,
-                                   &vDia                       ,
-                                   &vHor                       ,
-                                   &vMin                       ,
-                                   &vSeg 
-                                 );
-                           rtc.adjust(DateTime(vAnno, vMes, vDia, vHor, vMin, vSeg));
-                         }
+                      if ( v==0xF )
+                         { // ---------------------------------------------
+                           // Espera 15 caracteres "AAAAMMDD HHMMSS"
+                           // ---------------------------------------------
+                     
+                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
+                              {
+                                sscanf( gd->buffRespCmd             ,
+                                        "%04d%02d%02d %02d%02d%02d" , 
+                                        &vAnno                      ,
+                                        &vMes                       ,
+                                        &vDia                       ,
+                                        &vHor                       ,
+                                        &vMin                       ,
+                                        &vSeg 
+                                     );
+                                rtc.adjust(DateTime(vAnno, vMes, vDia, vHor, vMin, vSeg));
+                              }
+                           else
+                              {
+                                resultado = false;
+                              }
+                          }
                       else
-                         {
-                           resultado = false;
-                         }
-
+                          {
+                            resultado = false;
+                          }
+                      
                       break;
                     }
 
@@ -840,8 +850,10 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 {
   
   int resultado;
-
-// ---------------------------------------------------------
+  int v;
+  int velocidad;
+  
+  // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
   // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
@@ -864,14 +876,37 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                case (IDE_PARAM_AVA): { mIzq.avance();     break; }
                case (IDE_PARAM_RET): { mIzq.retroceso();  break; }
                case (IDE_PARAM_STO): { mIzq.paro();       break; }
-               case (IDE_PARAM_SVE): {                    break; }
                case (IDE_PARAM_GCO): {                    break; }
-               default:              { resultado = false; break; }
+               case (IDE_PARAM_SVE):
+                    {
+                      v = gd->cnv_Param02;
+                      if ( v==0x2 )
+                         { // ---------------------------------------------
+                           // Espera dos caracteres ( valores de 0...FF)
+                           // ---------------------------------------------
+                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
+                              {
+                                sscanf( gd->buffRespCmd,"%02x",&velocidad);
+                                mIzq.velocidad(velocidad);
+                              }
+                           else
+                              {
+                                resultado = false;
+                              }
+                         }
+                      else
+                         {
+                           resultado = false;
+                         }
+                         
+                      break;
+                    }
+               default:
+                    { 
+                      resultado = false;
+                      break;
+                    }
              }
-
-
-
-
      }
   else
      {
@@ -913,6 +948,8 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 {
     
   int resultado;
+  int v;
+  int velocidad;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -937,14 +974,38 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
                case (IDE_PARAM_AVA): { mDer.avance();     break; }
                case (IDE_PARAM_RET): { mDer.retroceso();  break; }
                case (IDE_PARAM_STO): { mDer.paro();       break; }
-               case (IDE_PARAM_SVE): {                    break; }
                case (IDE_PARAM_GCO): {                    break; }
-               default:              { resultado = false; break; }
+               case (IDE_PARAM_SVE):
+                    {
+                      v = gd->cnv_Param02;
+                      if ( v==0x2 )
+                         { // ---------------------------------------------
+                           // Espera tres caracteres ( valores de 0...FF)
+                           // ---------------------------------------------
+                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
+                              {
+                                sscanf( gd->buffRespCmd,"%2x",&velocidad);
+                                mDer.velocidad(velocidad);
+                              }
+                           else
+                              {
+                                resultado = false;
+                              }
+                         }
+                      else
+                         {
+                           resultado = false;
+                         }
+                         
+                      break;
+                    }
+
+               default:
+                    {
+                      resultado = false;
+                      break;
+                    }
              }
-
-
-
-
      }
   else
      {
