@@ -17,11 +17,12 @@ Está equipado entre otros con los siguientes sensores:
  4. Acelerómetro, brújula, sensores de posicion X-Y-Z.
  5. Camara video HD , movimiento X-Y.
  6. Microfonos.
+ 7. GPS
 
 
 Conectividad y Sw básico:
 
  1. Conectividad Internet.
- 2. Servidor web.
+ 2. Servidor web embebido.
 
 
