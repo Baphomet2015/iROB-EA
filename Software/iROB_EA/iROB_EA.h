@@ -37,7 +37,7 @@
 //
 // ---------------------------------------------------------
 
-#define PIN_HW_DOG_DONE                  53  // Señal para latido del watchdog            
+#define PIN_HW_DOG_DONE                  53  // SeÃ±al para latido del watchdog            
 #define PIN_HW_DOG_SFLAG                 12  // Flag asociado al Watchdog, 1: Se ha disparado el Watchdog    (inicio por Watchdog)          
                                              //                            0: NO se ha disparado el Watchdog (inicio por power ON)    
 #define PIN_HW_OFF_PETICION               2  // Boton de power OFF
@@ -92,7 +92,7 @@
 #define PIN_HW_MIZQ_ICC                  A4  // Motor izquierdo, sensor de corriente (consumo)
 
 #define PIN_HW_SEN_MET_LUZ               A9  // Estacion metereologica, sensor de luz 
-#define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, señal DTR
+#define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, seÃ±al DTR
 
 #define PIN_HW_BAT_INBP                   8  // control de carga de bateria 
 #define PIN_HW_BAT_INB0                   5  // control de carga de bateria 
@@ -116,7 +116,7 @@
 
 #define IDE_CLV_AP                    "9000"  // Clave de arranque, siempre 4 digitos (IDE_CLV_MAXL)
 #define IDE_CLV_MAXL                  4       // Longitud de la clave de arranque
-#define IDE_CLV_MAX_INTENTOS          3       // Numero de intentos máximo de introducir clave de arranque  
+#define IDE_CLV_MAX_INTENTOS          3       // Numero de intentos mÃ¡ximo de introducir clave de arranque  
 #define IDE_CLV_MAX_TIEMPO            10000   // Tiempo maximo para introducir una clave de inicio (ms)
 
 #define IDE_PAUSA_GENERAL             500     // Pausa general de 500ms
@@ -167,6 +167,7 @@ void FNG_Pausa             (unsigned int pausa);
 
 
 #endif
+
 
 
 

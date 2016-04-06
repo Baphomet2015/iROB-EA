@@ -81,12 +81,12 @@
 #define IDE_SYSTEM_WATCHDOG              0x0F
 
 
-#define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
+#define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo mÃ¡ximo que puede pasar entre tonos cuando se esta introduciendo una clave
 #define IDE_OFF_PAUSA                    4000  // Pausa antes de apagar el Robot
 #define IDE_SINCROWATCHDOG_PAUSA          500  // Pausa usada duranrte el sincronismo del watchdog
 
 
-#define IDE_MAXBUFF_GENERICO               50  // Tamaño para un buffer temporal generico
+#define IDE_MAXBUFF_GENERICO               50  // TamaÃ±o para un buffer temporal generico
 
 
 #define IDE_ADC_CONVERSION_MV           (double)4.88;
@@ -181,6 +181,7 @@ class UF_SYS
 
 
 #endif
+
 
 
 

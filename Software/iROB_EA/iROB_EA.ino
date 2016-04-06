@@ -13,7 +13,7 @@
 // Leitmotiv:      "Toda Bestia necesita un Cerebro..."  
 //                  Dr. Frankenstein, en su laboratorio
 //
-//                 "¡Larga y próspera vida!."   
+//                 "Â¡Larga y prÃ³spera vida!."   
 //                  Sr. Spock 
 //
 //
@@ -141,7 +141,7 @@ void setup(void)
 
   // ---------------------------------------------------------
   //
-  // ATENCIÓN:
+  // ATENCIÃ“N:
   //
   // . Los pines de control de los motores NO se inicializan
   //   aqui porque ya lo hace el constructor de la clase
@@ -279,7 +279,7 @@ void setup(void)
   // ---------------------------------------------------------
   //
   // Inicializacion de puertos serie
-  // MENOS Serial0 que está asociado con el gestor de comandos
+  // MENOS Serial0 que estÃ¡ asociado con el gestor de comandos
   // y se inicializa con gc->begin()
   //
   // ---------------------------------------------------------
@@ -358,7 +358,7 @@ void loop(void)
        // - Tiempo fijado ACTUAL: 16 SEGUNDOS
        //
        // IMPORTANTE:
-       // Si se añade codigo aqui y el tiempo necesario para ejecutar
+       // Si se aÃ±ade codigo aqui y el tiempo necesario para ejecutar
        // este bloque es mayor del tiempode watchdog, se debe elegir
        // mediante los puentes un tiempo superior de watchdog
        //
@@ -459,7 +459,7 @@ void loop(void)
        uf_sys.miDelay(IDE_OFF_PAUSA);
 
        // ---------------------------------------------------------
-       // Apagado físico (power OFF)
+       // Apagado fÃ­sico (power OFF)
        // ---------------------------------------------------------
        uf_sys.power_OFF();
      }
@@ -588,3 +588,4 @@ void FNG_Pausa(unsigned int pausa)
           uf_sys.watchDog_DONE();
         }
 }
+

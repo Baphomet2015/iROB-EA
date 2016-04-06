@@ -861,6 +861,9 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
   uf_sys.watchDog_DONE();
 
 
+
+
+
   resultado = true;
 
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
@@ -1022,7 +1025,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 //
 // void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 //
-// Uso: Generación de movimiento
+// Uso: GeneraciÃ³n de movimiento
 // Sintaxis: 
 //           comando:    IDE_CMD_C_RMOV    
 //
@@ -1085,4 +1088,5 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
   if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
   else                   { strcpy(gd->buffRespCmd,"1"); }
 }
+
 
