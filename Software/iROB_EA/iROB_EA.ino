@@ -250,8 +250,8 @@ void setup(void)
   rtc.begin();
   mlx.begin();  
    gc.begin();
-  sensorUS.inicio();
-  uf_bat.inicio();
+ // sensorUS.inicio();
+ // uf_bat.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
@@ -372,7 +372,7 @@ void loop(void)
        //
        // ---------------------------------------------------------
 
-       uf_bat.ctrl_Baterias();
+       //uf_bat.ctrl_Baterias();
 
        // ---------------------------------------------------------
        //
@@ -381,9 +381,10 @@ void loop(void)
        //                  CONTROL EXTERNO (DEBUG)
        //
        // ---------------------------------------------------------
-       vAux = uf_sys.get_FlgDebug();
-       mDer.inhibir(vAux);
-       mIzq.inhibir(vAux);
+       
+       //vAux = uf_sys.get_FlgDebug();
+       //mDer.inhibir(vAux);
+       //mIzq.inhibir(vAux);
 
 
 

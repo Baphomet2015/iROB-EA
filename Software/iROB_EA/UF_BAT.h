@@ -32,9 +32,6 @@
 #define IDE_ICC_NUN_MEDIDAS                10  // Numero de medidas realizadas para calibrar los sensores de Icc
 
 
-#define IDE_CH_
-
-
 // ---------------------------------------------------------
 //
 // Definicion de la Clase UF_BAT
