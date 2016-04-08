@@ -9,7 +9,7 @@
 //
 // Funcionalidad:  Definicion de la clase UF_BAT
 //
-// Notas:          
+// Notas:          REVISADO 08/04/2016 
 //
 // ---------------------------------------------------------
 
@@ -30,9 +30,6 @@
 #define IDE_ICC_PAUSA                     500  // Pausa para medir los sensores de Icc durante su calibracion
 
 #define IDE_ICC_NUN_MEDIDAS                10  // Numero de medidas realizadas para calibrar los sensores de Icc
-
-
-#define IDE_CH_
 
 
 // ---------------------------------------------------------

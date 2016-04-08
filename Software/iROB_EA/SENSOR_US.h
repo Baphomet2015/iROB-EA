@@ -9,7 +9,7 @@
 //
 // Funcionalidad:  Definicion de la clase SENSOR_US
 //
-// Notas:          
+// Notas:          REVISADO 08/04/2016        
 //
 // ---------------------------------------------------------
 
