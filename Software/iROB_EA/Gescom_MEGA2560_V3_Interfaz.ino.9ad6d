@@ -11,7 +11,8 @@
 //
 // Funcionalidad:  Procesador de Comandos
 //
-// Notas:          REVISADO 08/04/2016                      
+// Notas:          
+//                 
 //                 
 //                 
 // ----------------------------------------------------------
@@ -24,7 +25,6 @@
 #include "Gescom_MEGA2560_V3.h"
 #include "Gescom_MEGA2560_V3_CMD.h"
   
-
 
 
 // ---------------------------------------------------------
@@ -256,10 +256,10 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                       iMedida = uf_bat.get_IccChgLiPo();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
                       
-                  //  #ifdef APP_MODO_DEBUG
-                  //  Serial1.print(F("LiPo iMedida: "));
-                  //  Serial1.println(gd->buffRespCmd);
-                  //  #endif
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("LiPo iMedida: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
 
 
                       
@@ -275,10 +275,10 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                       carga = uf_bat.get_LedChgLiPo();
                       sprintf(gd->buffRespCmd,"%d",carga); 
 
-                  //  #ifdef APP_MODO_DEBUG
-                  //  Serial1.print(F("LiPo Carga: "));
-                  //  Serial1.println(gd->buffRespCmd);
-                  //  #endif
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("LiPo Carga: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
 
 
                       break;
@@ -308,7 +308,7 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 //           parametro2: IDE_PARAM_CHG
 //                       IDE_PARAM_POW
 // Retorna:
-// . Valor  solicitado
+// . Valor en hexadecimal solicitado
 // 
 // ---------------------------------------------------------
 
@@ -341,10 +341,10 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                       iMedida = uf_bat.get_IccChgPpak();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
 
-                  //  #ifdef APP_MODO_DEBUG
-                  //  Serial1.print(F("Power Bank iMedida: "));
-                  //  Serial1.println(gd->buffRespCmd);
-                  //  #endif
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("Power Bank iMedida: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
 
                       break;
                     }
@@ -362,10 +362,10 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                       carga = uf_bat.get_LedChgPpak();
                       sprintf(gd->buffRespCmd,"%d",carga); 
 
-                  //  #ifdef APP_MODO_DEBUG
-                  //  Serial1.print(F("Power Bank Carga: "));
-                  //  Serial1.println(gd->buffRespCmd);
-                  //  #endif
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("Power Bank Carga: "));
+                      Serial1.println(gd->buffRespCmd);
+                      #endif
 
                       break;
                     }
@@ -426,10 +426,10 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
        strcpy(gd->buffRespCmd,"2");
      }
       
-  // #ifdef APP_MODO_DEBUG
-  // Serial1.print(F("CDBG: "));
-  // Serial1.println(gd->buffRespCmd);
-  // #endif
+  #ifdef APP_MODO_DEBUG
+  Serial1.print(F("CDBG: "));
+  Serial1.println(gd->buffRespCmd);
+  #endif
 }
 
 
@@ -479,10 +479,10 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
        strcpy(gd->buffRespCmd,"2");
      }
       
-  // #ifdef APP_MODO_DEBUG
-  // Serial1.print(F("CARGA: "));
-  // Serial1.println(gd->buffRespCmd);
-  // #endif
+  #ifdef APP_MODO_DEBUG
+  Serial1.print(F("CARGA: "));
+  Serial1.println(gd->buffRespCmd);
+  #endif
 }
 
 
@@ -502,9 +502,9 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 //           parametro2: IE_PARAM_NOP
 //                       valor
 //
-// Retorna: 
-//          "0"               Error de comando
-//          "1"               Comando ejecutado
+// Retorna:
+//          "0"              Error de comando
+//         I"1"              Comando ejecutado
 //          "AAAAMMDD HHMMSS" La fecha/hora actual
 // 
 // ---------------------------------------------------------
@@ -559,10 +559,10 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                              );
                       flg = true;  
 
-                  //  #ifdef APP_MODO_DEBUG
-                  //  Serial1.print(F("RTC: "));
-                  //  Serial1.println(gd->buffRespCmd );
-                  //  #endif
+                      #ifdef APP_MODO_DEBUG
+                      Serial1.print(F("RTC: "));
+                      Serial1.println(gd->buffRespCmd );
+                      #endif
 
                       break;
                     }
@@ -577,34 +577,24 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
                       v = gd->cnv_Param02;
                       
-                      if ( v==0xF )
-                         { // ---------------------------------------------
-                           // Espera 15 caracteres "AAAAMMDD HHMMSS"
-                           // ---------------------------------------------
-                     
-                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
-                              {
-                                sscanf( gd->buffRespCmd             ,
-                                        "%04d%02d%02d %02d%02d%02d" , 
-                                        &vAnno                      ,
-                                        &vMes                       ,
-                                        &vDia                       ,
-                                        &vHor                       ,
-                                        &vMin                       ,
-                                        &vSeg 
-                                     );
-                                rtc.adjust(DateTime(vAnno, vMes, vDia, vHor, vMin, vSeg));
-                              }
-                           else
-                              {
-                                resultado = false;
-                              }
-                          }
+                      if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
+                         {
+                           sscanf( gd->buffRespCmd             ,
+                                   "%04d%02d%02d %02d%02d%02d" , 
+                                   &vAnno                      ,
+                                   &vMes                       ,
+                                   &vDia                       ,
+                                   &vHor                       ,
+                                   &vMin                       ,
+                                   &vSeg 
+                                 );
+                           rtc.adjust(DateTime(vAnno, vMes, vDia, vHor, vMin, vSeg));
+                         }
                       else
-                          {
-                            resultado = false;
-                          }
-                      
+                         {
+                           resultado = false;
+                         }
+
                       break;
                     }
 
@@ -829,36 +819,31 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 //           comando:    IDE_CMD_C_MIZQ    
 //
 //           parametro1: IDE_PARAM_INI
+//                       IDE_PARAM_GDE
 //                       IDE_PARAM_AVA
-//                       IDE_PARAM_RET
-//                       IDE_PARAM_STO
 //                       IDE_PARAM_SVE
-//                       IDE_PARAM_GCO
+//                       IDE_PARAM_STO
+//                       IDE_PARAM_GIZ
 //
 //           parametro2: IDE_PARAM_NOP
 //                       valor
 //
 // Retorna:
-//     0: Error de comando
-//     1: Ejecucion correcta
+//
+// 
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 {
   
   int resultado;
-  int v;
-  int velocidad;
-  
-  // ---------------------------------------------------------
+
+// ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
   // medida    de  seguridad  todas  las  implementaciones  de 
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
-
-
-
 
 
   resultado = true;
@@ -876,37 +861,13 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                case (IDE_PARAM_AVA): { mIzq.avance();     break; }
                case (IDE_PARAM_RET): { mIzq.retroceso();  break; }
                case (IDE_PARAM_STO): { mIzq.paro();       break; }
-               case (IDE_PARAM_GCO): {                    break; }
-               case (IDE_PARAM_SVE):
-                    {
-                      v = gd->cnv_Param02;
-                      if ( v==0x2 )
-                         { // ---------------------------------------------
-                           // Espera dos caracteres ( valores de 0...FF)
-                           // ---------------------------------------------
-                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
-                              {
-                                sscanf( gd->buffRespCmd,"%02x",&velocidad);
-                                mIzq.velocidad(velocidad);
-                              }
-                           else
-                              {
-                                resultado = false;
-                              }
-                         }
-                      else
-                         {
-                           resultado = false;
-                         }
-                         
-                      break;
-                    }
-               default:
-                    { 
-                      resultado = false;
-                      break;
-                    }
+               case (IDE_PARAM_SVE): {                    break; }
+               default:              { resultado = false; break; }
              }
+
+
+
+
      }
   else
      {
@@ -929,27 +890,25 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 //           comando:    IDE_CMD_C_MDER    
 //
 //           parametro1: IDE_PARAM_INI
+//                       IDE_PARAM_GDE
 //                       IDE_PARAM_AVA
-//                       IDE_PARAM_RET
-//                       IDE_PARAM_STO
 //                       IDE_PARAM_SVE
-//                       IDE_PARAM_GCO
+//                       IDE_PARAM_STO
+//                       IDE_PARAM_GIZ
 //
 //           parametro2: IDE_PARAM_NOP
 //                       valor
 //
 //
 // Retorna:
-//     0: Error de comando
-//     1: Ejecucion correcta
+//
+// 
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 {
     
   int resultado;
-  int v;
-  int velocidad;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -974,38 +933,13 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
                case (IDE_PARAM_AVA): { mDer.avance();     break; }
                case (IDE_PARAM_RET): { mDer.retroceso();  break; }
                case (IDE_PARAM_STO): { mDer.paro();       break; }
-               case (IDE_PARAM_GCO): {                    break; }
-               case (IDE_PARAM_SVE):
-                    {
-                      v = gd->cnv_Param02;
-                      if ( v==0x2 )
-                         { // ---------------------------------------------
-                           // Espera tres caracteres ( valores de 0...FF)
-                           // ---------------------------------------------
-                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
-                              {
-                                sscanf( gd->buffRespCmd,"%2x",&velocidad);
-                                mDer.velocidad(velocidad);
-                              }
-                           else
-                              {
-                                resultado = false;
-                              }
-                         }
-                      else
-                         {
-                           resultado = false;
-                         }
-                         
-                      break;
-                    }
-
-               default:
-                    {
-                      resultado = false;
-                      break;
-                    }
+               case (IDE_PARAM_SVE): {                    break; }
+               default:              { resultado = false; break; }
              }
+
+
+
+
      }
   else
      {
@@ -1022,7 +956,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 //
 // void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 //
-// Uso: GeneraciÃ³n de movimiento
+// Uso: Generación de movimiento
 // Sintaxis: 
 //           comando:    IDE_CMD_C_RMOV    
 //
@@ -1067,12 +1001,10 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
        switch(gd->cnv_Param01)
              {
                case (IDE_PARAM_INI): { mDer.paro();      mIzq.paro();      break; }
-               case (IDE_PARAM_GDE): { mDer.avance();    mIzq.retroceso(); break; }
                case (IDE_PARAM_AVA): { mDer.avance();    mIzq.avance();    break; }
                case (IDE_PARAM_RET): { mDer.retroceso(); mIzq.retroceso(); break; }
                case (IDE_PARAM_STO): { mDer.paro();      mIzq.paro();      break; }
                case (IDE_PARAM_SVE): {                                     break; }
-               case (IDE_PARAM_GIZ): { mDer.retroceso(); mIzq.avance();    break; }
                default:              { resultado = false;                  break; }
              }
 
@@ -1085,5 +1017,4 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
   if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
   else                   { strcpy(gd->buffRespCmd,"1"); }
 }
-
 

@@ -11,7 +11,7 @@
 // Funcionalidad:  Fichero cabecera ( include ) principal de
 //                 la Aplicacion
 //
-// Notas:          
+// Notas:          REVISADO 08/04/2016         
 //
 // ---------------------------------------------------------
 

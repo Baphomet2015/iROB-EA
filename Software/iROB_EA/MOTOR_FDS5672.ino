@@ -68,9 +68,7 @@ MOTOR_FDS5672::MOTOR_FDS5672(int pin_DIR,int pin_PWM,int pin_RST,int pin_FF1,int
 
 void MOTOR_FDS5672::inicio (void)
 {
-   flgInhibir  = true;
-  
-   inhibir(flgInhibir);                   
+   inhibir(true);                   
    velocidad(IDE_MOTOR_FDS5672_VELDEFECTO);
 }
 

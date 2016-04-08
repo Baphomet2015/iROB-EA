@@ -9,7 +9,7 @@
 //
 // Funcionalidad:  Definicion de la clase UF_BAT
 //
-// Notas:          
+// Notas:          REVISADO 08/04/2016 
 //
 // ---------------------------------------------------------
 
