@@ -23,8 +23,6 @@
 
 
 
-
-
 // ---------------------------------------------------------
 //
 // UF_SYS::UF_BAT()
@@ -54,9 +52,7 @@ UF_BAT::UF_BAT(int pin_INBP,int pin_INB0,int pin_INB1,int pin_INB2,int pin_INBS,
 
 
 
-
-
-   inicio();                 // 4Âº Esto   
+   inicio();                 // 4º Esto   
    
 }
 
@@ -96,7 +92,7 @@ int UF_BAT::get_LedChgLiPo(void)
   int valor; 
 
   // ---------------------------------------------------------  
-  // La seÃ±al del sensor que  detecta  el  led  de  carga  del 
+  // La señal del sensor que  detecta  el  led  de  carga  del 
   // cargador LiPo se encuentra en el CANAL 5 del MUX 4051
   // ---------------------------------------------------------  
   digitalWrite(pinINB0,HIGH); 
@@ -291,7 +287,7 @@ int UF_BAT::get_FlgCarga(void)
   int valor;
 
   // ---------------------------------------------------------  
-  // La seÃ±al del sensor que  detecta  si se esta recibiendo 
+  // La señal del sensor que  detecta  si se esta recibiendo 
   // tension de recarga se encuentra en el CANAL 6 del MUX 4051
   // ---------------------------------------------------------  
   digitalWrite(pinINB0,LOW); 
@@ -346,4 +342,3 @@ void UF_BAT::ctrl_Baterias(void)
      }
 
 }
-

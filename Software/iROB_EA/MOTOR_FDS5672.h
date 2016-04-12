@@ -24,7 +24,7 @@
 //
 // ---------------------------------------------------------
 
-#define IDE_MOTOR_FDS5672_PULSO_VAL      500    // Pulso de validacion
+#define IDE_MOTOR_FDS5672_PULSO_VAL      1000   // Pulso de validacion
 
                                                 // NO CAMBIAR estos defines, el valor es la representacion real de FF1 y FF2
 #define IDE_MOTOR_FDS5672_OK             0      // Motor sin fallos
@@ -56,7 +56,6 @@ class MOTOR_FDS5672
      void retroceso        (void);
      void paro             (void);
      void velocidad        (byte valor);
-     void inhibir          (byte modo);
      byte getEstado        (void);   
 
   // ---------------------------------------------------------
@@ -74,7 +73,7 @@ class MOTOR_FDS5672
      int  pinICC;
 
      byte vVelocidad;
-     byte flgInhibir;
+     
 };
 
 
@@ -86,7 +85,6 @@ class MOTOR_FDS5672
 
 
 #endif
-
 
 
 

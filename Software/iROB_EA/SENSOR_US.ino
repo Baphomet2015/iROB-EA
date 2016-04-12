@@ -41,15 +41,15 @@ SENSOR_US::SENSOR_US(int pin_USD_S,int pin_USI_S,int pin_USD_C, int pin_USI_C)
    pinUSD_C = pin_USD_C;
    pinUSI_C = pin_USI_C;
 
-                             // 2Âº Esto
+                             // 2º Esto
    
-                             // 3Âº Esto
+                             // 3º Esto
    pinMode(pinUSD_S,INPUT);  // 
    pinMode(pinUSI_S,INPUT);  // 
    pinMode(pinUSD_C,OUTPUT); // 
    pinMode(pinUSI_C,OUTPUT); // 
 
-   inicio();                 // 4Âº Esto
+   inicio();                 // 4º Esto
    
 
    
@@ -72,4 +72,3 @@ void SENSOR_US::inicio(void)
    
 
 }
-

@@ -27,6 +27,10 @@
 
 
 
+
+
+
+
 // ---------------------------------------------------------
 //
 //
@@ -858,9 +862,6 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
   uf_sys.watchDog_DONE();
 
 
-
-
-
   resultado = true;
 
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
@@ -928,12 +929,12 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 // Sintaxis: 
 //           comando:    IDE_CMD_C_MDER    
 //
-//           parametro1: IDE_PARAM_INI
-//                       IDE_PARAM_AVA
+//           parametro1: IDE_PARAM_INI*
+//                       IDE_PARAM_AVA*
 //                       IDE_PARAM_RET
-//                       IDE_PARAM_STO
-//                       IDE_PARAM_SVE
-//                       IDE_PARAM_GCO
+//                       IDE_PARAM_STO*
+//                       IDE_PARAM_SVE*
+//                       IDE_PARAM_GCO*
 //
 //           parametro2: IDE_PARAM_NOP
 //                       valor
@@ -959,6 +960,8 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
   uf_sys.watchDog_DONE();
 
 
+
+
   resultado = true;
 
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
@@ -970,11 +973,30 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 
        switch(gd->cnv_Param01)
              {
-               case (IDE_PARAM_INI): { mDer.paro();       break; }
-               case (IDE_PARAM_AVA): { mDer.avance();     break; }
+               case (IDE_PARAM_INI):
+                    { 
+                      uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+                      mDer.paro();
+                      break;
+                    }
+
+               case (IDE_PARAM_AVA):
+                    { 
+                      uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_ACTIVAR);
+                      mDer.avance();
+                      break;
+                    }
+               
+
                case (IDE_PARAM_RET): { mDer.retroceso();  break; }
+               
+
                case (IDE_PARAM_STO): { mDer.paro();       break; }
+               
+
                case (IDE_PARAM_GCO): {                    break; }
+               
+
                case (IDE_PARAM_SVE):
                     {
                       v = gd->cnv_Param02;
@@ -1022,7 +1044,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 //
 // void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 //
-// Uso: GeneraciÃ³n de movimiento
+// Uso: Generación de movimiento
 // Sintaxis: 
 //           comando:    IDE_CMD_C_RMOV    
 //
@@ -1085,5 +1107,4 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
   if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
   else                   { strcpy(gd->buffRespCmd,"1"); }
 }
-
 

@@ -211,7 +211,7 @@ void UF_SYS::timers(void)
 //         - Falta codigo de arranque
 //         - Numero maximo de reintentos
 //         - Etc
-//         En este caso desde la funcion que la llamÃ³ se 
+//         En este caso desde la funcion que la llamó se 
 //         debe ir a power OFF.
 // . true  Arranque OK en este caso las variables EEPROM:
 //         Numero reintentos (EPROM_ADDR_NUM_RC)  = 0
@@ -241,7 +241,7 @@ byte UF_SYS::secuenciaInicio(void)
          if ( nIntentos<IDE_CLV_MAX_INTENTOS )
             { // ---------------------------------------------------------
               // No se ha alcanzado el numero maximo de reintentos,
-              // visualiza en el display nÂº de intentos
+              // visualiza en el display nº de intentos
               // ---------------------------------------------------------
 
               buff[0] = 32;
@@ -479,7 +479,7 @@ byte UF_SYS::get_DTMF(void)
 //---------------------------------------------------------
 //
 // void UF_SYS::watchDog_DONE(void)
-//      Funcion para generar la seÃ±al de latido ( reset) del
+//      Funcion para generar la señal de latido ( reset) del
 //      watchDog, pulso de 1ms
 //
 // ---------------------------------------------------------
@@ -1116,6 +1116,5 @@ byte UF_SYS::setLed(byte ledID,byte modo)
 
   return(modo);
 }
-
 
 

@@ -63,7 +63,7 @@
 #define IDE_RELE_ACTIVAR                     1
 #define IDE_RELE_DESACTIVAR                  0
 
-                                            // Usar MEMPROG
+
 #define IDE_STR_INICIO_VERSION               F("iROB_EA, version 1.00, Junio 2015")
 #define IDE_STR_INICIO_WATCHDOG              F("Arranque por Watchdog")
 #define IDE_STR_INICIO_POWER_ON              F("Arranque por Power ON")
@@ -77,16 +77,17 @@
 #define IDE_STR_DEBUG_EXE                    F("Tiempo de ejecucion setup: ")
 
 
+
 #define IDE_SYSTEM_OK                    0x00
 #define IDE_SYSTEM_WATCHDOG              0x0F
 
 
-#define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo mÃ¡ximo que puede pasar entre tonos cuando se esta introduciendo una clave
+#define IDE_DTMF_PAUSA_TONO               300L // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
 #define IDE_OFF_PAUSA                    4000  // Pausa antes de apagar el Robot
 #define IDE_SINCROWATCHDOG_PAUSA          500  // Pausa usada durante el sincronismo del watchdog
 
 
-#define IDE_MAXBUFF_GENERICO               50  // TamaÃ±o para un buffer temporal generico
+#define IDE_MAXBUFF_GENERICO               50  // Tamaño para un buffer temporal generico
 
 
 #define IDE_ADC_CONVERSION_MV           (double)4.88;
@@ -181,7 +182,6 @@ class UF_SYS
 
 
 #endif
-
 
 
 

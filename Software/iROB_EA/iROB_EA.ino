@@ -13,7 +13,7 @@
 // Leitmotiv:      "Toda Bestia necesita un Cerebro..."  
 //                  Dr. Frankenstein, en su laboratorio
 //
-//                 "Â¡Larga y prÃ³spera vida!."   
+//                 "¡Larga y próspera vida!."   
 //                  Sr. Spock 
 //
 //
@@ -38,13 +38,6 @@
 #include "UF_BAT.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
-
-
-
-
-
-
-
 
 
 
@@ -141,7 +134,7 @@ void setup(void)
 
   // ---------------------------------------------------------
   //
-  // ATENCIÃ“N:
+  // ATENCIÓN:
   //
   // . Los pines de control de los motores NO se inicializan
   //   aqui porque ya lo hace el constructor de la clase
@@ -250,8 +243,8 @@ void setup(void)
   rtc.begin();
   mlx.begin();  
    gc.begin();
- // sensorUS.inicio();
- // uf_bat.inicio();
+  sensorUS.inicio();
+  uf_bat.inicio();
   myDisplay.begin();
   myDisplay.setBrightness(15);
 
@@ -279,7 +272,7 @@ void setup(void)
   // ---------------------------------------------------------
   //
   // Inicializacion de puertos serie
-  // MENOS Serial0 que estÃ¡ asociado con el gestor de comandos
+  // MENOS Serial0 que está asociado con el gestor de comandos
   // y se inicializa con gc->begin()
   //
   // ---------------------------------------------------------
@@ -358,7 +351,7 @@ void loop(void)
        // - Tiempo fijado ACTUAL: 16 SEGUNDOS
        //
        // IMPORTANTE:
-       // Si se aÃ±ade codigo aqui y el tiempo necesario para ejecutar
+       // Si se añade codigo aqui y el tiempo necesario para ejecutar
        // este bloque es mayor del tiempode watchdog, se debe elegir
        // mediante los puentes un tiempo superior de watchdog
        //
@@ -372,7 +365,7 @@ void loop(void)
        //
        // ---------------------------------------------------------
 
-       //uf_bat.ctrl_Baterias();
+       uf_bat.ctrl_Baterias();
 
        // ---------------------------------------------------------
        //
@@ -381,12 +374,17 @@ void loop(void)
        //                  CONTROL EXTERNO (DEBUG)
        //
        // ---------------------------------------------------------
-       
-       //vAux = uf_sys.get_FlgDebug();
-       //mDer.inhibir(vAux);
-       //mIzq.inhibir(vAux);
+       vAux = uf_sys.get_FlgDebug();
+       if (vAux==true) 
+          {
+            // mDer.paro();
+            // mIzq.paro();
+          }
+       else
+          { 
 
 
+          }
 
        // -------------------------------------------------------
        //
@@ -460,7 +458,7 @@ void loop(void)
        uf_sys.miDelay(IDE_OFF_PAUSA);
 
        // ---------------------------------------------------------
-       // Apagado fÃ­sico (power OFF)
+       // Apagado físico (power OFF)
        // ---------------------------------------------------------
        uf_sys.power_OFF();
      }
@@ -589,4 +587,3 @@ void FNG_Pausa(unsigned int pausa)
           uf_sys.watchDog_DONE();
         }
 }
-
