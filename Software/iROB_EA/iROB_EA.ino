@@ -58,8 +58,8 @@
 // . gc           Objeto que implementa el gestor de comandos
 // . flgPower_OFF Flag para control  del  flujo  principal en 
 //                la funcion loop.
-//
-//
+// . powerMotores Flag para control el estado de la alimentacion
+//                de los motores
 //
 //
 // ---------------------------------------------------------
@@ -113,8 +113,8 @@ GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
                                        IDE_SERIAL_TRX_9600
                                      );                         // Gestor de comandos
 volatile byte     flgPower_OFF;                                 // Flag actualizado desde la funcion asociada a la INT 0 ( Boton de OFF) 
-
-
+         byte     powerMotores;                                 // True:  La alimentación de los motores    esta conectada  
+                                                                // False: La alimentación de los motores NO esta conectada
 
 
 // ---------------------------------------------------------
@@ -249,6 +249,7 @@ void setup(void)
   myDisplay.setBrightness(15);
 
   flgPower_OFF = false;
+  FNG_SetPowerMotores(false);
 
   // ---------------------------------------------------------
   // Interrupciones:
@@ -265,7 +266,9 @@ void setup(void)
 
   uf_sys.rele(IDE_RELE_CPU_APL,IDE_RELE_DESACTIVAR);
   uf_sys.rele(IDE_RELE_CAMARA ,IDE_RELE_DESACTIVAR);
-  uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+
+
+  
   
   analogReference(DEFAULT); // SIEMPRE se utiliza DEFAULT 
 
@@ -587,3 +590,34 @@ void FNG_Pausa(unsigned int pausa)
           uf_sys.watchDog_DONE();
         }
 }
+
+
+
+// ---------------------------------------------------------
+//
+// void FNG_SetPowerMotores(byte estado)
+//
+// Controla la activacion/desactivacion de la tension de 
+// alimentacion de los motores y actualiza el flag "powerMotores"
+// 
+// ---------------------------------------------------------
+ 
+void FNG_SetPowerMotores(byte estado)
+{
+    
+  if ( estado==false )
+     { 
+       uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+     }
+  else
+     { if ( powerMotores==false )
+          {
+            uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_ACTIVAR);
+            FNG_Pausa(IDE_PAUSA_GENERAL);     
+          }
+     }
+
+  powerMotores = estado;  // Esto lo ultimo
+}
+
+

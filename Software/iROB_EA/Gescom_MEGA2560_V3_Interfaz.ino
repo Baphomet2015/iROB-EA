@@ -975,14 +975,14 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
              {
                case (IDE_PARAM_INI):
                     { 
-                      uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+                      FNG_SetPowerMotores(false);
                       mDer.paro();
                       break;
                     }
 
                case (IDE_PARAM_AVA):
                     { 
-                      uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_ACTIVAR);
+                      FNG_SetPowerMotores(true);
                       mDer.avance();
                       break;
                     }

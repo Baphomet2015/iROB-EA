@@ -574,7 +574,8 @@ void UF_SYS::power_OFF(void)
   // Como  medida  de  seguridad  se  desactiva  el   rele  de 
   // alimentacion de los motores antes del power OFF
   // ---------------------------------------------------------
-  uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
+  FNG_SetPowerMotores(false);
+  //uf_sys.rele(IDE_RELE_MOTORES,IDE_RELE_DESACTIVAR);
 
   // ---------------------------------------------------------
   // Apagado fisico
