@@ -157,6 +157,7 @@ const char IDE_MSG_DISPLAY_ER_004 [] PROGMEM = "E004";  // NO se utiliza
 byte FNG_DisplayMsgPROGMEM (const char* msgP,unsigned int pausa);
 byte FNG_DisplayMsg        (      char* msg ,unsigned int pausa);
 void FNG_Pausa             (unsigned int pausa);
+void FNG_SetPowerMotores   (byte estado);
 
 
 

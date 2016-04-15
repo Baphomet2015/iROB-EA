@@ -873,11 +873,43 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 
        switch(gd->cnv_Param01)
              {
-               case (IDE_PARAM_INI): { mIzq.paro();       break; }
-               case (IDE_PARAM_AVA): { mIzq.avance();     break; }
-               case (IDE_PARAM_RET): { mIzq.retroceso();  break; }
-               case (IDE_PARAM_STO): { mIzq.paro();       break; }
-               case (IDE_PARAM_GCO): {                    break; }
+               case (IDE_PARAM_INI):
+                    { 
+                      FNG_SetPowerMotores(false);
+                      mIzq.paro();
+                      break;
+                    }
+
+               case (IDE_PARAM_AVA):
+                    { 
+                      FNG_SetPowerMotores(true);
+                      mIzq.avance();
+                      break;
+                    }
+               
+
+               case (IDE_PARAM_RET):
+                    { 
+                      FNG_SetPowerMotores(true);
+                      mIzq.retroceso();
+                      break;
+                    }
+               
+
+               case (IDE_PARAM_STO):
+                    { 
+                      FNG_SetPowerMotores(false);
+                      mIzq.paro();
+                      break;
+                    }
+               
+
+               case (IDE_PARAM_GCO):
+                    {
+                  
+                      break;
+                    }
+                    
                case (IDE_PARAM_SVE):
                     {
                       v = gd->cnv_Param02;
@@ -988,14 +1020,27 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
                     }
                
 
-               case (IDE_PARAM_RET): { mDer.retroceso();  break; }
+               case (IDE_PARAM_RET):
+                    { 
+                      FNG_SetPowerMotores(true);
+                      mDer.retroceso();
+                      break;
+                    }
                
 
-               case (IDE_PARAM_STO): { mDer.paro();       break; }
+               case (IDE_PARAM_STO):
+                    { 
+                      FNG_SetPowerMotores(false);
+                      mDer.paro();
+                      break;
+                    }
                
 
-               case (IDE_PARAM_GCO): {                    break; }
-               
+               case (IDE_PARAM_GCO):
+                    {
+                  
+                      break;
+                    }
 
                case (IDE_PARAM_SVE):
                     {
