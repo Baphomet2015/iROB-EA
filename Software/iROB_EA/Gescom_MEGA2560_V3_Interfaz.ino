@@ -1006,14 +1006,18 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
        switch(gd->cnv_Param01)
              {
                case (IDE_PARAM_INI):
-                    { 
+                    { // ---------------------------------------------------------
+                      // Iniciar OK
+                      // ---------------------------------------------------------
                       FNG_SetPowerMotores(false);
                       mDer.paro();
                       break;
                     }
 
                case (IDE_PARAM_AVA):
-                    { 
+                    {  // ---------------------------------------------------------
+                       // Avance OK
+                       // ---------------------------------------------------------
                       FNG_SetPowerMotores(true);
                       mDer.avance();
                       break;

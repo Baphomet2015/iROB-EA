@@ -33,7 +33,7 @@
 #define IDE_MOTOR_FDS5672_TENSION        3      // Voltaje demasiado bajo
 
 
-#define IDE_MOTOR_FDS5672_VELDEFECTO    50      // Velocidad por defecto
+#define IDE_MOTOR_FDS5672_VELDEFECTO     0x7F   // Velocidad por defecto
 
 
 // ---------------------------------------------------------

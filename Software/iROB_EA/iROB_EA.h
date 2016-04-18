@@ -77,19 +77,19 @@
 #define PIN_HW_LED_BDEL                  38  // Leds blancos traseros
 #define PIN_HW_LED_RDET                  37  // Leds rojos traseros
 
-#define PIN_HW_MIZQ_DIR                  36  // Motor derecho, Direccion
-#define PIN_HW_MIZQ_RST                  35  // Motor derecho, Reset
+#define PIN_HW_MIZQ_DIR                  32  // Motor derecho, Direccion
+#define PIN_HW_MIZQ_RST                  31  // Motor derecho, Reset
 #define PIN_HW_MIZQ_PWM                   4  // Motor derecho, PWN, velocidad/paro
-#define PIN_HW_MIZQ_FF1                  33  // Motor derecho, Flag estado (1)
-#define PIN_HW_MIZQ_FF2                  34  // Motor derecho, Flag estado (2)
-#define PIN_HW_MIZQ_ICC                  A3  // Motor derecho, sensor de corriente (consumo)
+#define PIN_HW_MIZQ_FF1                  28  // Motor derecho, Flag estado (1)
+#define PIN_HW_MIZQ_FF2                  30  // Motor derecho, Flag estado (2)
+#define PIN_HW_MIZQ_ICC                  A4  // Motor derecho, sensor de corriente (consumo)
 
-#define PIN_HW_MDER_DIR                  32  // Motor izquierdo, Direccion
-#define PIN_HW_MDER_RST                  31  // Motor izquierdo, Reset
+#define PIN_HW_MDER_DIR                  36  // Motor izquierdo, Direccion
+#define PIN_HW_MDER_RST                  35  // Motor izquierdo, Reset
 #define PIN_HW_MDER_PWM                   3  // Motor izquierdo, PWN, velocidad/paro
-#define PIN_HW_MDER_FF1                  28  // Motor izquierdo, Flag estado (1)
-#define PIN_HW_MDER_FF2                  30  // Motor izquierdo, Flag estado (2)
-#define PIN_HW_MDER_ICC                  A4  // Motor izquierdo, sensor de corriente (consumo)
+#define PIN_HW_MDER_FF1                  33  // Motor izquierdo, Flag estado (1)
+#define PIN_HW_MDER_FF2                  34  // Motor izquierdo, Flag estado (2)
+#define PIN_HW_MDER_ICC                  A3  // Motor izquierdo, sensor de corriente (consumo)
 
 #define PIN_HW_SEN_MET_LUZ               A9  // Estacion metereologica, sensor de luz 
 #define PIN_HW_DTR_RAZOR_1               24  // 9DOF-Razor-v21, señal DTR
