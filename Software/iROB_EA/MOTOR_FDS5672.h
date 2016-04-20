@@ -50,13 +50,15 @@ class MOTOR_FDS5672
   // ---------------------------------------------------------
   public:
           
-          MOTOR_FDS5672    (int pin_DIR,int pin_PWM,int pin_RST,int pin_FF1,int pin_FF2,int pin_ICC);
-     void inicio           (void);
-     void avance           (void);
-     void retroceso        (void);
-     void paro             (void);
-     void velocidad        (byte valor);
-     byte getEstado        (void);   
+            MOTOR_FDS5672   (int pin_DIR,int pin_PWM,int pin_RST,int pin_FF1,int pin_FF2,int pin_ICC);
+     void   inicio          (void);
+     void   avance          (void);
+     void   retroceso       (void);
+     void   paro            (void);
+     void   velocidad       (byte valor);
+     byte   getEstado       (void);   
+     double getCorriente    (void);
+
 
   // ---------------------------------------------------------
   //

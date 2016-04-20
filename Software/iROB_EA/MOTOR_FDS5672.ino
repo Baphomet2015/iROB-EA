@@ -174,3 +174,20 @@ byte MOTOR_FDS5672::getEstado(void)
 }
        
 
+// ---------------------------------------------------------
+//
+// double MOTOR_FDS5672::getCorriente(void)
+//         
+//
+// ---------------------------------------------------------
+
+double MOTOR_FDS5672::getCorriente(void)
+{
+  double iMedida;
+  
+  
+
+  iMedida = uf_sys.get_Corriente(pinICC);
+  
+  return( iMedida);
+}

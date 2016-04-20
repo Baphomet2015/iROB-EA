@@ -50,16 +50,90 @@
 
 // ---------------------------------------------------------
 //
-// void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
+// void cmd_Comando_CM_R00(GESCOM_DATA* gd)
 //
-// Uso:      
-// Sintaxis: 
-//           comando:    IDE_CMD_DBG
+// Uso:      Comando Reservado
+// Sintaxis: comando:    IDE_CMD_CM_R00
+//           
 //           parametro1: -
+//
 //           parametro2: -
 //
 // Retorna:
-// 
+//
+//
+// VERIFICADO: NO
+//
+// ---------------------------------------------------------
+
+void cmd_Comando_CM_R00(GESCOM_DATA* gd)
+{
+  // ---------------------------------------------------------
+  // Generacion  del  pulso de latido, reset del watchDog como 
+  // medida    de  seguridad  todas  las  implementaciones  de 
+  // comandos lo ejecutan al entrar
+  // ---------------------------------------------------------
+  uf_sys.watchDog_DONE();
+
+
+
+
+
+}
+
+
+
+// ---------------------------------------------------------
+//
+// void cmd_Comando_CM_R01(GESCOM_DATA* gd)
+//
+// Uso:      Comando Reservado
+// Sintaxis: comando:    IDE_CMD_CM_R01
+//           
+//           parametro1: -
+//
+//           parametro2: -
+//
+// Retorna:
+//
+//
+// VERIFICADO: NO
+//
+// ---------------------------------------------------------
+
+void cmd_Comando_CM_R01(GESCOM_DATA* gd)
+{
+  // ---------------------------------------------------------
+  // Generacion  del  pulso de latido, reset del watchDog como 
+  // medida    de  seguridad  todas  las  implementaciones  de 
+  // comandos lo ejecutan al entrar
+  // ---------------------------------------------------------
+  uf_sys.watchDog_DONE();
+
+
+
+
+
+}
+
+
+
+// ---------------------------------------------------------
+//
+// void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
+//
+// Uso:      Comando para debug (no se utiliza)
+// Sintaxis: comando:    IDE_CMD_CM_DBG
+//           
+//           parametro1: -
+//
+//           parametro2: -
+//
+// Retorna:
+//
+//
+// VERIFICADO: NO
+//
 // ---------------------------------------------------------
 
 void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
@@ -75,143 +149,9 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
 
 
 
-
-
-
-
 }
 
 
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_CM_RET(GESCOM_DATA* gd)
-//
-// Uso:      
-// Sintaxis: 
-//           comando:    IDE_CMD_RET
-//           parametro1: -
-//           parametro2: -
-//
-// Retorna:
-// 
-// ---------------------------------------------------------
-
-void cmd_Comando_CM_RET(GESCOM_DATA* gd)
-{
-  // ---------------------------------------------------------
-  // Generacion  del  pulso de latido, reset del watchDog como 
-  // medida   de  seguridad   todas  las  implementaciones  de 
-  // comandos lo ejecutan al entrar
-  // ---------------------------------------------------------
-  uf_sys.watchDog_DONE(); 
-
-
-
-
-
-
-
-}
-
-
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_CM_RSV(GESCOM_DATA* gd)
-//
-// Uso:      
-// Sintaxis: 
-//           comando:    IDE_CMD_S_RSV
-//           parametro1: -
-//           parametro2: -
-//
-// Retorna:
-// 
-// ---------------------------------------------------------
-
-void cmd_Comando_CM_RSV(GESCOM_DATA* gd)
-{
-  // ---------------------------------------------------------
-  // Generacion  del  pulso de latido, reset del watchDog como 
-  // medida    de  seguridad  todas  las  implementaciones  de 
-  // comandos lo ejecutan al entrar
-  // ---------------------------------------------------------
-  uf_sys.watchDog_DONE(); 
-
-
-
-
-
-
-}
-
-
-
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_S_MDER(GESCOM_DATA* gd)
-//
-// Uso:      
-// Sintaxis: 
-//           comando:    IDE_CMD_S_MDER
-//           parametro1: -
-//           parametro2: -
-//
-// Retorna:
-// . True  Todo correcto
-// . False Error en la ejecucion
-// 
-// ---------------------------------------------------------
-
-void cmd_Comando_S_MDER(GESCOM_DATA* gd)
-{
-  // ---------------------------------------------------------
-  // Generacion  del  pulso de latido, reset del watchDog como 
-  // medida    de  seguridad  todas  las  implementaciones  de 
-  // comandos lo ejecutan al entrar
-  // ---------------------------------------------------------
-  uf_sys.watchDog_DONE();
-
-
-
-
-
-}
-
-
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_S_MIZQ( unsigned int tComando,
-//
-// Uso:      
-// Sintaxis: 
-//           comando:    IDE_CMD_S_MIZQ
-//           parametro1: -
-//           parametro2: -
-//
-// Retorna:
-//
-// 
-// ---------------------------------------------------------
-
-void cmd_Comando_S_MIZQ(GESCOM_DATA* gd)
-{
-  // ---------------------------------------------------------
-  // Generacion  del  pulso de latido, reset del watchDog como 
-  // medida    de  seguridad  todas  las  implementaciones  de 
-  // comandos lo ejecutan al entrar
-  // ---------------------------------------------------------
-  uf_sys.watchDog_DONE();
-
-
-
-
-
-
-}
 
 
 
@@ -221,13 +161,23 @@ void cmd_Comando_S_MIZQ(GESCOM_DATA* gd)
 //
 // Uso:      Retorna informacion relacionada con la bateria
 //           de LiPo
-// Sintaxis: 
-//           comando:    IDE_CMD_B_LIPO
+// Sintaxis: comando:    IDE_CMD_B_LIPO
+//           
 //           parametro1: IDE_PARAM_GET
+//
 //           parametro2: IDE_PARAM_CHG
 //                       IDE_PARAM_POW
+//
 // Retorna:
-// . Valor en hexadecimal solicitado
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == CHG   gd->buffRespCmd = Corriente consumida en carga
+//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "0"  Bateria en carga
+//                                            gd->buffRespCmd = "1"  Bateria cargada
+//           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
+//
+// VERIFICADO: 
 // 
 // ---------------------------------------------------------
 
@@ -235,6 +185,7 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 {
   double iMedida;
   byte   carga;
+  int    flg;
 
 
   // ---------------------------------------------------------
@@ -243,6 +194,8 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
+
+  flg = false;
 
   if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
      { // ---------------------------------------------------------
@@ -259,14 +212,12 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                       
                       iMedida = uf_bat.get_IccChgLiPo();
                       dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
-                      
+                                 
                   //  #ifdef APP_MODO_DEBUG
                   //  Serial1.print(F("LiPo iMedida: "));
                   //  Serial1.println(gd->buffRespCmd);
                   //  #endif
-
-
-                      
+                      flg = true;
                       break;
                     }
 
@@ -283,8 +234,7 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
                   //  Serial1.print(F("LiPo Carga: "));
                   //  Serial1.println(gd->buffRespCmd);
                   //  #endif
-
-
+                      flg = true;
                       break;
                     }
 
@@ -296,6 +246,12 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
              }        
        
     }
+
+  if ( flg==false )
+     {
+       strcpy(gd->buffRespCmd,"2");      
+     }
+
 }
 
 
@@ -306,13 +262,22 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 //
 // Uso:      Retorna informacion relacionada con la bateria
 //           de PowerPack
-// Sintaxis: 
-//           comando:    IDE_CMD_B_PPAK
+// Sintaxis: comando:    IDE_CMD_B_PPAK
+//           
 //           parametro1: IDE_PARAM_GET
+//
 //           parametro2: IDE_PARAM_CHG
 //                       IDE_PARAM_POW
 // Retorna:
-// . Valor  solicitado
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == CHG   gd->buffRespCmd = Corriente consumida en carga
+//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "0"  Bateria en carga
+//                                            gd->buffRespCmd = "1"  Bateria cargada
+//           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
+// 
+// VERIFICADO: 
 // 
 // ---------------------------------------------------------
 
@@ -320,6 +285,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 {
   double iMedida;
   byte   carga;
+  int    flg;
   
 
   // ---------------------------------------------------------
@@ -328,7 +294,9 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
   // comandos lo ejecutan al entrar
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
-  
+
+  flg = false;
+
   if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
      { // ---------------------------------------------------------
        //
@@ -349,7 +317,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                   //  Serial1.print(F("Power Bank iMedida: "));
                   //  Serial1.println(gd->buffRespCmd);
                   //  #endif
-
+                      flg = true;
                       break;
                     }
 
@@ -370,7 +338,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                   //  Serial1.print(F("Power Bank Carga: "));
                   //  Serial1.println(gd->buffRespCmd);
                   //  #endif
-
+                      flg = true;
                       break;
                     }
 
@@ -381,6 +349,12 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
                     }
              }
     }
+
+  if ( flg==false )
+     {
+       strcpy(gd->buffRespCmd,"2");      
+     }
+
 }
 
 
@@ -391,22 +365,27 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 //
 // Uso:       Retorna valor del flag hardware que indica si 
 //            esta conectado el conector de DEBUG
-// Sintaxis: 
-//           comando:    IDE_CMD_S_DBG
+// Sintaxis: comando:    IDE_CMD_S_DBG
+//           
 //           parametro1: IDE_PARAM_GET
+//
 //           parametro2: IDE_PARAM_NOP
 //
 // Retorna:
-//          "0" NO esta conectado
-//          "1" SI esta conectado
-//          "2" Error de comando
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "0"  NO esta conectado el conector
+//                                            gd->buffRespCmd = "1"  SI esta conectado el conector
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
+//
+// VERIFICADO: 
 // 
 // ---------------------------------------------------------
 
 void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 {
   int v;
-
+  int flg;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -415,17 +394,20 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
   
+  flg = false;
 
   if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
      { // ---------------------------------------------------------
        //
-       //
+       // No espera parametro 2 (recibe NOP)
        //
        // ---------------------------------------------------------
+
        if ( uf_sys.get_FlgDebug()==true) { strcpy(gd->buffRespCmd,"1"); }
        else                              { strcpy(gd->buffRespCmd,"0"); }
      }
-  else
+
+  if (flg==false)
      {
        strcpy(gd->buffRespCmd,"2");
      }
@@ -443,23 +425,29 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 // void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 //
 // Uso:       Retorna valor del flag hardware que indica si 
-//            se esta recibiendo tension de recaarga
-// Sintaxis: 
-//           comando:    IDE_CMD_S_VCHG
+//            se esta recibiendo tension de recarga
+// Sintaxis: comando:    IDE_CMD_S_VCHG
+//           
 //           parametro1: IDE_PARAM_GET
+//
 //           parametro2: IDE_PARAM_NOP
 //
 // Retorna:
-//          "0" NO esta recibiendo
-//          "1" SI esta recibiendo
-//          "2" Error de comando
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "0"  NO esta conectado el conector
+//                                            gd->buffRespCmd = "1"  SI esta conectado el conector
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
+//
+// VERIFICADO: 
+// 
 // 
 // ---------------------------------------------------------
 
 void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 {
   int v;
-
+  int flg;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -468,17 +456,19 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
   // ---------------------------------------------------------
   uf_sys.watchDog_DONE();
   
+  flg = false;
 
   if ( (gd->cnv_Tipo==IDE_T_COMANDO_ENVIO) && (gd->cnv_Param01==IDE_PARAM_GET) )
      { // ---------------------------------------------------------
        //
-       //
+       // No espera parametro 2 (recibe NOP)
        //
        // ---------------------------------------------------------
        if ( uf_bat.get_FlgCarga()==true) { strcpy(gd->buffRespCmd,"1"); }
        else                              { strcpy(gd->buffRespCmd,"0"); }
      }
-  else
+ 
+  if ( flg==false )
      {
        strcpy(gd->buffRespCmd,"2");
      }
@@ -506,10 +496,20 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 //           parametro2: IE_PARAM_NOP
 //                       valor
 //
-// Retorna: 
-//          "0"               Error de comando
-//          "1"               Comando ejecutado
-//          "AAAAMMDD HHMMSS" La fecha/hora actual
+
+// Retorna:
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "1"  Comando ejecutado
+//                                           
+//           P1 == IDE_PARAM_SET  P2 == valor gd->buffRespCmd = "0"  Error comando
+//                                            gd->buffRespCmd = "1"  Comando ejecutado 
+//           P1 == IDE_PARAM_CHK  P2 == NOP   gd->buffRespCmd = "0"  Error comando
+//                                            gd->buffRespCmd = "1"  Comando ejecutado 
+//           P1 == IDE_PARAM_INI  P2 == NOP   gd->buffRespCmd = "1"  Comando ejecutado 
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
+//
+// VERIFICADO: 
 // 
 // ---------------------------------------------------------
 
@@ -548,6 +548,7 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                     { // ---------------------------------------------------------
                       // GET: Retonar Fecha y Hora del RTC
                       //      Retorna: "AAAAMMDD HHMMSS"
+                     // No espera parametro 2 (recibe NOP)
                       // ---------------------------------------------------------
                      
                       DateTime now = rtc.now();
@@ -575,8 +576,6 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                     { // ---------------------------------------------------------
                       // SET: Establecer Fecha y Hora del RTC
                       //      Espera un string en la forma: "AAAAMMDD HHMMSS"
-                      //      Retorna  "00" Error
-                      //               "01" Ok se ha establecido los nueva fecha/hora
                       // ---------------------------------------------------------
 
                       v = gd->cnv_Param02;
@@ -609,52 +608,52 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
                             resultado = false;
                           }
                       
+                      flg = true;  
                       break;
                     }
 
                case ( IDE_PARAM_CHK ):
                     { // ---------------------------------------------------------
                       // CHK: Comprobar funcionamiento del RTC
-                      //      Retorna  "00" No se esta ejecutando
-                      //               "01" Si se esta ejecutando   
+                      // No espera parametro 2 (recibe NOP)
                       // ---------------------------------------------------------
-                      
                       if (!rtc.isrunning() )
                          { 
                            resultado = false;
                          }
                       
+                      flg = true;  
                       break;
                     }
 
                case ( IDE_PARAM_INI ):
                     { // ---------------------------------------------------------
                       // INI: Iniciar RTC
-                      //      Retorna IDE_CMD_RETORNO_1
+                      // No espera parametro 2 (recibe NOP)
                       // ---------------------------------------------------------
                       rtc.begin();
+                      flg = true;  
                       break;
                     }
                
                default:
                     {
-                      resultado = false;
+                      flg = false;  
                       break;
                     }
 
              }
      }
- else
-     {
-       resultado = false;
-     }
-
-  if (flg==false)
+ 
+  if (flg==true)
      {
        if (resultado==false) { strcpy(gd->buffRespCmd,"0"); }   
        else                  { strcpy(gd->buffRespCmd,"1"); }    
      }
-  
+  else 
+     {
+       strcpy(gd->buffRespCmd,"2");
+     }
 }
 
 
@@ -676,9 +675,10 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 //                       IDE_PARAM_BLK
 //
 // Retorna:
-//          "0" Error de comando
-//          "1" Comando ejecutado
+//          gd->buffRespCmd = "0" Error de comando
+//          gd->buffRespCmd = "1" Comando ejecutado
 //
+// VERIFICADO: SI
 // 
 // ---------------------------------------------------------
 
@@ -754,6 +754,7 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 //
 // Retorna:
 //
+// VERIFICADO: NO
 // 
 // ---------------------------------------------------------
 
@@ -843,17 +844,26 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 //                       valor
 //
 // Retorna:
-//     0: Error de comando
-//     1: Ejecucion correcta
+//          INI: gd->buffRespCmd = "1"               Comando ejecutado
+//          AVA: gd->buffRespCmd = "1"               Comando ejecutado
+//          RET: gd->buffRespCmd = "1"               Comando ejecutado
+//          STO: gd->buffRespCmd = "1"               Comando ejecutado
+//          SVE: gd->buffRespCmd = "0"               Error comando
+//               gd->buffRespCmd = "1"               Comando ejecutado
+//          GCO: gd->buffRespCmd = "XX"              Corriente medida (Hexaddecinal) 
+//
+/// VERIFICADO: SI
+// 
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 {
   
-  int resultado;
-  int v;
-  int velocidad;
-  
+  int    resultado;
+  int    v;
+  int    velocidad;
+  double iMedida;
+
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
   // medida    de  seguridad  todas  las  implementaciones  de 
@@ -867,7 +877,7 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
      { // ---------------------------------------------------------
        //
-       // !!! Comprobar qu el sensor sea la version de 5 voltios 
+       // 
        //
        // ---------------------------------------------------------
 
@@ -887,7 +897,6 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                       break;
                     }
                
-
                case (IDE_PARAM_RET):
                     { 
                       FNG_SetPowerMotores(true);
@@ -895,7 +904,6 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                       break;
                     }
                
-
                case (IDE_PARAM_STO):
                     { 
                       FNG_SetPowerMotores(false);
@@ -903,10 +911,17 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
                       break;
                     }
                
-
                case (IDE_PARAM_GCO):
                     {
-                  
+
+                      iMedida = mIzq.getCorriente();
+                      dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
+                      
+                  //  #ifdef APP_MODO_DEBUG
+                  //  Serial1.print(F("Mot Izq iMedida: "));
+                  //  Serial1.println(gd->buffRespCmd);
+                  //  #endif
+
                       break;
                     }
                     
@@ -946,8 +961,21 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
-  else                   { strcpy(gd->buffRespCmd,"1"); }
+
+  // ---------------------------------------------
+  // Resultado a retornar
+  // ---------------------------------------------
+  if ( resultado==false)
+     { 
+       strcpy(gd->buffRespCmd,"0");
+     }
+  else
+     {
+       if ( gd->cnv_Param01!=IDE_PARAM_GCO) 
+          {
+            strcpy(gd->buffRespCmd,"1"); 
+          }
+     }
 }
 
 
@@ -973,16 +1001,25 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 //
 //
 // Retorna:
-//     0: Error de comando
-//     1: Ejecucion correcta
+//          INI: gd->buffRespCmd = "1"               Comando ejecutado
+//          AVA: gd->buffRespCmd = "1"               Comando ejecutado
+//          RET: gd->buffRespCmd = "1"               Comando ejecutado
+//          STO: gd->buffRespCmd = "1"               Comando ejecutado
+//          SVE: gd->buffRespCmd = "0"               Error comando
+//               gd->buffRespCmd = "1"               Comando ejecutado
+//          GCO: gd->buffRespCmd = "XX"              Corriente medida (Hexaddecinal) 
+//
+/// VERIFICADO: SI
+// 
 // ---------------------------------------------------------
 
 void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 {
     
-  int resultado;
-  int v;
-  int velocidad;
+  int    resultado;
+  int    v;
+  int    velocidad;
+  double iMedida;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -1042,7 +1079,14 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 
                case (IDE_PARAM_GCO):
                     {
-                  
+                      iMedida = mDer.getCorriente();
+                      dtostrf(iMedida, 4, 1, gd->buffRespCmd);     
+                      
+                  //  #ifdef APP_MODO_DEBUG
+                  //  Serial1.print(F("Mot Der iMedida: "));
+                  //  Serial1.println(gd->buffRespCmd);
+                  //  #endif
+
                       break;
                     }
 
@@ -1083,8 +1127,20 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
-  else                   { strcpy(gd->buffRespCmd,"1"); }
+  // ---------------------------------------------
+  // Resultado a retornar
+  // ---------------------------------------------
+  if ( resultado==false)
+     { 
+       strcpy(gd->buffRespCmd,"0");
+     }
+  else
+     {
+       if ( gd->cnv_Param01!=IDE_PARAM_GCO) 
+          {
+            strcpy(gd->buffRespCmd,"1"); 
+          }
+     }
 }
 
 
@@ -1110,6 +1166,7 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 //
 // Retorna:
 //
+// VERIFICADO: NO
 // 
 // ---------------------------------------------------------
 
@@ -1117,6 +1174,8 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 {
     
   int resultado;
+  int v;
+  int velocidad;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -1142,9 +1201,34 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
                case (IDE_PARAM_AVA): { mDer.avance();    mIzq.avance();    break; }
                case (IDE_PARAM_RET): { mDer.retroceso(); mIzq.retroceso(); break; }
                case (IDE_PARAM_STO): { mDer.paro();      mIzq.paro();      break; }
-               case (IDE_PARAM_SVE): {                                     break; }
                case (IDE_PARAM_GIZ): { mDer.retroceso(); mIzq.avance();    break; }
-               default:              { resultado = false;                  break; }
+               case (IDE_PARAM_SVE):
+                    {
+                      v = gd->cnv_Param02;
+                      if ( v==0x2 )
+                         { // ---------------------------------------------
+                           // Espera tres caracteres ( valores de 0...FF)
+                           // ---------------------------------------------
+                           if ( gc.getBytes(gd->buffRespCmd,v)==v ) 
+                              {
+                                sscanf( gd->buffRespCmd,"%2x",&velocidad);
+                                mDer.velocidad(velocidad);
+                                mIzq.velocidad(velocidad);
+                              }
+                           else
+                              {
+                                resultado = false;
+                              }
+                         }
+
+                      break;
+                    }
+
+               default:
+                   {
+                     resultado = false;
+                     break; 
+                   }
              }
 
      }
