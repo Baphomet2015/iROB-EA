@@ -277,8 +277,8 @@ double UF_BAT::get_IccChgPpak(void)
 // 
 //
 // Retorna:
-//   1  SI Se esta recibiendo tension de recarga
-//   0  NO Se esta recibiendo tension de recarga
+//   true  SI Se esta recibiendo tension de recarga
+//   false NO Se esta recibiendo tension de recarga
 //
 // ---------------------------------------------------------
 
@@ -301,8 +301,8 @@ int UF_BAT::get_FlgCarga(void)
   // tension de recarga, se pone 50 por seguridad, para asegurar
   // que se lee un valor bueno, no ruido
   // ---------------------------------------------------------  
-  if (valor>50)    { valor = 1; }
-  else             { valor = 0; }
+  if (valor>50)    { valor = true;  }
+  else             { valor = false; }
 
 
   return(valor);

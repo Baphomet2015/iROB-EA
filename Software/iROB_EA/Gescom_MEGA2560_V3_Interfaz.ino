@@ -177,7 +177,7 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
 //           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
 //           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 //
-// VERIFICADO: 
+// VERIFICADO: SI
 // 
 // ---------------------------------------------------------
 
@@ -272,12 +272,11 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 //                parametro1      parametro2  retorno
 //           -------------------  ----------  -------
 //           P1 == IDE_PARAM_GET  P2 == CHG   gd->buffRespCmd = Corriente consumida en carga
-//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "0"  Bateria en carga
-//                                            gd->buffRespCmd = "1"  Bateria cargada
+//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "100" ... "25" nivel de carga
 //           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
 //           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 // 
-// VERIFICADO: 
+// VERIFICADO: SI
 // 
 // ---------------------------------------------------------
 
@@ -378,7 +377,7 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 //                                            gd->buffRespCmd = "1"  SI esta conectado el conector
 //           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 //
-// VERIFICADO: 
+// VERIFICADO: SI
 // 
 // ---------------------------------------------------------
 
@@ -402,10 +401,11 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
        // No espera parametro 2 (recibe NOP)
        //
        // ---------------------------------------------------------
-
+       flg = true;
        if ( uf_sys.get_FlgDebug()==true) { strcpy(gd->buffRespCmd,"1"); }
        else                              { strcpy(gd->buffRespCmd,"0"); }
      }
+
 
   if (flg==false)
      {
@@ -439,7 +439,7 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 //                                            gd->buffRespCmd = "1"  SI esta conectado el conector
 //           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 //
-// VERIFICADO: 
+// VERIFICADO: SI
 // 
 // 
 // ---------------------------------------------------------
@@ -464,19 +464,21 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
        // No espera parametro 2 (recibe NOP)
        //
        // ---------------------------------------------------------
+       flg = true;
        if ( uf_bat.get_FlgCarga()==true) { strcpy(gd->buffRespCmd,"1"); }
        else                              { strcpy(gd->buffRespCmd,"0"); }
      }
  
+
   if ( flg==false )
      {
        strcpy(gd->buffRespCmd,"2");
      }
       
-  // #ifdef APP_MODO_DEBUG
-  // Serial1.print(F("CARGA: "));
-  // Serial1.println(gd->buffRespCmd);
-  // #endif
+   //#ifdef APP_MODO_DEBUG
+   //Serial1.print(F("CARGA: "));
+   //Serial1.println(gd->buffRespCmd);
+   //#endif
 }
 
 
@@ -496,20 +498,19 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 //           parametro2: IE_PARAM_NOP
 //                       valor
 //
-
 // Retorna:
 //                parametro1      parametro2  retorno
 //           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "1"  Comando ejecutado
+//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "AAAAMMDD HHMMSS"  
 //                                           
 //           P1 == IDE_PARAM_SET  P2 == valor gd->buffRespCmd = "0"  Error comando
 //                                            gd->buffRespCmd = "1"  Comando ejecutado 
-//           P1 == IDE_PARAM_CHK  P2 == NOP   gd->buffRespCmd = "0"  Error comando
-//                                            gd->buffRespCmd = "1"  Comando ejecutado 
+//           P1 == IDE_PARAM_CHK  P2 == NOP   gd->buffRespCmd = "0"  Reloj no esta funcionando
+//                                            gd->buffRespCmd = "1"  Reloj si esta funcionando
 //           P1 == IDE_PARAM_INI  P2 == NOP   gd->buffRespCmd = "1"  Comando ejecutado 
 //           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 //
-// VERIFICADO: 
+// VERIFICADO: SI
 // 
 // ---------------------------------------------------------
 
@@ -645,10 +646,19 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
              }
      }
  
-  if (flg==true)
+  if ( flg==true )
      {
-       if (resultado==false) { strcpy(gd->buffRespCmd,"0"); }   
-       else                  { strcpy(gd->buffRespCmd,"1"); }    
+       if (resultado==false)
+          { 
+            strcpy(gd->buffRespCmd,"0");
+          }   
+       else
+          { 
+            if ( gd->cnv_Param01!=IDE_PARAM_GET )
+               {
+                 strcpy(gd->buffRespCmd,"1");
+               }
+          }    
      }
   else 
      {
@@ -675,8 +685,24 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 //                       IDE_PARAM_BLK
 //
 // Retorna:
-//          gd->buffRespCmd = "0" Error de comando
-//          gd->buffRespCmd = "1" Comando ejecutado
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_LD1  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
+//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
+//                                P2 == BLK   
+//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
+//
+//           P1 == IDE_PARAM_LD2  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
+//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
+//                                P2 == BLK   
+//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
+//
+//           P1 == IDE_PARAM_LD3  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
+//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
+//                                P2 == BLK   
+//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
+//
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 //
 // VERIFICADO: SI
 // 
@@ -686,7 +712,7 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 {
   int ledID;
   int resultado;
- 
+  int flg;
 
   // ---------------------------------------------------------
   // Generacion  del  pulso de latido, reset del watchDog como 
@@ -697,6 +723,7 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 
   
   resultado = true;
+  flg       = false;
 
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
      { // ---------------------------------------------------------
@@ -709,10 +736,10 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
           {
             switch(gd->cnv_Param01)
                   {
-                    case (IDE_PARAM_LD1): { ledID = IDE_LED_BDEL; break; }
-                    case (IDE_PARAM_LD2): { ledID = IDE_LED_BDET; break; }
-                    case (IDE_PARAM_LD3): { ledID = IDE_LED_RDET; break; }
-                    default:              { resultado = false;    break; }
+                    case (IDE_PARAM_LD1): { flg = true; ledID = IDE_LED_BDEL; break; }
+                    case (IDE_PARAM_LD2): { flg = true; ledID = IDE_LED_BDET; break; }
+                    case (IDE_PARAM_LD3): { flg = true; ledID = IDE_LED_RDET; break; }
+                    default:              {             resultado = false;    break; }
                   }
           } 
 
@@ -723,18 +750,21 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
                     case (IDE_PARAM_OFF): { uf_sys.setLed(ledID,IDE_LED_OFF); break; }
                     case (IDE_PARAM__ON): { uf_sys.setLed(ledID,IDE_LED_ON);  break; }
                     case (IDE_PARAM_BLK): { uf_sys.setLed(ledID,IDE_LED_BLK); break; }
-                    default:              { resultado = false;                break; }
+                    default:              { flg = false;                      break; }
                   }
           }
      }
-  else
+
+
+  if ( flg==true )
      {
-       resultado = false;
+       if (resultado==false) { strcpy(gd->buffRespCmd,"0"); }   
+       else                  { strcpy(gd->buffRespCmd,"1"); }    
      }
-
-  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
-  else                   { strcpy(gd->buffRespCmd,"1"); }
-
+  else 
+     {
+       strcpy(gd->buffRespCmd,"2");
+     }
 }
 
 
@@ -749,12 +779,17 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 //
 //           parametro1: IDE_PARAM_GET
 //
-//           parametro2: IDE_PARAM_SMA
-//                       IDE_PARAM_SMB    
+//           parametro2: IDE_PARAM_SSA
+//                       IDE_PARAM_SSB    
 //
 // Retorna:
+//                parametro1      parametro2  retorno
+//           -------------------  ----------  -------
+//           P1 == IDE_PARAM_GET  P2 == SSA   gd->buffRespCmd = "xxx"  Temperatura leida con el sensor Ambiente
+//                                P2 == SSB   gd->buffRespCmd = "xxx"  Temperatura leida con el sensor Infrarrojo
+//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
 //
-// VERIFICADO: NO
+//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
 // 
 // ---------------------------------------------------------
 
@@ -778,7 +813,7 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
   if ( gd->cnv_Tipo==IDE_T_COMANDO_ENVIO )
      { // ---------------------------------------------------------
        //
-       // !!! Comprobar qu el sensor sea la version de 5 voltios 
+       // 
        //
        // ---------------------------------------------------------
 
@@ -819,7 +854,7 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
        resultado = false;
      }
 
-  if ( resultado==false) { strcpy(gd->buffRespCmd,"0"); }
+  if ( resultado==false) { strcpy(gd->buffRespCmd,"2"); }
   
 }
 
