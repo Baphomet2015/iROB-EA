@@ -1,20 +1,16 @@
-// ----------------------------------------------------------
-//
-//                       GESCOM 
-//                 Gestor de comandos
-//            Version para Arduino MEGA2560
-// 
-// Autor:
-// Fichero:        gescom_MEGA2560_Fn_V3.cpp
-// Hardware:       -
-// Version:        3.0, Junio 2015
-//
-// Funcionalidad:  Procesador de Comandos
-//
-// Notas:          REVISADO 08/04/2016                      
-//                 
-//                 
-// ----------------------------------------------------------
+
+
+
+//! ----------------------------------------------------------
+//!
+//! @file
+//! @author  AAL
+//! @brief   Funciones del Procesador de Comandos
+//! @date    08/04/2016                      
+//! @warning Codigo revisado: SI
+//! @version 3.0, Junio 2015
+//!                 
+//! ----------------------------------------------------------
                   
 #include <stdio.h>
 #include <string.h>
@@ -23,48 +19,24 @@
 #include "UF_SYS.h"
 #include "Gescom_MEGA2560_V3.h"
 #include "Gescom_MEGA2560_V3_CMD.h"
-  
 
 
 
 
 
 
-
-// ---------------------------------------------------------
-//
-//
-//
-//         FUNCIONES DE IMPLEMENTACION DE COMANDOS
-//
-//
-//
-//
-//
-//
-//
-//
-// ---------------------------------------------------------
-
-
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_CM_R00(GESCOM_DATA* gd)
-//
-// Uso:      Comando Reservado
-// Sintaxis: comando:    IDE_CMD_CM_R00
-//           
-//           parametro1: -
-//
-//           parametro2: -
-//
-// Retorna:
-//
-//
-// VERIFICADO: NO
-//
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//!
+//! @brief   Uso: Comando Reservado
+//! @note    Comando implementado: IDE_CMD_CM_R00
+//!           
+//! @param   GESCOM_DATA* gd
+//!
+//! @return  Retorna:
+//!
+//! @warning Codigo verificado: NO
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_CM_R00(GESCOM_DATA* gd)
 {
@@ -83,23 +55,18 @@ void cmd_Comando_CM_R00(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_CM_R01(GESCOM_DATA* gd)
-//
-// Uso:      Comando Reservado
-// Sintaxis: comando:    IDE_CMD_CM_R01
-//           
-//           parametro1: -
-//
-//           parametro2: -
-//
-// Retorna:
-//
-//
-// VERIFICADO: NO
-//
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//!
+//! @brief   Uso: Comando Reservado
+//! @note    Comando implementado: IDE_CMD_CM_R01
+//!           
+//! @param   GESCOM_DATA* gd
+//!
+//! @return  Retorna:
+//!
+//! @warning Codigo verificado: NO
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_CM_R01(GESCOM_DATA* gd)
 {
@@ -118,23 +85,20 @@ void cmd_Comando_CM_R01(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
-//
-// Uso:      Comando para debug (no se utiliza)
-// Sintaxis: comando:    IDE_CMD_CM_DBG
-//           
-//           parametro1: -
-//
-//           parametro2: -
-//
-// Retorna:
-//
-//
-// VERIFICADO: NO
-//
-// ---------------------------------------------------------
+
+//! ---------------------------------------------------------
+//!
+//! @brief   Comando para debug (no se utiliza)
+
+//! @note    Comando implementado: IDE_CMD_CM_DBG
+//!           
+//! @param   GESCOM_DATA* gd
+//!
+//! @return  Retorna:
+//!
+//! @warning Codigo verificado: NO
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
 {
@@ -153,33 +117,31 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
 
 
 
-
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
-//
-// Uso:      Retorna informacion relacionada con la bateria
-//           de LiPo
-// Sintaxis: comando:    IDE_CMD_B_LIPO
-//           
-//           parametro1: IDE_PARAM_GET
-//
-//           parametro2: IDE_PARAM_CHG
-//                       IDE_PARAM_POW
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == CHG   gd->buffRespCmd = Corriente consumida en carga
-//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "0"  Bateria en carga
-//                                            gd->buffRespCmd = "1"  Bateria cargada
-//           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-//
-// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//!
+//! @brief   Uso: Retorna informacion relacionada con la
+//!          bateria de LiPo
+//! 
+//! @note    Comando implementado: IDE_CMD_B_LIPO
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET
+//! gd->cnv_Param02: IDE_PARAM_CHG,IDE_PARAM_POW
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = CHG Retorna: gd->buffRespCmd = Icc. consumida en carga
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = POW Retorna: gd->buffRespCmd = "0"  Bateria en carga
+//!                                                                gd->buffRespCmd = "1"  Bateria cargada
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+//! gd->cnv_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 {
@@ -256,29 +218,29 @@ void cmd_Comando_B_LIPO(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
-//
-// Uso:      Retorna informacion relacionada con la bateria
-//           de PowerPack
-// Sintaxis: comando:    IDE_CMD_B_PPAK
-//           
-//           parametro1: IDE_PARAM_GET
-//
-//           parametro2: IDE_PARAM_CHG
-//                       IDE_PARAM_POW
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == CHG   gd->buffRespCmd = Corriente consumida en carga
-//           P1 == IDE_PARAM_GET  P2 == POW   gd->buffRespCmd = "100" ... "25" nivel de carga
-//           P1 == IDE_PARAM_GET  P2 == ???   gd->buffRespCmd = "2"  Error comando
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-// 
-// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Retorna informacion relacionada con la
+//!          bateria de PowerPack
+//! 
+//! @note    Comando implementado: IDE_CMD_B_PPAK
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET
+//! gd->cnv_Param02: IDE_PARAM_CHG,IDE_PARAM_POW
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = CHG Retorna: gd->buffRespCmd = Icc. consumida en carga
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = POW Retorna: gd->buffRespCmd = "100" ... "25"  %de carga
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+//! gd->cnv_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 {
