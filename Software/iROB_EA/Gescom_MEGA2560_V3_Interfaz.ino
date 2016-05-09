@@ -3,9 +3,16 @@
 
 //! ----------------------------------------------------------
 //!
-//! @file
+//! @file 
 //! @author  AAL
-//! @brief   Funciones del Procesador de Comandos
+//! 
+//! @brief   <b>FUNCIONES DEL PROCESADOR DE COMANDOS</b>\n
+//!          Estas funciones son las que implmentan los diferentes   
+//!          comandos que ejecuta el iROB-EA\n
+//!          Los comandos se definen, modifican etc utilizando la BBDD
+//!          <b>Gescom_MEGA2560_V3.mdb</b>, consultar la información asociada
+//!          a esta BBDD para más detalles\n
+//!  
 //! @date    08/04/2016                      
 //! @warning Codigo revisado: SI
 //! @version 3.0, Junio 2015
@@ -320,29 +327,28 @@ void cmd_Comando_B_PPAK(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
-//
-// Uso:       Retorna valor del flag hardware que indica si 
-//            esta conectado el conector de DEBUG
-// Sintaxis: comando:    IDE_CMD_S_DBG
-//           
-//           parametro1: IDE_PARAM_GET
-//
-//           parametro2: IDE_PARAM_NOP
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "0"  NO esta conectado el conector
-//                                            gd->buffRespCmd = "1"  SI esta conectado el conector
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-//
-// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
-
+//! ---------------------------------------------------------
+//! @brief   Uso: Retorna valor del flag hardware que indica si
+//!          esta conectado el conector de DEBUG
+//! 
+//! @note    Comando implementado: IDE_CMD_S_DBG
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET
+//! gd->cnv_Param02: IDE_PARAM_NOP
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = NOP Retorna: gd->buffRespCmd = "0"  NO esta conectado el conector
+//!                                                       Retorna: gd->buffRespCmd = "1"  SI esta conectado el conector
+//! gd->cnv_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 {
   int v;
@@ -382,29 +388,28 @@ void cmd_Comando_S_CDBG(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
-//
-// Uso:       Retorna valor del flag hardware que indica si 
-//            se esta recibiendo tension de recarga
-// Sintaxis: comando:    IDE_CMD_S_VCHG
-//           
-//           parametro1: IDE_PARAM_GET
-//
-//           parametro2: IDE_PARAM_NOP
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "0"  NO esta conectado el conector
-//                                            gd->buffRespCmd = "1"  SI esta conectado el conector
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-//
-// VERIFICADO: SI
-// 
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Retorna valor del flag hardware que indica si
+//!          se esta recibiendo tension de recarga
+//! 
+//! @note    Comando implementado: IDE_CMD_S_VCHG
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET
+//! gd->cnv_Param02: IDE_PARAM_NOP
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = NOP Retorna: gd->buffRespCmd = "0"  NO se recibe V. de carga
+//!                                                       Retorna: gd->buffRespCmd = "1"  SI se recibe V. de carga
+//! gd->cnv_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 {
@@ -444,37 +449,31 @@ void cmd_Comando_S_VCHG(GESCOM_DATA* gd)
 }
 
 
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_R_TIME( GESCOM_DATA* gd )
-//
-// Uso:  Control del reloj de tiempo real 
-// Sintaxis: comando:    IDE_CMD_R_TIME
-//
-//           parametro1: IDE_PARAM_GET 
-//                       IDE_PARAM_SET  
-//                       IDE_PARAM_CHK
-//                       IDE_PARAM_INI
-//
-//           parametro2: IE_PARAM_NOP
-//                       valor
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == NOP   gd->buffRespCmd = "AAAAMMDD HHMMSS"  
-//                                           
-//           P1 == IDE_PARAM_SET  P2 == valor gd->buffRespCmd = "0"  Error comando
-//                                            gd->buffRespCmd = "1"  Comando ejecutado 
-//           P1 == IDE_PARAM_CHK  P2 == NOP   gd->buffRespCmd = "0"  Reloj no esta funcionando
-//                                            gd->buffRespCmd = "1"  Reloj si esta funcionando
-//           P1 == IDE_PARAM_INI  P2 == NOP   gd->buffRespCmd = "1"  Comando ejecutado 
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-//
-// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Control del reloj de tiempo real
+//! 
+//! @note    Comando implementado: IDE_CMD_R_TIME
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET,IDE_PARAM_SET,IDE_PARAM_CHK,IDE_PARAM_INI
+//! gd->cnv_Param02: IDE_PARAM_NOP, valor
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = NOP   Retorna: gd->buffRespCmd = "AAAAMMDD HHMMSS"
+//! gd->cnv_Param01 = IDE_PARAM_SET gd->cnv_Param02 = valor Retorna: gd->buffRespCmd = "0"  Error comando
+//!                                                                  gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_CHK gd->cnv_Param02 = NOP   Retorna: gd->buffRespCmd = "0"  Reloj no esta funcionando
+//!                                                                  gd->buffRespCmd = "1"  Reloj si esta funcionando
+//! gd->cnv_Param01 = IDE_PARAM_INI gd->cnv_Param02 = NOP   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 {
@@ -630,45 +629,42 @@ void cmd_Comando_R_TIME(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_L_LEDS( GESCOM_DATA* gd )
-//
-// Uso: Control de los leds      
-// Sintaxis: 
-//           comando:    IDE_CMD_L_LEDS    
-//
-//           parametro1: IDE_PARAM_LD1
-//                       IDE_PARAM_LD2 
-//                       IDE_PARAM_LD3 
-//
-//           parametro2: IDE_PARAM_OFF
-//                       IDE_PARAM__ON
-//                       IDE_PARAM_BLK
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_LD1  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
-//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
-//                                P2 == BLK   
-//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
-//
-//           P1 == IDE_PARAM_LD2  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
-//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
-//                                P2 == BLK   
-//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
-//
-//           P1 == IDE_PARAM_LD3  P2 == OFF   gd->buffRespCmd = "1"  Comando ejecutado
-//                                P2 == _ON   gd->buffRespCmd = "0"  Error comando
-//                                P2 == BLK   
-//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
-//
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-//
-// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+
+//! ---------------------------------------------------------
+//! @brief   Uso: Retorna informacion relacionada con la
+//!          bateria de PowerPack
+//! 
+//! @note    Comando implementado: IDE_CMD_L_LEDS
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_LD1,IDE_PARAM_LD2,IDE_PARAM_LD3
+//! gd->cnv_Param02: IDE_PARAM_OFF,IDE_PARAM__ON,IDE_PARAM_BLK
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_LD1 gd->cnv_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//!                                 gd->cnv_Param02 = _ON Retorna: gd->buffRespCmd = "0"  Error comando
+//!                                 gd->cnv_Param02 = BLK  
+//!                                 gd->cnv_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+//!                                 
+//! gd->cnv_Param01 = IDE_PARAM_LD2 gd->cnv_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//!                                 gd->cnv_Param02 = _ON Retorna: gd->buffRespCmd = "0"  Error comando
+//!                                 gd->cnv_Param02 = BLK  
+//!                                 gd->cnv_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+//!                                                                  
+//! gd->cnv_Param01 = IDE_PARAM_LD3 gd->cnv_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//!                                 gd->cnv_Param02 = _ON Retorna: gd->buffRespCmd = "0"  Error comando
+//!                                 gd->cnv_Param02 = BLK  
+//!                                 gd->cnv_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+//!                                 
+//! gd->cnv_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 {
@@ -731,29 +727,28 @@ void cmd_Comando_L_LEDS(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_S_MLX9( GESCOM_DATA* gd )
-//
-// Uso: Control del sensor de Temperatura MLX 90614
-// Sintaxis: 
-//           comando:    IDE_CMD_S_MLX9    
-//
-//           parametro1: IDE_PARAM_GET
-//
-//           parametro2: IDE_PARAM_SSA
-//                       IDE_PARAM_SSB    
-//
-// Retorna:
-//                parametro1      parametro2  retorno
-//           -------------------  ----------  -------
-//           P1 == IDE_PARAM_GET  P2 == SSA   gd->buffRespCmd = "xxx"  Temperatura leida con el sensor Ambiente
-//                                P2 == SSB   gd->buffRespCmd = "xxx"  Temperatura leida con el sensor Infrarrojo
-//                                P2 == ???   gd->buffRespCmd = "2"  Error comando
-//
-//           P1 == ???                        gd->buffRespCmd = "2"  Error comando
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Control del sensor de Temperatura MLX 90614
+//! 
+//! @note    Comando implementado: IDE_CMD_S_MLX9
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_GET
+//! gd->cnv_Param02: IDE_PARAM_SSA,IDE_PARAM_SSB
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_GET gd->cnv_Param02 = IDE_PARAM_SSA Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//!                                 gd->cnv_Param02 = IDE_PARAM_SSB Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//!                                 gd->cnv_Param02 = ???           Retorna: gd->buffRespCmd = "2"  Error comando
+//! gd->cnv_Param01 = ???                                           Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 {
@@ -822,36 +817,31 @@ void cmd_Comando_S_MLX9(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
-//
-// Uso: Control del motor izquierdo
-// Sintaxis: 
-//           comando:    IDE_CMD_C_MIZQ    
-//
-//           parametro1: IDE_PARAM_INI
-//                       IDE_PARAM_AVA
-//                       IDE_PARAM_RET
-//                       IDE_PARAM_STO
-//                       IDE_PARAM_SVE
-//                       IDE_PARAM_GCO
-//
-//           parametro2: IDE_PARAM_NOP
-//                       valor
-//
-// Retorna:
-//          INI: gd->buffRespCmd = "1"               Comando ejecutado
-//          AVA: gd->buffRespCmd = "1"               Comando ejecutado
-//          RET: gd->buffRespCmd = "1"               Comando ejecutado
-//          STO: gd->buffRespCmd = "1"               Comando ejecutado
-//          SVE: gd->buffRespCmd = "0"               Error comando
-//               gd->buffRespCmd = "1"               Comando ejecutado
-//          GCO: gd->buffRespCmd = "XX"              Corriente medida (Hexaddecinal) 
-//
-/// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Control del motor izquierdo
+//! 
+//! @note    Comando implementado: IDE_CMD_C_MIZQ
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_INI,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,IDE_PARAM_GCO
+//! gd->cnv_Param02: IDE_PARAM_NOP,valor
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_AVA gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_RET gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_STO gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_SVE gd->cnv_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_GCO gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "XX"   Corriente medida (Hexaddecinal) 
+//!                                 
+//! gd->cnv_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 {
@@ -977,38 +967,31 @@ void cmd_Comando_C_MIZQ(GESCOM_DATA* gd)
 
 
 
-
-// ---------------------------------------------------------
-//
-// void cmd_Comando_C_MDER(GESCOM_DATA* gd)
-//
-// Uso: Control del motor derecho
-// Sintaxis: 
-//           comando:    IDE_CMD_C_MDER    
-//
-//           parametro1: IDE_PARAM_INI*
-//                       IDE_PARAM_AVA*
-//                       IDE_PARAM_RET
-//                       IDE_PARAM_STO*
-//                       IDE_PARAM_SVE*
-//                       IDE_PARAM_GCO*
-//
-//           parametro2: IDE_PARAM_NOP
-//                       valor
-//
-//
-// Retorna:
-//          INI: gd->buffRespCmd = "1"               Comando ejecutado
-//          AVA: gd->buffRespCmd = "1"               Comando ejecutado
-//          RET: gd->buffRespCmd = "1"               Comando ejecutado
-//          STO: gd->buffRespCmd = "1"               Comando ejecutado
-//          SVE: gd->buffRespCmd = "0"               Error comando
-//               gd->buffRespCmd = "1"               Comando ejecutado
-//          GCO: gd->buffRespCmd = "XX"              Corriente medida (Hexaddecinal) 
-//
-/// VERIFICADO: SI
-// 
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//! @brief   Uso: Control del motor derecho
+//! 
+//! @note    Comando implementado: IDE_CMD_C_MDER
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_INI,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,IDE_PARAM_GCO
+//! gd->cnv_Param02: IDE_PARAM_NOP,valor
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_AVA gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_RET gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_STO gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_SVE gd->cnv_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_GCO gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "XX" Corriente medida (Hexaddecinal) 
+//!                                 
+//! gd->cnv_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: SI
+//!
+//! ---------------------------------------------------------
 
 void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 {
@@ -1142,31 +1125,33 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 
 
 
-// ---------------------------------------------------------
-//
-// void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
-//
-// Uso: Generación de movimiento
-// Sintaxis: 
-//           comando:    IDE_CMD_C_RMOV    
-//
-//           parametro1: IDE_PARAM_INI
-//                       IDE_PARAM_GDE
-//                       IDE_PARAM_AVA
-//                       IDE_PARAM_SVE
-//                       IDE_PARAM_STO
-//                       IDE_PARAM_GIZ
-//
-//           parametro2: IDE_PARAM_NOP
-//                       valor
-//
-//
-// Retorna:
-//
-// VERIFICADO: NO
-// 
-// ---------------------------------------------------------
-
+//! ---------------------------------------------------------
+//! @brief   Uso: Generacion de movimiento
+//! 
+//! @note    Comando implementado: IDE_CMD_C_RMOV
+//!           
+//! @param   GESCOM_DATA* gd
+//! @code
+//! gd->cnv_Param01: IDE_PARAM_INI,IDE_PARAM_GDE,IDE_PARAM_GIZ,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,
+//! gd->cnv_Param02: IDE_PARAM_NOP,valor
+//! @endcode
+//!
+//! @return 
+//! @code
+//! gd->cnv_Param01 = IDE_PARAM_INI gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_GDE gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_GIZ gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_AVA gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_RET gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_STO gd->cnv_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = IDE_PARAM_SVE gd->cnv_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+//! gd->cnv_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+//! @endcode
+//!
+//! @warning Codigo verificado: NO
+//!
+//! ---------------------------------------------------------
+//! 
 void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 {
     
@@ -1195,10 +1180,10 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
              {
                case (IDE_PARAM_INI): { mDer.paro();      mIzq.paro();      break; }
                case (IDE_PARAM_GDE): { mDer.avance();    mIzq.retroceso(); break; }
+               case (IDE_PARAM_GIZ): { mDer.retroceso(); mIzq.avance();    break; }
                case (IDE_PARAM_AVA): { mDer.avance();    mIzq.avance();    break; }
                case (IDE_PARAM_RET): { mDer.retroceso(); mIzq.retroceso(); break; }
                case (IDE_PARAM_STO): { mDer.paro();      mIzq.paro();      break; }
-               case (IDE_PARAM_GIZ): { mDer.retroceso(); mIzq.avance();    break; }
                case (IDE_PARAM_SVE):
                     {
                       v = gd->cnv_Param02;

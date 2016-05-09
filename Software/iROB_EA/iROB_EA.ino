@@ -1,27 +1,29 @@
 
-// ---------------------------------------------------------
-//
-// Proyecto:       iROB-EA
-// Version:        1.0
-// Fichero:        iROB_EA.ino
-// Autor:
-// Hardware:       Arduino MEGA 2560
-// Fecha:          Abril 2015
-//
-// Version de IDE Arduino: 1.6.4
-//
-// Leitmotiv:      "Toda Bestia necesita un Cerebro..."  
-//                  Dr. Frankenstein, en su laboratorio
-//
-//                 "¡Larga y próspera vida!."   
-//                  Sr. Spock 
-//
-//
-// Funcionalidad:  Modulo principal de la Aplicacion
-//
-// Notas:          REVISADO 08/04/2016      
-//
-// ---------------------------------------------------------
+//! ---------------------------------------------------------
+//!
+//! @mainpage 
+//!                 
+//! @brief   Proyecto: iROB-EA
+//! @date    Fecha:    Abril 2015
+//! @author  AAL
+//!
+//! @remarks Hardware Arduino MEGA 2560\n
+//!
+//! @version Versión de SW 1.0
+//! @version Versión de IDE Arduino: 1.6.4
+//!
+//! @brief   <b>Leitmotiv:</b>\n
+//!          "Toda Bestia necesita un Cerebro...", Dr. Frankenstein, en su laboratorio\n
+//!          "¡Larga y próspera vida!.", Sr. Spock\n
+//!
+//! ---------------------------------------------------------
+
+//! ---------------------------------------------------------
+//!
+//! @brief   Funcionalidad:  Modulo principal de la Aplicacion
+//!
+//! @warning REVISADO 08/04/2016      
+//! ---------------------------------------------------------
 
 #include <Arduino.h>
 #include <stdlib.h>

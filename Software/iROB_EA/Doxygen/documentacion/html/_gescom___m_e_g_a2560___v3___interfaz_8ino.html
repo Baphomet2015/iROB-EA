@@ -89,7 +89,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>Funciones del Procesador de Comandos.  
+<p><b>FUNCIONES DEL PROCESADOR DE COMANDOS</b><br />
+ Estas funciones son las que implmentan los diferentes comandos que ejecuta el iROB-EA<br />
+ Los comandos se definen, modifican etc utilizando la BBDD <b>Gescom_MEGA2560_V3.mdb</b>, consultar la información asociada a esta BBDD para más detalles<br />
+ 
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;string.h&gt;</code><br />
@@ -116,37 +119,38 @@ Functions</h2></td></tr>
 <tr class="memitem:a337a7577f586434b2b72595b1d401f0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a337a7577f586434b2b72595b1d401f0e">cmd_Comando_B_PPAK</a> (GESCOM_DATA *gd)</td></tr>
 <tr class="memdesc:a337a7577f586434b2b72595b1d401f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Retorna informacion relacionada con la bateria de PowerPack.  <a href="#a337a7577f586434b2b72595b1d401f0e">More...</a><br /></td></tr>
 <tr class="separator:a337a7577f586434b2b72595b1d401f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad1a82b3f1bc9fc116cf8a05ae4712b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad1a82b3f1bc9fc116cf8a05ae4712b4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_S_CDBG</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:aad1a82b3f1bc9fc116cf8a05ae4712b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#aad1a82b3f1bc9fc116cf8a05ae4712b4">cmd_Comando_S_CDBG</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:aad1a82b3f1bc9fc116cf8a05ae4712b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Retorna valor del flag hardware que indica si esta conectado el conector de DEBUG.  <a href="#aad1a82b3f1bc9fc116cf8a05ae4712b4">More...</a><br /></td></tr>
 <tr class="separator:aad1a82b3f1bc9fc116cf8a05ae4712b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c8e0cf02cde535e4eaff6fb8b7f0adc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c8e0cf02cde535e4eaff6fb8b7f0adc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_S_VCHG</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:a2c8e0cf02cde535e4eaff6fb8b7f0adc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a2c8e0cf02cde535e4eaff6fb8b7f0adc">cmd_Comando_S_VCHG</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:a2c8e0cf02cde535e4eaff6fb8b7f0adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Retorna valor del flag hardware que indica si se esta recibiendo tension de recarga.  <a href="#a2c8e0cf02cde535e4eaff6fb8b7f0adc">More...</a><br /></td></tr>
 <tr class="separator:a2c8e0cf02cde535e4eaff6fb8b7f0adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bca73c989666a2969dbc1ac7fa94af3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bca73c989666a2969dbc1ac7fa94af3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_R_TIME</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:a4bca73c989666a2969dbc1ac7fa94af3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a4bca73c989666a2969dbc1ac7fa94af3">cmd_Comando_R_TIME</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:a4bca73c989666a2969dbc1ac7fa94af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Control del reloj de tiempo real.  <a href="#a4bca73c989666a2969dbc1ac7fa94af3">More...</a><br /></td></tr>
 <tr class="separator:a4bca73c989666a2969dbc1ac7fa94af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1f0e8938dcb96dae770470fbc2ccb8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1f0e8938dcb96dae770470fbc2ccb8e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_L_LEDS</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:af1f0e8938dcb96dae770470fbc2ccb8e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#af1f0e8938dcb96dae770470fbc2ccb8e">cmd_Comando_L_LEDS</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:af1f0e8938dcb96dae770470fbc2ccb8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Retorna informacion relacionada con la bateria de PowerPack.  <a href="#af1f0e8938dcb96dae770470fbc2ccb8e">More...</a><br /></td></tr>
 <tr class="separator:af1f0e8938dcb96dae770470fbc2ccb8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb509ac66221f928e1aa18fa649176f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb509ac66221f928e1aa18fa649176f4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_S_MLX9</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:acb509ac66221f928e1aa18fa649176f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#acb509ac66221f928e1aa18fa649176f4">cmd_Comando_S_MLX9</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:acb509ac66221f928e1aa18fa649176f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Control del sensor de Temperatura MLX 90614.  <a href="#acb509ac66221f928e1aa18fa649176f4">More...</a><br /></td></tr>
 <tr class="separator:acb509ac66221f928e1aa18fa649176f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3489b010361bf072d159295afd7086a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3489b010361bf072d159295afd7086a7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a3489b010361bf072d159295afd7086a7">cmd_Comando_C_MIZQ</a> (GESCOM_DATA *gd)</td></tr>
-<tr class="memdesc:a3489b010361bf072d159295afd7086a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">VERIFICADO: SI. <br /></td></tr>
+<tr class="memitem:a3489b010361bf072d159295afd7086a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a3489b010361bf072d159295afd7086a7">cmd_Comando_C_MIZQ</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:a3489b010361bf072d159295afd7086a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Control del motor izquierdo.  <a href="#a3489b010361bf072d159295afd7086a7">More...</a><br /></td></tr>
 <tr class="separator:a3489b010361bf072d159295afd7086a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24e35e85f799a97fbf24ffa7fb32bea7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a24e35e85f799a97fbf24ffa7fb32bea7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a24e35e85f799a97fbf24ffa7fb32bea7">cmd_Comando_C_MDER</a> (GESCOM_DATA *gd)</td></tr>
-<tr class="memdesc:a24e35e85f799a97fbf24ffa7fb32bea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">VERIFICADO: SI. <br /></td></tr>
+<tr class="memitem:a24e35e85f799a97fbf24ffa7fb32bea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a24e35e85f799a97fbf24ffa7fb32bea7">cmd_Comando_C_MDER</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:a24e35e85f799a97fbf24ffa7fb32bea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Control del motor derecho.  <a href="#a24e35e85f799a97fbf24ffa7fb32bea7">More...</a><br /></td></tr>
 <tr class="separator:a24e35e85f799a97fbf24ffa7fb32bea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e318e5158915a5ff22b546547ccdc61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e318e5158915a5ff22b546547ccdc61"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_C_RMOV</b> (GESCOM_DATA *gd)</td></tr>
+<tr class="memitem:a7e318e5158915a5ff22b546547ccdc61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_gescom___m_e_g_a2560___v3___interfaz_8ino.html#a7e318e5158915a5ff22b546547ccdc61">cmd_Comando_C_RMOV</a> (GESCOM_DATA *gd)</td></tr>
+<tr class="memdesc:a7e318e5158915a5ff22b546547ccdc61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uso: Generacion de movimiento.  <a href="#a7e318e5158915a5ff22b546547ccdc61">More...</a><br /></td></tr>
 <tr class="separator:a7e318e5158915a5ff22b546547ccdc61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Funciones del Procesador de Comandos. </p>
+<div class="textblock"><p><b>FUNCIONES DEL PROCESADOR DE COMANDOS</b><br />
+ Estas funciones son las que implmentan los diferentes comandos que ejecuta el iROB-EA<br />
+ Los comandos se definen, modifican etc utilizando la BBDD <b>Gescom_MEGA2560_V3.mdb</b>, consultar la información asociada a esta BBDD para más detalles<br />
+</p>
 <hr/>
-<dl class="section author"><dt>Author</dt><dd>AAL </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>AAL</dd></dl>
 <dl class="section date"><dt>Date</dt><dd>08/04/2016 </dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Codigo revisado: SI </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>3.0, Junio 2015 <hr/>
@@ -206,6 +210,93 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_C_RMOV</b
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = CHG Retorna: gd-&gt;buffRespCmd = Icc. consumida en carga</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = POW Retorna: gd-&gt;buffRespCmd = &quot;100&quot; ... &quot;25&quot;  %de carga</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = ??? Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = ???                                 Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a24e35e85f799a97fbf24ffa7fb32bea7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_C_MDER </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Control del motor derecho. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_C_MDER</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_INI,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,IDE_PARAM_GCO</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP,valor</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_AVA gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_RET gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_STO gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_SVE gd-&gt;cnv_Param02 = valor Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GCO gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;XX&quot; Corriente medida (Hexaddecinal) </div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                                </div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;gd-&gt;cnv_Param01 = ???                                   Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3489b010361bf072d159295afd7086a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_C_MIZQ </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Control del motor izquierdo. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_C_MIZQ</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_INI,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,IDE_PARAM_GCO</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP,valor</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_AVA gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_RET gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_STO gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_SVE gd-&gt;cnv_Param02 = valor Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GCO gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;XX&quot;   Corriente medida (Hexaddecinal) </div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;                                </div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;gd-&gt;cnv_Param01 = ???                                   Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7e318e5158915a5ff22b546547ccdc61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_C_RMOV </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Generacion de movimiento. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_C_RMOV</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_INI,IDE_PARAM_GDE,IDE_PARAM_GIZ,IDE_PARAM_AVA,IDE_PARAM_RET,IDE_PARAM_STO,IDE_PARAM_SVE,</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP,valor</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_INI gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GDE gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GIZ gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_AVA gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_RET gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_STO gd-&gt;cnv_Param02 = ???   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_SVE gd-&gt;cnv_Param02 = valor Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;gd-&gt;cnv_Param01 = ???                                   Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: NO <hr/>
  </dd></dl>
 
 </div>
@@ -293,6 +384,151 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>cmd_Comando_C_RMOV</b
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Retorna:</dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: NO <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af1f0e8938dcb96dae770470fbc2ccb8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_L_LEDS </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Retorna informacion relacionada con la bateria de PowerPack. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_L_LEDS</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_LD1,IDE_PARAM_LD2,IDE_PARAM_LD3</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_OFF,IDE_PARAM__ON,IDE_PARAM_BLK</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_LD1 gd-&gt;cnv_Param02 = OFF Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                gd-&gt;cnv_Param02 = _ON Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  Error comando</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                                gd-&gt;cnv_Param02 = BLK  </div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;                                gd-&gt;cnv_Param02 = ??? Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                                </div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_LD2 gd-&gt;cnv_Param02 = OFF Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;                                gd-&gt;cnv_Param02 = _ON Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  Error comando</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                                gd-&gt;cnv_Param02 = BLK  </div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                                gd-&gt;cnv_Param02 = ??? Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;                                                                 </div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_LD3 gd-&gt;cnv_Param02 = OFF Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                                gd-&gt;cnv_Param02 = _ON Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  Error comando</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                                gd-&gt;cnv_Param02 = BLK  </div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                                gd-&gt;cnv_Param02 = ??? Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                                </div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;gd-&gt;cnv_Param01 = ???                                 Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4bca73c989666a2969dbc1ac7fa94af3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_R_TIME </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Control del reloj de tiempo real. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_R_TIME</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_GET,IDE_PARAM_SET,IDE_PARAM_CHK,IDE_PARAM_INI</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP, valor</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = NOP   Retorna: gd-&gt;buffRespCmd = &quot;AAAAMMDD HHMMSS&quot;</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_SET gd-&gt;cnv_Param02 = valor Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  Error comando</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                                                                 gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_CHK gd-&gt;cnv_Param02 = NOP   Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  Reloj no esta funcionando</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;                                                                 gd-&gt;buffRespCmd = &quot;1&quot;  Reloj si esta funcionando</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_INI gd-&gt;cnv_Param02 = NOP   Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;gd-&gt;cnv_Param01 = ???                                   Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aad1a82b3f1bc9fc116cf8a05ae4712b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_S_CDBG </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Retorna valor del flag hardware que indica si esta conectado el conector de DEBUG. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_S_DBG</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_GET</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = NOP Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  NO esta conectado el conector</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                                      Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  SI esta conectado el conector</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = ???                                 Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acb509ac66221f928e1aa18fa649176f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_S_MLX9 </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Control del sensor de Temperatura MLX 90614. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_S_MLX9</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_GET</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_SSA,IDE_PARAM_SSB</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = IDE_PARAM_SSA Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                gd-&gt;cnv_Param02 = IDE_PARAM_SSB Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  Comando ejecutado</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;                                gd-&gt;cnv_Param02 = ???           Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;gd-&gt;cnv_Param01 = ???                                           Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
+ </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2c8e0cf02cde535e4eaff6fb8b7f0adc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cmd_Comando_S_VCHG </td>
+          <td>(</td>
+          <td class="paramtype">GESCOM_DATA *&#160;</td>
+          <td class="paramname"><em>gd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Uso: Retorna valor del flag hardware que indica si se esta recibiendo tension de recarga. </p>
+<hr/>
+ <dl class="section note"><dt>Note</dt><dd>Comando implementado: IDE_CMD_S_VCHG</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">GESCOM_DATA*</td><td>gd <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01: IDE_PARAM_GET</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;gd-&gt;cnv_Param02: IDE_PARAM_NOP</div></div><!-- fragment --></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;gd-&gt;cnv_Param01 = IDE_PARAM_GET gd-&gt;cnv_Param02 = NOP Retorna: gd-&gt;buffRespCmd = &quot;0&quot;  NO se recibe V. de carga</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;                                                      Retorna: gd-&gt;buffRespCmd = &quot;1&quot;  SI se recibe V. de carga</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;gd-&gt;cnv_Param01 = ???                                 Retorna: gd-&gt;buffRespCmd = &quot;2&quot;  Error comando</div></div><!-- fragment --></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Codigo verificado: SI <hr/>
  </dd></dl>
 
 </div>
