@@ -10,5 +10,5 @@ Figura 16
 
 . Este circuito es el mismo tanto para la parte emisora como la receptora.
 . Todos los componentes pueden comprarse en www.rsonline.es
-  En el nombre de los ficheros .pdf datasheet de los componentes que se encuentran en este directotio, se ha
+  En el nombre de los ficheros .pdf datasheet de los componentes que se encuentran en este directorio, se ha
   añadido el codigo del componente en RS online para mayor facilidad a la hora de localizar el componente.
