@@ -1,0 +1,5 @@
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\ROB_EA_Consola\obj\Release\ResolveAssemblyReference.cache
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\ROB_EA_Consola\obj\Release\iROB_EA_V1_Consola.FormPrincipal.resources
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\ROB_EA_Consola\obj\Release\iROB_EA_V1_Consola.FormVideo.resources
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\ROB_EA_Consola\obj\Release\iROB_EA_V1_Consola.Resources.resources
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\ROB_EA_Consola\obj\Release\iROB_EA.vbproj.GenerateResource.Cache
