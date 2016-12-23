@@ -5,7 +5,7 @@ Para realizar el cargador inhalambrico del iROB-EA se ha utilizado el circuito r
 de la nota de aplicación de Würth Elektronik (figura 16)
 
 
-3.3 Standard resonant converter ( transmit ter and receiver) 100 W
+3.3 Standard resonant converter ( transmitter and receiver) 100 W
 Figura 16
 
 . Este circuito es el mismo tanto para la parte emisora como la receptora.
