@@ -1,0 +1,615 @@
+\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino}{}\section{F\+:/\+Cortana/\+Google Drive/\+Robots/i\+R\+O\+B-\/\+E\+A/\+Software/i\+R\+O\+B\+\_\+\+E\+A/\+Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.ino File Reference}
+\label{_gescom___m_e_g_a2560___v3___interfaz_8ino}\index{F\+:/\+Cortana/\+Google Drive/\+Robots/i\+R\+O\+B-\/\+E\+A/\+Software/i\+R\+O\+B\+\_\+\+E\+A/\+Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{F\+:/\+Cortana/\+Google Drive/\+Robots/i\+R\+O\+B-\/\+E\+A/\+Software/i\+R\+O\+B\+\_\+\+E\+A/\+Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+
+
+{\bfseries F\+U\+N\+C\+I\+O\+N\+ES D\+EL P\+R\+O\+C\+E\+S\+A\+D\+OR DE C\+O\+M\+A\+N\+D\+OS}~\newline
+ Estas funciones son las que implmentan los diferentes comandos que ejecuta el i\+R\+O\+B-\/\+EA~\newline
+ Los comandos se definen, modifican etc utilizando la B\+B\+DD {\bfseries Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3.\+mdb}, consultar la información asociada a esta B\+B\+DD para más detalles~\newline
+ 
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include $<$string.\+h$>$}\\*
+{\ttfamily \#include $<$inttypes.\+h$>$}\\*
+{\ttfamily \#include $<$Arduino.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}U\+F\+\_\+\+S\+Y\+S.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+C\+M\+D.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac57c6579cefb2d3ef3d759b7eb17792}{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Comando Reservado. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac7d395a871b2c8a45e0f878632d2521}{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Comando Reservado. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4279cb7dd4b63a73a3fcf44390b82e54}{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Comando para debug (no se utiliza) \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a98aff49bf403ccb006895c0443025536}{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Retorna informacion relacionada con la bateria de Li\+Po. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a337a7577f586434b2b72595b1d401f0e}{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Retorna informacion relacionada con la bateria de Power\+Pack. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_aad1a82b3f1bc9fc116cf8a05ae4712b4}{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Retorna valor del flag hardware que indica si esta conectado el conector de D\+E\+B\+UG. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a2c8e0cf02cde535e4eaff6fb8b7f0adc}{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Retorna valor del flag hardware que indica si se esta recibiendo tension de recarga. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4bca73c989666a2969dbc1ac7fa94af3}{cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Control del reloj de tiempo real. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_af1f0e8938dcb96dae770470fbc2ccb8e}{cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Retorna informacion relacionada con la bateria de Power\+Pack. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_acb509ac66221f928e1aa18fa649176f4}{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Control del sensor de Temperatura M\+LX 90614. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a3489b010361bf072d159295afd7086a7}{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Control del motor izquierdo. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a24e35e85f799a97fbf24ffa7fb32bea7}{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Control del motor derecho. \end{DoxyCompactList}\item 
+void \hyperlink{_gescom___m_e_g_a2560___v3___interfaz_8ino_a7e318e5158915a5ff22b546547ccdc61}{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV} (G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$gd)
+\begin{DoxyCompactList}\small\item\em Uso\+: Generacion de movimiento. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+{\bfseries F\+U\+N\+C\+I\+O\+N\+ES D\+EL P\+R\+O\+C\+E\+S\+A\+D\+OR DE C\+O\+M\+A\+N\+D\+OS}~\newline
+ Estas funciones son las que implmentan los diferentes comandos que ejecuta el i\+R\+O\+B-\/\+EA~\newline
+ Los comandos se definen, modifican etc utilizando la B\+B\+DD {\bfseries Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3.\+mdb}, consultar la información asociada a esta B\+B\+DD para más detalles~\newline
+
+
+
+
+
+
+\begin{DoxyAuthor}{Author}
+A\+AL
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+08/04/2016 
+\end{DoxyDate}
+\begin{DoxyWarning}{Warning}
+Codigo revisado\+: SI 
+\end{DoxyWarning}
+\begin{DoxyVersion}{Version}
+3.\+0, Junio 2015 
+
+
+\end{DoxyVersion}
+
+
+\subsection{Function Documentation}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO@{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO}}
+\index{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO@{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+P\+O(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_B_LIPO(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+L\+I\+PO (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a98aff49bf403ccb006895c0443025536}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a98aff49bf403ccb006895c0443025536}
+
+
+Uso\+: Retorna informacion relacionada con la bateria de Li\+Po. 
+
+
+
+
+
+\begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+B\+\_\+\+L\+I\+PO
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET
+2 gd->cnv\_Param02: IDE\_PARAM\_CHG,IDE\_PARAM\_POW
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = CHG Retorna: gd->buffRespCmd = Icc. consumida en carga
+2 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = POW Retorna: gd->buffRespCmd = "0"  Bateria en carga
+3                                                                gd->buffRespCmd = "1"  Bateria cargada
+4 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+5 gd->cnv\_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK@{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK}}
+\index{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK@{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+A\+K(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_B_PPAK(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+B\+\_\+\+P\+P\+AK (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a337a7577f586434b2b72595b1d401f0e}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a337a7577f586434b2b72595b1d401f0e}
+
+
+Uso\+: Retorna informacion relacionada con la bateria de Power\+Pack. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+B\+\_\+\+P\+P\+AK
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET
+2 gd->cnv\_Param02: IDE\_PARAM\_CHG,IDE\_PARAM\_POW
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = CHG Retorna: gd->buffRespCmd = Icc. consumida en carga
+2 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = POW Retorna: gd->buffRespCmd = "100" ... "25"  %de carga
+3 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+4 gd->cnv\_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+E\+R(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_C_MDER(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+D\+ER (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a24e35e85f799a97fbf24ffa7fb32bea7}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a24e35e85f799a97fbf24ffa7fb32bea7}
+
+
+Uso\+: Control del motor derecho. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+\_\+\+M\+D\+ER
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_INI,IDE\_PARAM\_AVA,IDE\_PARAM\_RET,IDE\_PARAM\_STO,IDE\_PARAM\_SVE,IDE\_PARAM\_GCO
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP,valor
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_AVA gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+2 gd->cnv\_Param01 = IDE\_PARAM\_RET gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+3 gd->cnv\_Param01 = IDE\_PARAM\_STO gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+4 gd->cnv\_Param01 = IDE\_PARAM\_SVE gd->cnv\_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+5 gd->cnv\_Param01 = IDE\_PARAM\_GCO gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "XX" Corriente medida
+       (Hexaddecinal) 
+6                                 
+7 gd->cnv\_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+Z\+Q(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_C_MIZQ(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+M\+I\+ZQ (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a3489b010361bf072d159295afd7086a7}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a3489b010361bf072d159295afd7086a7}
+
+
+Uso\+: Control del motor izquierdo. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+\_\+\+M\+I\+ZQ
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_INI,IDE\_PARAM\_AVA,IDE\_PARAM\_RET,IDE\_PARAM\_STO,IDE\_PARAM\_SVE,IDE\_PARAM\_GCO
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP,valor
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_AVA gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+2 gd->cnv\_Param01 = IDE\_PARAM\_RET gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+3 gd->cnv\_Param01 = IDE\_PARAM\_STO gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+4 gd->cnv\_Param01 = IDE\_PARAM\_SVE gd->cnv\_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+5 gd->cnv\_Param01 = IDE\_PARAM\_GCO gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "XX"   Corriente medida
+       (Hexaddecinal) 
+6                                 
+7 gd->cnv\_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV@{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+O\+V(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_C_RMOV(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+\_\+\+R\+M\+OV (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a7e318e5158915a5ff22b546547ccdc61}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a7e318e5158915a5ff22b546547ccdc61}
+
+
+Uso\+: Generacion de movimiento. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+\_\+\+R\+M\+OV
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01:
+       IDE\_PARAM\_INI,IDE\_PARAM\_GDE,IDE\_PARAM\_GIZ,IDE\_PARAM\_AVA,IDE\_PARAM\_RET,IDE\_PARAM\_STO,IDE\_PARAM\_SVE,
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP,valor
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_INI gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+2 gd->cnv\_Param01 = IDE\_PARAM\_GDE gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+3 gd->cnv\_Param01 = IDE\_PARAM\_GIZ gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+4 gd->cnv\_Param01 = IDE\_PARAM\_AVA gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+5 gd->cnv\_Param01 = IDE\_PARAM\_RET gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+6 gd->cnv\_Param01 = IDE\_PARAM\_STO gd->cnv\_Param02 = ???   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+7 gd->cnv\_Param01 = IDE\_PARAM\_SVE gd->cnv\_Param02 = valor Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+8 gd->cnv\_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: NO 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+B\+G(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_CM_DBG(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+D\+BG (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4279cb7dd4b63a73a3fcf44390b82e54}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4279cb7dd4b63a73a3fcf44390b82e54}
+
+
+Comando para debug (no se utiliza) 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+M\+\_\+\+D\+BG
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retorna\+:
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: NO 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_CM_R00(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R00 (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac57c6579cefb2d3ef3d759b7eb17792}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac57c6579cefb2d3ef3d759b7eb17792}
+
+
+Uso\+: Comando Reservado. 
+
+
+
+
+
+\begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+M\+\_\+\+R00
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retorna\+:
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: NO 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01}}
+\index{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01@{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_CM_R01(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+C\+M\+\_\+\+R01 (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac7d395a871b2c8a45e0f878632d2521}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_aac7d395a871b2c8a45e0f878632d2521}
+
+
+Uso\+: Comando Reservado. 
+
+
+
+
+
+\begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+C\+M\+\_\+\+R01
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Retorna\+:
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: NO 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS@{cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS}}
+\index{cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS@{cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+D\+S(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_L_LEDS(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+L\+\_\+\+L\+E\+DS (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_af1f0e8938dcb96dae770470fbc2ccb8e}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_af1f0e8938dcb96dae770470fbc2ccb8e}
+
+
+Uso\+: Retorna informacion relacionada con la bateria de Power\+Pack. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+L\+\_\+\+L\+E\+DS
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_LD1,IDE\_PARAM\_LD2,IDE\_PARAM\_LD3
+2 gd->cnv\_Param02: IDE\_PARAM\_OFF,IDE\_PARAM\_\_ON,IDE\_PARAM\_BLK
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_LD1 gd->cnv\_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+2                                 gd->cnv\_Param02 = \_ON Retorna: gd->buffRespCmd = "0"  Error comando
+3                                 gd->cnv\_Param02 = BLK  
+4                                 gd->cnv\_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+5                                 
+6 gd->cnv\_Param01 = IDE\_PARAM\_LD2 gd->cnv\_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+7                                 gd->cnv\_Param02 = \_ON Retorna: gd->buffRespCmd = "0"  Error comando
+8                                 gd->cnv\_Param02 = BLK  
+9                                 gd->cnv\_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+10                                                                  
+11 gd->cnv\_Param01 = IDE\_PARAM\_LD3 gd->cnv\_Param02 = OFF Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+12                                 gd->cnv\_Param02 = \_ON Retorna: gd->buffRespCmd = "0"  Error comando
+13                                 gd->cnv\_Param02 = BLK  
+14                                 gd->cnv\_Param02 = ??? Retorna: gd->buffRespCmd = "2"  Error comando
+15                                 
+16 gd->cnv\_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME@{cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME}}
+\index{cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME@{cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+M\+E(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_R_TIME(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+R\+\_\+\+T\+I\+ME (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4bca73c989666a2969dbc1ac7fa94af3}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a4bca73c989666a2969dbc1ac7fa94af3}
+
+
+Uso\+: Control del reloj de tiempo real. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+R\+\_\+\+T\+I\+ME
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET,IDE\_PARAM\_SET,IDE\_PARAM\_CHK,IDE\_PARAM\_INI
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP, valor
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = NOP   Retorna: gd->buffRespCmd = "AAAAMMDD HHMMSS"
+2 gd->cnv\_Param01 = IDE\_PARAM\_SET gd->cnv\_Param02 = valor Retorna: gd->buffRespCmd = "0"  Error comando
+3                                                                  gd->buffRespCmd = "1"  Comando ejecutado
+4 gd->cnv\_Param01 = IDE\_PARAM\_CHK gd->cnv\_Param02 = NOP   Retorna: gd->buffRespCmd = "0"  Reloj no esta
+       funcionando
+5                                                                  gd->buffRespCmd = "1"  Reloj si esta
+       funcionando
+6 gd->cnv\_Param01 = IDE\_PARAM\_INI gd->cnv\_Param02 = NOP   Retorna: gd->buffRespCmd = "1"  Comando ejecutado
+7 gd->cnv\_Param01 = ???                                   Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG}}
+\index{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+B\+G(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_S_CDBG(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+C\+D\+BG (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_aad1a82b3f1bc9fc116cf8a05ae4712b4}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_aad1a82b3f1bc9fc116cf8a05ae4712b4}
+
+
+Uso\+: Retorna valor del flag hardware que indica si esta conectado el conector de D\+E\+B\+UG. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+S\+\_\+\+D\+BG
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = NOP Retorna: gd->buffRespCmd = "0"  NO esta conectado el
+       conector
+2                                                       Retorna: gd->buffRespCmd = "1"  SI esta conectado el
+       conector
+3 gd->cnv\_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9}}
+\index{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_S_MLX9(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+M\+L\+X9 (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_acb509ac66221f928e1aa18fa649176f4}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_acb509ac66221f928e1aa18fa649176f4}
+
+
+Uso\+: Control del sensor de Temperatura M\+LX 90614. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+S\+\_\+\+M\+L\+X9
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET
+2 gd->cnv\_Param02: IDE\_PARAM\_SSA,IDE\_PARAM\_SSB
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = IDE\_PARAM\_SSA Retorna: gd->buffRespCmd = "1"  Comando
+       ejecutado
+2                                 gd->cnv\_Param02 = IDE\_PARAM\_SSB Retorna: gd->buffRespCmd = "1"  Comando
+       ejecutado
+3                                 gd->cnv\_Param02 = ???           Retorna: gd->buffRespCmd = "2"  Error
+       comando
+4 gd->cnv\_Param01 = ???                                           Retorna: gd->buffRespCmd = "2"  Error
+       comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}
+\index{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}!cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG}}
+\index{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG@{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG}!Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino@{Gescom\+\_\+\+M\+E\+G\+A2560\+\_\+\+V3\+\_\+\+Interfaz.\+ino}}
+\subsubsection[{\texorpdfstring{cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+H\+G(\+G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A $\ast$gd)}{cmd_Comando_S_VCHG(GESCOM_DATA *gd)}}]{\setlength{\rightskip}{0pt plus 5cm}void cmd\+\_\+\+Comando\+\_\+\+S\+\_\+\+V\+C\+HG (
+\begin{DoxyParamCaption}
+\item[{G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+TA $\ast$}]{gd}
+\end{DoxyParamCaption}
+)}\hypertarget{_gescom___m_e_g_a2560___v3___interfaz_8ino_a2c8e0cf02cde535e4eaff6fb8b7f0adc}{}\label{_gescom___m_e_g_a2560___v3___interfaz_8ino_a2c8e0cf02cde535e4eaff6fb8b7f0adc}
+
+
+Uso\+: Retorna valor del flag hardware que indica si se esta recibiendo tension de recarga. 
+
+
+
+ \begin{DoxyNote}{Note}
+Comando implementado\+: I\+D\+E\+\_\+\+C\+M\+D\+\_\+\+S\+\_\+\+V\+C\+HG
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em G\+E\+S\+C\+O\+M\+\_\+\+D\+A\+T\+A$\ast$} & gd 
+\begin{DoxyCode}
+1 gd->cnv\_Param01: IDE\_PARAM\_GET
+2 gd->cnv\_Param02: IDE\_PARAM\_NOP
+\end{DoxyCode}
+\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\begin{DoxyCode}
+1 gd->cnv\_Param01 = IDE\_PARAM\_GET gd->cnv\_Param02 = NOP Retorna: gd->buffRespCmd = "0"  NO se recibe V. de
+       carga
+2                                                       Retorna: gd->buffRespCmd = "1"  SI se recibe V. de
+       carga
+3 gd->cnv\_Param01 = ???                                 Retorna: gd->buffRespCmd = "2"  Error comando
+\end{DoxyCode}
+
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Codigo verificado\+: SI 
+
+ 
+\end{DoxyWarning}

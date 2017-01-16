@@ -1,0 +1,20 @@
+
+Displays Avago serie HCMS_xx
+
+En www.rs-online.es
+
+
+Para 3.3v:
+	496-5226
+	496-5204
+	496-5197
+
+Para 5V:
+	496-5147
+	830-5091
+	
+
+
+Ejemplos para Arduino:
+
+https://www.pjrc.com/teensy/td_libs_LedDisplay.html
