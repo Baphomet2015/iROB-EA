@@ -1,0 +1,20 @@
+D:\Temp\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.exe
+D:\Temp\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.pdb
+D:\Temp\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.xml
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\ResolveAssemblyReference.cache
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB_EA.FormPrincipal.resources
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB_EA.Resources.resources
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.vbproj.GenerateResource.Cache
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.exe
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.xml
+D:\Temp\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.pdb
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.exe
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.xml
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.pdb
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.exe
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.pdb
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\bin\Debug\iROB-EA_consola.xml
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\ResolveAssemblyReference.cache
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB_EA.FormPrincipal.resources
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB_EA.Resources.resources
+D:\Cortana\Google Drive\Robots\iROB-EA\Software\iROB_EA\App_Ctrl_Windows\iROB-EA_consola\iROB-EA_consola\obj\Debug\iROB-EA_consola.vbproj.GenerateResource.Cache
