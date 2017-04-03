@@ -1,0 +1,105 @@
+Joystickex.Pas; V1.1
+
+Copy rights:  Heiko Groschupp; h.groschupp@media-ag.com; Germany
+
+Status : E- mailware (free tu use, but send me an E-mail, if you do so or if you make changes)
+
+
+Disclaimer
+----------
+THIS SOFTWARE IS PROVIDED BY HEIKO GROSCHUPP "AS IS" AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+
+
+
+
+
+Purpose: 
+
+Joystickex is a nonvisual component to implement capturing of joystick input to your app.
+It uses no timer to poll joystick informations but is driven by windows messages. That means as soon as windows notifys a joystick event it is sended to that component and and will be processed at the same time.
+This component was testet with D4 and WIN98 should run with other Win32 and D2- D5 too.
+
+In  Version 1.1 I hopefully fixed a bug which came up under Win2K and XP
+
+Interface:
+
+    // Get Infos about device
+    Function GetDevices  :Byte; --> returns Number of connected devises
+    function GetButtons :Byte; --> returns Number of Buttons of the joystick at the selected Gameport
+
+    // Set to or set out of Operation
+    procedure disableJoystick; --> capturing of the joystick is disabled 
+    function EnableJoyStick :Boolean;--> initialisize joystick capturing; returns FALSE if failed (i.e. no joystick connected)
+
+   // Calibrating functions
+   function CalibrateCenter : Boolean; --> set the internal center values to current x/y- values
+   function BeginCalibrateRange  : Boolean; --> component is set to calibrating mode; change s of x/x range are stored every time the values go higher/ lower then they where before
+   procedure StopCalibrateRange; --> sets component to normal mode
+
+   // System dialog
+   procedure SysDialog; --> executes the windows Dialog for Joystick properties
+
+   // save settings
+   procedure SaveCalibration; --> stores the internal calibration datas to the app. directory (INI- file)
+   procedure LoadCalibration; --> loads the internal calibration datas from INI-file in the app. directory
+ 
+ 
+properties
+
+
+    property GamePort :TGameport  --> spezifies the port
+    property Polling: Boolean --> Windows sends continiously messages  in the interval you can spezify (min 10ms; max 1000ms)
+    property Interval : integer --> see above
+    property Center : TPoint --> gives you the value of internal Centerpoint (read only);
+    property EventThreshold : Real; spezifies the amount of movement, which needs to be done with the joystick in the spezified interval above (0.01 -10 in per cent of maxvalues of internal range)
+    property Scaled : Boolean; if true you get negativ/ positiv values with the maximum like you spezify below otherwise you get value mostly in the range of -32767 - 32767
+
+    property XScaledBy :TScalevalue (TScalevalue = 1..32767) if you spezify i.e. 100 you get  -100 for left side and  and +100 right side (Center := 0)
+    property YScaledBy :TScalevalue (TScalevalue = 1..32767)
+    property ZScaledBy :TScalevalue (TScalevalue = 1..32767)
+    property CalAutoSave :Boolean; if true component saves values of internal range to a Ini- file if component is destroyed;
+    property CalAutoLoad :Boolean; if true component loads values of internal range from a Ini- file if component is created;
+    
+    // Read onlys
+    property MaxLeftUP :TPoint;
+    property MaxRightDown :TPoint;
+    property MaxZ :integer;
+    property MinZ :integer;
+    property NumButtons :Integer;
+   
+
+ //Events
+    property OnButton1_Change: TButtonNotifyEvent read  FOnButton1_Change Write  FOnButton1_Change;
+    property OnButton2_Change: TButtonNotifyEvent read  FOnButton2_Change Write  FOnButton2_Change;
+    property OnButton3_Change: TButtonNotifyEvent read  FOnButton3_Change Write  FOnButton3_Change;
+    property OnButton4_Change: TButtonNotifyEvent read  FOnButton4_Change Write  FOnButton4_Change;
+
+    property JoyZMove :TJoyZMoveEvent read FJoyZMoveEvent write FJoyZMoveEvent;
+    property JoyMove : TJoyMoveEvent read FJoyMoveEvent Write FJoyMoveEvent;
+
+
+MISC
+
+containing files of this upload:
+
+JoyStickEx.pas
+JoyStickEx.dcr
+JoyStickEx.txt
+
+simple Demo project
+
+provided as zip- file
+
+
+If you like to make changes to this code feel free to do so but send me an E-mail with your changes. Thanks:-)
