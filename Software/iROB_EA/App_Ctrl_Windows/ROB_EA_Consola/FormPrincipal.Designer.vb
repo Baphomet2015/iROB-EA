@@ -39,7 +39,6 @@ Partial Class FormPrincipal
         Me.CampoListaComandosDesc = New System.Windows.Forms.TextBox
         Me.CampoListaComandos = New System.Windows.Forms.ComboBox
         Me.CampoListaFamilias = New System.Windows.Forms.ComboBox
-        Me.Texto_Info_TX = New System.Windows.Forms.Label
         Me.Boton_Cls_RX = New System.Windows.Forms.Button
         Me.Campo_Act_RX = New System.Windows.Forms.TextBox
         Me.Texto_TX = New System.Windows.Forms.Label
@@ -221,6 +220,7 @@ Partial Class FormPrincipal
         '
         Me.Campo_TX.BackColor = System.Drawing.Color.MidnightBlue
         Me.Campo_TX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Campo_TX.Enabled = False
         Me.Campo_TX.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Campo_TX.ForeColor = System.Drawing.Color.LimeGreen
         Me.Campo_TX.Location = New System.Drawing.Point(44, 275)
@@ -249,7 +249,6 @@ Partial Class FormPrincipal
         Me.Grupo_TXRX.Controls.Add(Me.CampoListaComandosDesc)
         Me.Grupo_TXRX.Controls.Add(Me.CampoListaComandos)
         Me.Grupo_TXRX.Controls.Add(Me.CampoListaFamilias)
-        Me.Grupo_TXRX.Controls.Add(Me.Texto_Info_TX)
         Me.Grupo_TXRX.Controls.Add(Me.Boton_Cls_RX)
         Me.Grupo_TXRX.Controls.Add(Me.Campo_Act_RX)
         Me.Grupo_TXRX.Controls.Add(Me.Texto_TX)
@@ -268,7 +267,7 @@ Partial Class FormPrincipal
         '
         'Boton_AutoEnvio
         '
-        Me.Boton_AutoEnvio.BackColor = System.Drawing.Color.DarkGreen
+        Me.Boton_AutoEnvio.BackColor = System.Drawing.Color.Firebrick
         Me.Boton_AutoEnvio.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Boton_AutoEnvio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_AutoEnvio.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -277,7 +276,7 @@ Partial Class FormPrincipal
         Me.Boton_AutoEnvio.Name = "Boton_AutoEnvio"
         Me.Boton_AutoEnvio.Size = New System.Drawing.Size(116, 23)
         Me.Boton_AutoEnvio.TabIndex = 32
-        Me.Boton_AutoEnvio.Text = "AUTOENVIO ON"
+        Me.Boton_AutoEnvio.Text = "AUTOENVIO OFF"
         Me.Boton_AutoEnvio.UseVisualStyleBackColor = False
         '
         'CampoListaComandosDesc
@@ -317,17 +316,6 @@ Partial Class FormPrincipal
         Me.CampoListaFamilias.Name = "CampoListaFamilias"
         Me.CampoListaFamilias.Size = New System.Drawing.Size(221, 22)
         Me.CampoListaFamilias.TabIndex = 19
-        '
-        'Texto_Info_TX
-        '
-        Me.Texto_Info_TX.AutoSize = True
-        Me.Texto_Info_TX.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Texto_Info_TX.ForeColor = System.Drawing.Color.SaddleBrown
-        Me.Texto_Info_TX.Location = New System.Drawing.Point(41, 304)
-        Me.Texto_Info_TX.Name = "Texto_Info_TX"
-        Me.Texto_Info_TX.Size = New System.Drawing.Size(160, 14)
-        Me.Texto_Info_TX.TabIndex = 18
-        Me.Texto_Info_TX.Text = "Doble click, borra contenido"
         '
         'Boton_Cls_RX
         '
@@ -765,7 +753,7 @@ Partial Class FormPrincipal
         Me.Boton_F10.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Boton_F10.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F10.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F10.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_signal
+        Me.Boton_F10.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F10.Location = New System.Drawing.Point(260, 200)
         Me.Boton_F10.Name = "Boton_F10"
         Me.Boton_F10.Size = New System.Drawing.Size(77, 84)
@@ -1021,7 +1009,7 @@ Partial Class FormPrincipal
         Me.Boton_F06.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Boton_F06.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F06.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F06.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_onoff_rojo
+        Me.Boton_F06.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F06.Location = New System.Drawing.Point(177, 108)
         Me.Boton_F06.Name = "Boton_F06"
         Me.Boton_F06.Size = New System.Drawing.Size(77, 84)
@@ -1038,7 +1026,7 @@ Partial Class FormPrincipal
         Me.Boton_F05.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Boton_F05.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F05.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F05.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_colorpicker
+        Me.Boton_F05.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F05.Location = New System.Drawing.Point(94, 105)
         Me.Boton_F05.Name = "Boton_F05"
         Me.Boton_F05.Size = New System.Drawing.Size(77, 84)
@@ -1123,7 +1111,7 @@ Partial Class FormPrincipal
         Me.Boton_F04.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Boton_F04.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F04.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F04.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_flash
+        Me.Boton_F04.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F04.Location = New System.Drawing.Point(11, 105)
         Me.Boton_F04.Name = "Boton_F04"
         Me.Boton_F04.Size = New System.Drawing.Size(77, 84)
@@ -1138,9 +1126,8 @@ Partial Class FormPrincipal
         Me.Boton_F03.FlatAppearance.BorderSize = 0
         Me.Boton_F03.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold
         Me.Boton_F03.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
-        Me.Boton_F03.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F03.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F03.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_light_rojo
+        Me.Boton_F03.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F03.Location = New System.Drawing.Point(177, 10)
         Me.Boton_F03.Name = "Boton_F03"
         Me.Boton_F03.Size = New System.Drawing.Size(77, 84)
@@ -1155,9 +1142,8 @@ Partial Class FormPrincipal
         Me.Boton_F02.FlatAppearance.BorderSize = 0
         Me.Boton_F02.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gold
         Me.Boton_F02.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
-        Me.Boton_F02.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F02.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F02.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_light_blanco
+        Me.Boton_F02.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F02.Location = New System.Drawing.Point(94, 10)
         Me.Boton_F02.Name = "Boton_F02"
         Me.Boton_F02.Size = New System.Drawing.Size(77, 84)
@@ -1174,7 +1160,7 @@ Partial Class FormPrincipal
         Me.Boton_F01.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.Boton_F01.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Boton_F01.ForeColor = System.Drawing.Color.Transparent
-        Me.Boton_F01.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_light_azul
+        Me.Boton_F01.Image = Global.iROB_EA_V1_Consola.My.Resources.Resources.ic_menu_smalltiles
         Me.Boton_F01.Location = New System.Drawing.Point(6, 10)
         Me.Boton_F01.Name = "Boton_F01"
         Me.Boton_F01.Size = New System.Drawing.Size(82, 84)
@@ -1246,7 +1232,6 @@ Partial Class FormPrincipal
     Friend WithEvents Texto_RX As System.Windows.Forms.Label
     Friend WithEvents Campo_Act_RX As System.Windows.Forms.TextBox
     Friend WithEvents Boton_Cls_RX As System.Windows.Forms.Button
-    Friend WithEvents Texto_Info_TX As System.Windows.Forms.Label
     Friend WithEvents Icono_TRX As System.Windows.Forms.PictureBox
     Friend WithEvents Texto_TRX As System.Windows.Forms.Label
     Friend WithEvents PanelTelemetria As System.Windows.Forms.Panel

@@ -1,0 +1,87 @@
+
+
+
+
+
+
+
+
+HACER EXTO !!!!!!!
+
+http://stackoverflow.com/questions/520506/how-do-i-structure-an-oledbcommand-query-so-that-i-can-take-tables-from-one-mdb
+
+
+
+
+
+
+
+
+
+
+Dim tdfVinculado As TableDef
+Dim resultado    As Integer
+
+
+On Error Resume Next
+
+resultado = True
+
+Set tdfVinculado = Global_miBD.CreateTableDef(Tbl_Des)
+    tdfVinculado.Connect = "MS ACCESS;DATABASE=" & basedatos & ";PWD=" & sAcceso
+    tdfVinculado.SourceTableName = Tbl_Org
+
+Global_miBD.TableDefs.Append tdfVinculado
+
+If (Err <> 0) Then
+    resultado = False
+End If
+
+On Error GoTo 0
+
+FN_VincularTabla = resultado
+
+
+
+
+ way for creating a linked table
+Ask Question
+up vote
+4
+down vote
+favorite
+2
+	
+
+I'm writing an application that uses ADO.NET OLEDB provider. Database is Access. Most of DB interaction is through DDL/DML SQL queries.
+
+I now need to create linked tables and there doesn't seem to be a way of doing that with ADO.NET alone. Neither in a simple DDL query, nor with trying to manipulate Access system tables directly.
+
+I'm trying to avoid using ADOX, with the extra reference/dependency in my application. Anyone knows a way around this? Much appreciated.
+
+Here's how I currently create linked tables with ADOX.
+
+
+
+
+
+
+
+
+
+
+
+            Dim nomTablas() As String
+            Dim dataTable As Data.DataTable
+            Dim dbNull As System.DBNull
+            Dim restrictions() As Object = {dbNull, dbNull, dbNull, "TABLE"}
+            Dim i As Integer
+
+            dataTable = GLB_Ob_Cnx.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, restrictions)
+            i = dataTable.Rows.Count - 1
+            If i > -1 Then
+                ReDim nomTablas(i)
+                For i = 0 To dataTable.Rows.Count - 1
+                    nomTablas(i) = dataTable.Rows(i).Item("TABLE_NAME").ToString()
+                Next
+            End If

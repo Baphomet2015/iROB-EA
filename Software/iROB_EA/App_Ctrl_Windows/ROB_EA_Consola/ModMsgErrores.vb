@@ -10,6 +10,17 @@ Module ModMsgErrores
 
     End Function
 
+    Public Function MsgErr_EnviandoDatos() As Integer
+
+        Dim strMsg As String
+
+        strMsg = ""
+        strMsg = strMsg & "Se ha producido un error al enviar el comando..."
+        MsgErr_EnviandoDatos = MsgBox(strMsg, 16, "Error enviando a datos ")
+
+    End Function
+
+
     Public Function MsgErr_MaxComandosRespuesta() As Integer
 
         Dim strMsg As String
@@ -17,6 +28,16 @@ Module ModMsgErrores
         strMsg = ""
         strMsg = strMsg & "Hay demasiados comandos de respuesta definidos en la Base de Datos, no se reconocerán todos"
         MsgErr_MaxComandosRespuesta = MsgBox(strMsg, 16, "Error accediendo a datos ")
+
+    End Function
+
+    Public Function MsgErr_PuertoCerrado() As Integer
+
+        Dim strMsg As String
+
+        strMsg = ""
+        strMsg = strMsg & "El puerto Serie NO está disponible."
+        MsgErr_PuertoCerrado = MsgBox(strMsg, 16, "Error en el puero Serie ")
 
     End Function
 

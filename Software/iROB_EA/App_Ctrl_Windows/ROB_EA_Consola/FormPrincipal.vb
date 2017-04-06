@@ -6,6 +6,8 @@ Imports System.Data.SqlClient
 Imports System.Data.Common
 Imports System.Runtime.InteropServices
 
+Imports System.Data.OleDb
+
 Public Class FormPrincipal
 
     ' ----------------------------------------------
@@ -37,7 +39,7 @@ Public Class FormPrincipal
 
 
 
-    Private Const IDE_BBDD = "gescom_02.mdb"
+    Private Const IDE_BBDD_GESCOM = "gescom_MEGA2560_V3.mdb"
     Private Const AUTOENVIO_ON = 1
     Private Const AUTOENVIO_OFF = 0
 
@@ -91,7 +93,7 @@ Public Class FormPrincipal
 
     Private Sub FormPrincipal_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
 
-      
+
 
     End Sub
 
@@ -103,21 +105,25 @@ Public Class FormPrincipal
 
     Private Sub iniApp(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Dim sBBDD As String
+        Dim sBBDD_GESCOM As String
+        Dim res1 As Integer
+
 
         Stop
-        Dim x As Integer
-        x = FN_GetJoystick()
+        '  Dim x As Integer
+        '  x = FN_GetJoystick()
 
 
         dirApp = "" & Application.StartupPath
-        sBBDD = "" & dirApp & "\" & IDE_BBDD
+        sBBDD_GESCOM = "" & dirApp & "\" & IDE_BBDD_GESCOM
 
-        If (FN_TestFichero(sBBDD) = True) Then
+        res1 = FN_TestFichero(sBBDD_GESCOM)
+
+        If (res1 = True) Then
             ' -------------------------------------
             '
             ' -------------------------------------
-            If (crearConexion(sBBDD) = True) Then
+            If (crearConexion(sBBDD_GESCOM) = True) Then
 
                 ' -------------------------------------
                 '
@@ -127,9 +133,14 @@ Public Class FormPrincipal
                 ' -------------------------------------
                 '
                 ' -------------------------------------
+
+                Me.Boton_AutoEnvio.BackColor = Color.Firebrick
+                Me.Boton_AutoEnvio.Text = " AUTOENVIO OFF"
+                autoenvioModo = AUTOENVIO_OFF
+
                 setListaFamilias()
                 setListaComandos()
-                setTablaCmdRespuestas()
+                'setTablaCmdRespuestas()
 
                 Me.Campo_Lst_RX.Text = ""
                 Me.Campo_Act_RX.Text = ""
@@ -138,13 +149,11 @@ Public Class FormPrincipal
                 iniCamposTelemetria()
 
                 Me.CampoListaComandosDesc.Text = ""
-                
+
                 Me.KeyPreview = True
 
-                autoenvioModo = AUTOENVIO_ON
                 funcionDirecta_Key = ""
                 funcionDirecta_Idx = 0
-
 
                 Me.AutoScrollMinSize = New Size(100, 100)
 
@@ -152,8 +161,13 @@ Public Class FormPrincipal
                 Application.Exit()
             End If
 
-        Else
-            MsgErr_BBDD(sBBDD)
+        End If
+
+        If (res1 = False) Then
+            MsgErr_BBDD(sBBDD_GESCOM)
+        End If
+
+        If (res1 = False) Then
             Application.Exit()
         End If
 
@@ -388,7 +402,7 @@ Public Class FormPrincipal
             End Try
 
         End While
-        
+
 
     End Sub
 
@@ -737,7 +751,7 @@ Public Class FormPrincipal
 
     Private Sub Boton_TX_BEnter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Campo_TX.MouseDoubleClick
 
-        displayClsTX("")
+        ' displayClsTX("")
 
     End Sub
 
@@ -749,8 +763,10 @@ Public Class FormPrincipal
 
     Private Sub Boton_TX_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Boton_TX.Click
 
-        Stop
-        'enviarComando()
+        Dim strTX As String
+
+        strTX = "" & Me.Campo_TX.Text
+        strTX = enviarComando(strTX)
 
     End Sub
 
@@ -848,6 +864,8 @@ Public Class FormPrincipal
     Private Function enviarComando(ByVal sComando As String) As String
 
         Dim strTX As String
+        Dim xx As Integer
+
 
         strTX = ""
 
@@ -855,20 +873,20 @@ Public Class FormPrincipal
             ' ----------------------------------------------
             '
             ' ----------------------------------------------
-
-            strTX = IDE_CABECERA_STRING & IDE_ROBOT_ID & IDE_PC_ID & Trim(sComando)
-
-            If (strTX.Length > 0) Then
+            If (sComando.Length > 0) Then
                 Try
-                    strTX = strTX & vbCr
+                    strTX = sComando & vbCr
                     Me.SerialPort_01.Write(strTX)
                 Catch
-                    MsgBox("Se ha producido un error al enviar el comando...")
+                    xx = MsgErr_EnviandoDatos()
                 End Try
             End If
+        Else
+            xx = MsgErr_PuertoCerrado()
+            sComando = ""
         End If
 
-        enviarComando = strTX
+        enviarComando = sComando
 
     End Function
 
@@ -891,7 +909,7 @@ Public Class FormPrincipal
 
             sSql = ""
             sSql = sSql & " SELECT "
-            sSql = sSql & " Tbl_Familia.GESCOM_FAMILIA_IDX    As ID    , "
+            sSql = sSql & " Tbl_Familia.GESCOM_FAMILIA_ID     As ID    , "
             sSql = sSql & " Tbl_Familia.GESCOM_FAMILIA_NOMBRE As Nombre  "
             sSql = sSql & " FROM Tbl_Familia"
             sSql = sSql & " WHERE   (Tbl_Familia.GESCOM_FAMILIA_FEBAJA = 0) "
@@ -947,16 +965,18 @@ Public Class FormPrincipal
             ' -------------------------------------------------
             familiaID = Me.CampoListaFamilias.SelectedValue
 
+            ' Stop
+
             sSql = ""
-            sSql = sSql & " SELECT "
-            sSql = sSql & " Tbl_Comandos.GESCOM_IDX         As ID          , "
-            sSql = sSql & " Tbl_Comandos.GESCOM_CMD         As CMD         , "
-            sSql = sSql & " Tbl_Comandos.GESCOM_DESCRIPCION As DESCRIPCION   "
-            sSql = sSql & " FROM Tbl_Comandos"
-            sSql = sSql & " WHERE ( (Tbl_Comandos.GESCOM_FEBAJA     = 0) AND "
-            sSql = sSql & "         (Tbl_Comandos.GESCOM_FAMILIA_ID = " & familiaID & " ) "
-            sSql = sSql & "       ) "
-            sSql = sSql & " ORDER BY Tbl_Comandos.GESCOM_ORDEN; "
+            sSql = sSql & "SELECT "
+            sSql = sSql & "Tbl_Comandos.GESCOM_NOMBRE AS CMD, "
+            sSql = sSql & "[GESCOM_CCMD_CABECERA] & [GESCOM_CCMD_DISPO_DES_ID] & [GESCOM_CCMD_DISPO_ORG_ID] & [GESCOM_CCMD_TIPO] & [GESCOM_CCMD_CMD_ID] & [GESCOM_CCMD_PARAM1_ID] & [GESCOM_CCMD_PARAM2_ID] AS SECUENCIA "
+            sSql = sSql & " FROM (((Tbl_Comandos_Completos "
+            sSql = sSql & " INNER JOIN Tbl_Dispositivos ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_DES_ID = Tbl_Dispositivos.GESCOM_DISPO_ID) "
+            sSql = sSql & " INNER JOIN Tbl_Dispositivos AS Tbl_Dispositivos_1 ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_ORG_ID = Tbl_Dispositivos_1.GESCOM_DISPO_ID) INNER JOIN Tbl_Comandos ON Tbl_Comandos_Completos.GESCOM_CCMD_CMD_ID = Tbl_Comandos.GESCOM_CMD_ID) "
+            sSql = sSql & " INNER JOIN Tbl_Parametros ON Tbl_Comandos_Completos.GESCOM_CCMD_PARAM1_ID = Tbl_Parametros.GESCOM_PARAM_ID "
+            sSql = sSql & " WHERE(Tbl_Comandos_Completos.GESCOM_CCMD_FAMILIA_ID = " & familiaID & " )"
+            sSql = sSql & " ORDER BY Tbl_Comandos_Completos.GESCOM_CCMD_IDX, Tbl_Comandos.GESCOM_NOMBRE; "
 
             Ob_Data = New OleDb.OleDbDataAdapter(sSql, GLB_Ob_Cnx)
             Dim oledbSqlCommandBuilder As New OleDb.OleDbCommandBuilder(Ob_Data)
@@ -970,8 +990,8 @@ Public Class FormPrincipal
             ' -------------------------------------------------
             '
             ' -------------------------------------------------
-            Me.CampoListaComandos.DisplayMember = "DESCRIPCION"
-            Me.CampoListaComandos.ValueMember = "ID"
+            Me.CampoListaComandos.DisplayMember = "CMD"
+            Me.CampoListaComandos.ValueMember = "SECUENCIA"
             Me.CampoListaComandos.DataSource = dt
 
             dt = Nothing
@@ -1033,7 +1053,7 @@ Public Class FormPrincipal
             ' -------------------------------------------------
 
             tabRespuestas_Num = dt.Rows.Count
-            tabRespuestas_Ind = 0
+            tabRespuestas_ind = 0
 
             If (tabRespuestas_Num > IDE_MAX_CMD_RESPUESTAS) Then
                 ' -------------------------------------------------
@@ -1050,7 +1070,7 @@ Public Class FormPrincipal
                 tabRespuestas_Cmd(tabRespuestas_ind, 3) = Trim(dt.Rows(tabRespuestas_ind).Item(3))
                 tabRespuestas_ind = tabRespuestas_ind + 1
             End While
- 
+
             dt = Nothing
             Ob_Data = Nothing
 
@@ -1070,14 +1090,17 @@ Public Class FormPrincipal
     ' crearConexion
     '
     ' ---------------------------------------
-    Private Function crearConexion(ByVal sBBDD As String) As Integer
+    Private Function crearConexion(ByVal sBBDD_GESCOM As String) As Integer
 
         Dim sCnx As String
         Dim resultado As Integer
 
+        ' Stop
+
         ' ----------------------------------------
+        ' PRIMERO Abrir conexion sobre IDE_BBDD_IROBEA
         ' ----------------------------------------
-        sCnx = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & sBBDD & "; Password="
+        sCnx = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" & sBBDD_GESCOM & "; Password="
 
         Try
             GLB_Ob_Cnx = New OleDb.OleDbConnection(sCnx)
@@ -1091,6 +1114,7 @@ Public Class FormPrincipal
         End Try
 
         crearConexion = resultado
+
     End Function
 
     ' ---------------------------------------
@@ -1115,10 +1139,11 @@ Public Class FormPrincipal
 
         Dim sAux As String
 
-        Me.CampoListaComandosDesc.Text = Me.CampoListaComandos.SelectedItem.item("DESCRIPCION").ToString
+
+        Me.CampoListaComandosDesc.Text = Me.CampoListaComandos.SelectedItem.item("CMD").ToString
 
         If (autoenvioModo = AUTOENVIO_ON) Then
-            sAux = Me.CampoListaComandos.SelectedItem.item("CMD").ToString
+            sAux = Me.CampoListaComandos.SelectedItem.item("SECUENCIA").ToString
             Me.Campo_TX.Text = enviarComando(sAux)
         Else
             Me.Campo_TX.Text = ""
@@ -1410,21 +1435,19 @@ Public Class FormPrincipal
                 ' Inicializar el SqlDataAdapter 
                 ' -------------------------------------------------
 
+                Stop
                 sSql = ""
                 sSql = sSql & " SELECT "
-                sSql = sSql & " Tbl_Comandos_Botones.GESCOM_BOTONES_IDE  , "
-                sSql = sSql & " Tbl_Comandos_Botones.GESCOM_BOTONES_ORDEN, "
-                sSql = sSql & " Tbl_Comandos.GESCOM_CMD                    "
-                sSql = sSql & " FROM Tbl_Comandos "
-                sSql = sSql & " INNER JOIN Tbl_Comandos_Botones "
-                sSql = sSql & " ON         Tbl_Comandos.GESCOM_IDX = "
-                sSql = sSql & "            Tbl_Comandos_Botones.GESCOM_BOTONES_GESCOM_IDX "
-                sSql = sSql & " WHERE ( "
-                sSql = sSql & "       (Tbl_Comandos_Botones.GESCOM_BOTONES_FEBAJA = 0) And "
-                sSql = sSql & "       (Tbl_Comandos_Botones.GESCOM_BOTONES_IDE    = '" & funcionDirecta_Key & "') And "
-                sSql = sSql & "       (Tbl_Comandos.GESCOM_FEBAJA = 0)"
-                sSql = sSql & "       ) "
-                sSql = sSql & " ORDER BY Tbl_Comandos_Botones.GESCOM_BOTONES_ORDEN;"
+                sSql = sSql & " Tbl_Comandos_Completos.GESCOM_CCMD_IDX AS IDX, "
+                sSql = sSql & " [GESCOM_CCMD_CABECERA] & [GESCOM_CCMD_DISPO_DES_ID] & [GESCOM_CCMD_DISPO_ORG_ID] & [GESCOM_CCMD_TIPO] & [GESCOM_CCMD_CMD_ID] & [GESCOM_CCMD_PARAM1_ID] & [GESCOM_CCMD_PARAM2_ID] AS SECUENCIA, "
+                sSql = sSql & " FROM Tbl_Comandos_Botones "
+                sSql = sSql & " INNER JOIN ((((Tbl_Comandos_Completos "
+                sSql = sSql & " INNER JOIN Tbl_Dispositivos                       ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_DES_ID = Tbl_Dispositivos.GESCOM_DISPO_ID) "
+                sSql = sSql & " INNER JOIN Tbl_Dispositivos AS Tbl_Dispositivos_1 ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_ORG_ID = Tbl_Dispositivos_1.GESCOM_DISPO_ID) "
+                sSql = sSql & " INNER JOIN Tbl_Comandos                           ON Tbl_Comandos_Completos.GESCOM_CCMD_CMD_ID       = Tbl_Comandos.GESCOM_CMD_ID) "
+                sSql = sSql & " INNER JOIN Tbl_Parametros                         ON Tbl_Comandos_Completos.GESCOM_CCMD_PARAM1_ID    = Tbl_Parametros.GESCOM_PARAM_ID) ON Tbl_Comandos_Botones.GESCOM_BOTONES_GESCOM_IDX = Tbl_Comandos_Completos.GESCOM_CCMD_IDX "
+                sSql = sSql & " WHERE(Tbl_Comandos_Botones.GESCOM_BOTONES_IDE= '" & sTecla & "') "
+                sSql = sSql & " ORDER BY Tbl_Comandos_Completos.GESCOM_CCMD_IDX; "
 
                 Ob_TeclasFuncion = New OleDb.OleDbDataAdapter(sSql, GLB_Ob_Cnx)
 

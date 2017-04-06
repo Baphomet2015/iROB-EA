@@ -312,34 +312,6 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property ROB_EA_logo_01() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ROB_EA_logo_01", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property ROB_EA_logo_02() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ROB_EA_logo_02", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property ROB_EA_Version_01() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ROB_EA_Version_01", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property ROB_EA_Version_02() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ROB_EA_Version_02", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
         Friend ReadOnly Property rss() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("rss", resourceCulture)

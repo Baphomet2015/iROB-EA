@@ -127,9 +127,6 @@
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ico\edit.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ROB_EA_Version_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Iconos\ROB_EA_Version_01.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ic_menu_light_azul" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\Botones\ic_menu_light_azul.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -169,9 +166,6 @@
   <data name="contact" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ico\contact.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ROB_EA_logo_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Iconos\ROB_EA_logo_01.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="volcado" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ico\volcado.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -192,9 +186,6 @@
   </data>
   <data name="ic_menu_light_blanco" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\Botones\ic_menu_light_blanco.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ROB_EA_Version_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Iconos\ROB_EA_Version_02.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="loader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ico\loader.gif;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -234,9 +225,6 @@
   </data>
   <data name="user_female" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ico\user_female.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ROB_EA_logo_02" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Iconos\ROB_EA_logo_02.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ArduinoLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Iconos\ArduinoLogo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
