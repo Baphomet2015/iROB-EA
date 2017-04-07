@@ -19,8 +19,8 @@ Public Class FormPrincipal
     Private GLB_Ob_Cnx As OleDb.OleDbConnection
     Private autoenvioModo As Integer
     Private Dt_TeclasFuncion As New DataTable
-    Private funcionDirecta_Key As String
-    Private funcionDirecta_Idx As Integer
+    'Private funcionDirecta_Key As String
+    'Private funcionDirecta_Idx As Integer
     Private dirApp As String
 
     ' --------------------------------------
@@ -152,8 +152,8 @@ Public Class FormPrincipal
 
                 Me.KeyPreview = True
 
-                funcionDirecta_Key = ""
-                funcionDirecta_Idx = 0
+                'funcionDirecta_Key = ""
+                'funcionDirecta_Idx = 0
 
                 Me.AutoScrollMinSize = New Size(100, 100)
 
@@ -312,7 +312,7 @@ Public Class FormPrincipal
             resultado = iniPSerie()
             Me.BotonSelPuerto.Text = "CERRAR"
             If (resultado = False) Then
-                MsgBox("Se ha producido un error al abrir el puerto")
+                MsgErr_PuertoSerie()
             End If
         End If
 
@@ -657,27 +657,6 @@ Public Class FormPrincipal
         Else
             Me.Campo_Lst_RX.Text = Me.Campo_Lst_RX.Text & sValor & vbCrLf
             Me.Campo_Lst_RX.Refresh()
-        End If
-
-    End Sub
-
-    ' ----------------------------------------------
-    '
-    ' displayActRX
-    '
-    ' ----------------------------------------------
-
-    Private Delegate Sub displayActRX_CallBack(ByVal [xx] As String)
-
-    Private Sub displayActRX(ByVal sValor As String)
-
-        If Me.Campo_Act_RX.InvokeRequired Then
-            Dim d As New displayActRX_CallBack(AddressOf displayActRX)
-            Me.Invoke(d, New Object() {[sValor]})
-
-        Else
-            Me.Campo_Act_RX.Text = sValor
-            Me.Campo_Act_RX.Refresh()
         End If
 
     End Sub
@@ -1415,7 +1394,8 @@ Public Class FormPrincipal
         Dim sComando As String
         Dim Ob_TeclasFuncion As OleDb.OleDbDataAdapter
         Dim numComandos As Integer
-
+        Dim indComandos As Integer
+        Dim sRes As String
 
         resultado = True
 
@@ -1425,76 +1405,78 @@ Public Class FormPrincipal
         '
         ' -------------------------------------------------
 
-        If (funcionDirecta_Key <> sTecla) Then
+        'If (funcionDirecta_Key <> sTecla) Then
 
-            funcionDirecta_Key = sTecla
-            funcionDirecta_Idx = 0
+        'funcionDirecta_Key = sTecla
+        'funcionDirecta_Idx = 0
 
-            Try
-                ' -------------------------------------------------
-                ' Inicializar el SqlDataAdapter 
-                ' -------------------------------------------------
+        Try
+            ' -------------------------------------------------
+            ' Inicializar el SqlDataAdapter 
+            ' -------------------------------------------------
 
-                Stop
-                sSql = ""
-                sSql = sSql & " SELECT "
-                sSql = sSql & " Tbl_Comandos_Completos.GESCOM_CCMD_IDX AS IDX, "
-                sSql = sSql & " [GESCOM_CCMD_CABECERA] & [GESCOM_CCMD_DISPO_DES_ID] & [GESCOM_CCMD_DISPO_ORG_ID] & [GESCOM_CCMD_TIPO] & [GESCOM_CCMD_CMD_ID] & [GESCOM_CCMD_PARAM1_ID] & [GESCOM_CCMD_PARAM2_ID] AS SECUENCIA, "
-                sSql = sSql & " FROM Tbl_Comandos_Botones "
-                sSql = sSql & " INNER JOIN ((((Tbl_Comandos_Completos "
-                sSql = sSql & " INNER JOIN Tbl_Dispositivos                       ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_DES_ID = Tbl_Dispositivos.GESCOM_DISPO_ID) "
-                sSql = sSql & " INNER JOIN Tbl_Dispositivos AS Tbl_Dispositivos_1 ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_ORG_ID = Tbl_Dispositivos_1.GESCOM_DISPO_ID) "
-                sSql = sSql & " INNER JOIN Tbl_Comandos                           ON Tbl_Comandos_Completos.GESCOM_CCMD_CMD_ID       = Tbl_Comandos.GESCOM_CMD_ID) "
-                sSql = sSql & " INNER JOIN Tbl_Parametros                         ON Tbl_Comandos_Completos.GESCOM_CCMD_PARAM1_ID    = Tbl_Parametros.GESCOM_PARAM_ID) ON Tbl_Comandos_Botones.GESCOM_BOTONES_GESCOM_IDX = Tbl_Comandos_Completos.GESCOM_CCMD_IDX "
-                sSql = sSql & " WHERE(Tbl_Comandos_Botones.GESCOM_BOTONES_IDE= '" & sTecla & "') "
-                sSql = sSql & " ORDER BY Tbl_Comandos_Completos.GESCOM_CCMD_IDX; "
+            Stop
 
-                Ob_TeclasFuncion = New OleDb.OleDbDataAdapter(sSql, GLB_Ob_Cnx)
+            sSql = ""
+            sSql = sSql & " SELECT "
+            sSql = sSql & " Tbl_Comandos_Completos.GESCOM_CCMD_IDX AS IDX, "
+            sSql = sSql & " [GESCOM_CCMD_CABECERA] & [GESCOM_CCMD_DISPO_DES_ID] & [GESCOM_CCMD_DISPO_ORG_ID] & [GESCOM_CCMD_TIPO] & [GESCOM_CCMD_CMD_ID] & [GESCOM_CCMD_PARAM1_ID] & [GESCOM_CCMD_PARAM2_ID] AS SECUENCIA "
+            sSql = sSql & " FROM Tbl_Comandos_Botones "
+            sSql = sSql & " INNER JOIN ((((Tbl_Comandos_Completos "
+            sSql = sSql & " INNER JOIN Tbl_Dispositivos                       ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_DES_ID = Tbl_Dispositivos.GESCOM_DISPO_ID) "
+            sSql = sSql & " INNER JOIN Tbl_Dispositivos AS Tbl_Dispositivos_1 ON Tbl_Comandos_Completos.GESCOM_CCMD_DISPO_ORG_ID = Tbl_Dispositivos_1.GESCOM_DISPO_ID) "
+            sSql = sSql & " INNER JOIN Tbl_Comandos                           ON Tbl_Comandos_Completos.GESCOM_CCMD_CMD_ID       = Tbl_Comandos.GESCOM_CMD_ID) "
+            sSql = sSql & " INNER JOIN Tbl_Parametros                         ON Tbl_Comandos_Completos.GESCOM_CCMD_PARAM1_ID    = Tbl_Parametros.GESCOM_PARAM_ID) "
+            sSql = sSql & "                                                   ON Tbl_Comandos_Botones.GESCOM_BOTONES_GESCOM_IDX  = Tbl_Comandos_Completos.GESCOM_CCMD_IDX "
+            sSql = sSql & " WHERE(Tbl_Comandos_Botones.GESCOM_BOTONES_IDE= '" & sTecla & "') "
+            sSql = sSql & " ORDER BY Tbl_Comandos_Botones.GESCOM_BOTONES_ORDEN; "
 
-                Dim oledbSqlCommandBuilder As New OleDb.OleDbCommandBuilder(Ob_TeclasFuncion)
+            Ob_TeclasFuncion = New OleDb.OleDbDataAdapter(sSql, GLB_Ob_Cnx)
 
-                ' -------------------------------------------------
-                ' Llenar el DataTable, si esta lleno lo vacia antes
-                ' -------------------------------------------------
-                If (Dt_TeclasFuncion.Rows.Count > 0) Then
-                    Dt_TeclasFuncion.Clear()
-                End If
+            Dim oledbSqlCommandBuilder As New OleDb.OleDbCommandBuilder(Ob_TeclasFuncion)
 
-                Ob_TeclasFuncion.Fill(Dt_TeclasFuncion)
-                Ob_TeclasFuncion = Nothing
+            ' -------------------------------------------------
+            ' Llenar el DataTable, si esta lleno lo vacia antes
+            ' -------------------------------------------------
+            If (Dt_TeclasFuncion.Rows.Count > 0) Then
+                Dt_TeclasFuncion.Clear()
+            End If
 
-            Catch exSql As SqlException
-                MsgErr_AccDatos()
-                resultado = False
-            Catch ex As Exception
-                MsgErr_AccDatos()
-                resultado = False
-            End Try
+            Ob_TeclasFuncion.Fill(Dt_TeclasFuncion)
+            Ob_TeclasFuncion = Nothing
 
-        End If
+        Catch exSql As SqlException
+            MsgErr_AccDatos()
+            resultado = False
+        Catch ex As Exception
+            MsgErr_AccDatos()
+            resultado = False
+        End Try
+
+        'End If
 
         ' -------------------------------------------------
         '
         ' Ejecuta comandos asociados a la tecla
         '
         ' -------------------------------------------------
+
+        Stop
+
         If (resultado = True) Then
             numComandos = Dt_TeclasFuncion.Rows.Count
-            If (numComandos > 0) Then
-                ' -------------------------------------------------
-                ' Hay comando asociados a la tecla
-                ' -------------------------------------------------
+            While (indComandos < numComandos)
 
-                If (funcionDirecta_Idx >= numComandos) Then
-                    funcionDirecta_Idx = 0
+                sComando = "" & Dt_TeclasFuncion.Rows(indComandos).Item("SECUENCIA")
+                sRes = "" & enviarComando(sComando)
+                If (sRes <> "") Then
+                    displayLstRX(sComando)
+                    indComandos = indComandos + 1
+                Else
+                    indComandos = numComandos
                 End If
 
-                sComando = "" & Dt_TeclasFuncion.Rows(funcionDirecta_Idx).Item("GESCOM_CMD")
-                Me.Campo_TX.Text = enviarComando(sComando)
-
-                funcionDirecta_Idx = funcionDirecta_Idx + 1
-
-            End If
+            End While
         End If
 
         exeFuncionDirecta = resultado

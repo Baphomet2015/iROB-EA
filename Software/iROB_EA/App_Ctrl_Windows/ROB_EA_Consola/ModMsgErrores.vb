@@ -31,13 +31,23 @@ Module ModMsgErrores
 
     End Function
 
+    Public Function MsgErr_PuertoSerie() As Integer
+
+        Dim strMsg As String
+
+        strMsg = ""
+        strMsg = strMsg & "Se ha producido un error al abrir el puerto"
+        MsgErr_PuertoSerie = MsgBox(strMsg, 16, "Error en el puero Serie")
+
+    End Function
+
     Public Function MsgErr_PuertoCerrado() As Integer
 
         Dim strMsg As String
 
         strMsg = ""
         strMsg = strMsg & "El puerto Serie NO está disponible."
-        MsgErr_PuertoCerrado = MsgBox(strMsg, 16, "Error en el puero Serie ")
+        MsgErr_PuertoCerrado = MsgBox(strMsg, 16, "Error en el puero Serie")
 
     End Function
 
