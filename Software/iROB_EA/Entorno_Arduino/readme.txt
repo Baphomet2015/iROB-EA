@@ -17,4 +17,4 @@ en cuyo caso es recomendable reeplazar la que exista por la que se encuentra aqu
 
 ENTORNO ARDUINO
 
-La versión del IDE de Arduino con la que se ha desarrollado el SW es la 1.6.4.
+La versión del IDE de Arduino con la que se ha desarrollado el SW es la 1.8.12

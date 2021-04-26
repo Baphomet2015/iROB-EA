@@ -1,0 +1,26 @@
+#######################################
+# Syntax Coloring Map For Test
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+GESCOM_MEGA2560_V3	KEYWORD1
+GESCOM3			KEYWORD1
+GESCOM_DATA		KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+Gescom_MEGA2560_V3      	KEYWORD2
+Gescom_MEGA2560_V3.h		KEYWORD2
+Gescom_MEGA2560_V3_CMD.h	KEYWORD2
+gescom		   		KEYWORD2
+exeGesComando			KEYWORD2
+getBytes				KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
