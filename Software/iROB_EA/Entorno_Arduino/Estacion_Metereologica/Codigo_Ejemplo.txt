@@ -1,0 +1,8 @@
+
+https://github.com/sparkfun/Weather_Shield
+
+Librerias de los sensores:
+https://github.com/sparkfun/SparkFun_MPL3115A2_Breakout_Arduino_Library
+https://github.com/sparkfun/SparkFun_HTU21D_Breakout_Arduino_Library
+
+

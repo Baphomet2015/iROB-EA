@@ -6,7 +6,7 @@
 // Fichero:        ROB_EA.h
 // Autor:
 // Hardware:       Arduino MEGA 2560
-// Fecha:          Abril 2015
+// Fecha:          Enero 2021
 //
 // Funcionalidad:  Fichero cabecera ( include ) principal de
 //                 la Aplicacion
@@ -18,16 +18,6 @@
 #ifndef iROB_EA
 #define iROB_EA
 
-#include <avr/pgmspace.h>
-
-// ---------------------------------------------------------
-//
-// DESCOMENTAR este define para compilar trazas de depuracion
-//
-// ---------------------------------------------------------
-
-#define APP_MODO_DEBUG                   1   // MODO DEBUG: Descomentar este define
-                                             // MODO REAL:  Comentar este define
 
 // ---------------------------------------------------------
 //
@@ -47,11 +37,11 @@
 #define PIN_HW_DTMF_D3                  52  // D3, Decodificador DTMF
 #define PIN_HW_DTMF_DV                  48  // DV, Decodificador DTMF, dato valido
 
-#define PIN_HW_HCMS_RESET               40  // the display's reset pin
-#define PIN_HW_HCMS_RS                  41  // the display's register select pin 
-#define PIN_HW_HCMS_CE                  42  // the display's chip enable pin
-#define PIN_HW_HCMS_CLK                 43  // the display's clock pin
-#define PIN_HW_HCMS_DATA                44  // connects to the display's data in
+#define PIN_HW_HCMS_RESET               40  // Display Reset 
+#define PIN_HW_HCMS_RS                  41  // Display Seleccion de Registro
+#define PIN_HW_HCMS_CE                  42  // Display Enable
+#define PIN_HW_HCMS_CLK                 43  // Display Clock
+#define PIN_HW_HCMS_DATA                44  // Display Data
 
 #define PIN_HW_CNX_DEBUG                53  // Indicador de conector de DEBUG conectado
 
@@ -62,6 +52,8 @@
 
 #define PIN_HW_SERVO_HOR                 6  // Servo horizontal
 #define PIN_HW_SERVO_VER                 7  // Servo vertical
+
+#define PIN_HW_FAN                       8  // Ventilador del modulo de sensores
 
 #define PIN_HW_LED_POS                  37  // Leds rojos traseros
 #define PIN_HW_LED_DER                  38  // Leds blancos derecho
@@ -103,6 +95,17 @@
 
 #define IDE_SERIAL_TRX_9600           9600     // Velocidad 9600 para el puerto serie DEBUG
 #define IDE_PAUSA_GENERAL             500      // Pausa general de 500ms
+
+// ---------------------------------------------------------
+//
+// Retornos para indicar el resultado de la ejecucion de los
+// comandos
+// NO cambiar los valores, por Dios
+//
+// ---------------------------------------------------------
+
+#define IDE_EXE_CMD_OK               1 
+#define IDE_EXE_CMD_ER               0 
 
 // ---------------------------------------------------------
 //

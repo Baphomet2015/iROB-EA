@@ -1,3 +1,4 @@
+
 // --------------------------------------------------------------------
 //
 //                       GESCOM
@@ -19,11 +20,10 @@
 // -------------------------------------------------------------------
 
 
-
-// -------------------------------------------------------------------
-// Fecha Generación: 06/04/2017 , 12:42
 // -------------------------------------------------------------------
 
+// Fecha Generación: 29/10/2021 , 11:18
+// -------------------------------------------------------------------
 
 
 #include <stdio.h>
@@ -33,6 +33,7 @@
 #include <Arduino.h>
 #include "Gescom_MEGA2560_V3.h"
 #include "Gescom_MEGA2560_V3_CMD.h"
+
 
 
 
@@ -63,66 +64,49 @@ int GESCOM3::procesaComando_02(void)
 
 
 
+case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
                 case ( IDE_CMD_CM_R01): {  cmd_Comando_CM_R01(&gd);  break; }
 
                 case ( IDE_CMD_CM_DBG): {  cmd_Comando_CM_DBG(&gd);  break; }
-
-                case ( IDE_CMD_B_LIPO): {  cmd_Comando_B_LIPO(&gd);  break; }
+                case ( IDE_CMD_CM_RTC): {  cmd_Comando_CM_RTC(&gd);  break; }
 
                 case ( IDE_CMD_B_PPAK): {  cmd_Comando_B_PPAK(&gd);  break; }
 
-                case ( IDE_CMD_S_CDBG): {  cmd_Comando_S_CDBG(&gd);  break; }
+                case ( IDE_CMD_C_LEDS): {  cmd_Comando_C_LEDS(&gd);  break; }
 
-                case ( IDE_CMD_S_MLX9): {  cmd_Comando_S_MLX9(&gd);  break; }
-
-                case ( IDE_CMD_S_VCHG): {  cmd_Comando_S_VCHG(&gd);  break; }
-
-                case ( IDE_CMD_R_TIME): {  cmd_Comando_R_TIME(&gd);  break; }
-
-                case ( IDE_CMD_L_LEDS): {  cmd_Comando_L_LEDS(&gd);  break; }
                 case ( IDE_CMD_C_MIZQ): {  cmd_Comando_C_MIZQ(&gd);  break; }
 
                 case ( IDE_CMD_C_MDER): {  cmd_Comando_C_MDER(&gd);  break; }
 
                 case ( IDE_CMD_C_RMOV): {  cmd_Comando_C_RMOV(&gd);  break; }
 
+                case ( IDE_CMD_C_SRVX): {  cmd_Comando_C_SRVX(&gd);  break; }
 
+                case ( IDE_CMD_C_SRVY): {  cmd_Comando_C_SRVY(&gd);  break; }
 
+                case ( IDE_CMD_S_TEMP): {  cmd_Comando_S_TEMP(&gd);  break; }
+                case ( IDE_CMD_S_HUMR): {  cmd_Comando_S_HUMR(&gd);  break; }
 
+                case ( IDE_CMD_S_GLUZ): {  cmd_Comando_S_GLUZ(&gd);  break; }
 
+                case ( IDE_CMD_S_SSUP): {  cmd_Comando_S_SSUP(&gd);  break; }
 
+                case ( IDE_CMD_S_RGPS): {  cmd_Comando_S_RGPS(&gd);  break; }
 
+                case ( IDE_CMD_S_SICC): {  cmd_Comando_S_SICC(&gd);  break; }
 
+                case ( IDE_CMD_S_SEUS): {  cmd_Comando_S_SEUS(&gd);  break; }
 
+                case ( IDE_CMD_S_CFAN): {  cmd_Comando_S_CFAN(&gd);  break; }
 
+                case ( IDE_CMD_S_SALT): {  cmd_Comando_S_SALT(&gd);  break; }
 
+                case ( IDE_CMD_S_PRES): {  cmd_Comando_S_PRES(&gd);  break; }
+                case ( IDE_CMD_C_RELE): {  cmd_Comando_C_RELE(&gd);  break; }
 
-
+                case ( IDE_CMD_C_STPC): {  cmd_Comando_C_STPC(&gd);  break; }
 
 
          }

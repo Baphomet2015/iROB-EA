@@ -6,7 +6,7 @@
 // Fichero:        SENSOR_US.ino
 // Autor:
 // Hardware:       Arduino MEGA 2560
-// Fecha:          Marzo 2016
+// Fecha:          Enero 2021
 //
 // Funcionalidad:  Implmentacion de la clase SENSOR_US
 //
@@ -14,10 +14,6 @@
 //
 // ---------------------------------------------------------
 
-#include <Arduino.h>
-#include <stdlib.h>
-#include <WString.h> 
-#include "iROB_EA.h"
 #include "SENSOR_USS.h"
 
 

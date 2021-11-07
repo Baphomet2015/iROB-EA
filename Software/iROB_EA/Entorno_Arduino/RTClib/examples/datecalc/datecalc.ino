@@ -1,6 +1,5 @@
 // Simple date conversions and calculations
 
-#include <Wire.h>
 #include "RTClib.h"
 
 void showDate(const char* txt, const DateTime& dt) {
@@ -17,13 +16,13 @@ void showDate(const char* txt, const DateTime& dt) {
     Serial.print(dt.minute(), DEC);
     Serial.print(':');
     Serial.print(dt.second(), DEC);
-    
+
     Serial.print(" = ");
     Serial.print(dt.unixtime());
     Serial.print("s / ");
     Serial.print(dt.unixtime() / 86400L);
     Serial.print("d since 1970");
-    
+
     Serial.println();
 }
 
@@ -44,8 +43,12 @@ void showTimeSpan(const char* txt, const TimeSpan& ts) {
 }
 
 void setup () {
+
+#ifndef ESP8266
+  while (!Serial); // for Leonardo/Micro/Zero
+#endif
     Serial.begin(57600);
-    
+
     DateTime dt0 (0, 1, 1, 0, 0, 0);
     showDate("dt0", dt0);
 

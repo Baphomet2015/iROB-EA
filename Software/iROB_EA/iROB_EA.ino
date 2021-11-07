@@ -1,4 +1,3 @@
-
 //! ---------------------------------------------------------
 //!
 //! @mainpage 
@@ -28,59 +27,58 @@
 #include <Arduino.h>
 #include <stdlib.h>
 #include <WString.h> 
+#include <avr/pgmspace.h>
 #include <Wire.h>
-#include <RTClib.h>
-#include <Adafruit_MLX90614.h>
+#include <Servo.h>
 #include <EEPROM.h>
 #include <LedDisplay.h>
 #include "iROB_EA.h"
 #include "UF_SYS.h"
-//#include "MOTOR_FDS5672.h"
+#include "MOTOR_FDS5672.h"
 #include "SENSOR_USS.h"
+#include "SENSOR_GPS.h"
+#include "SENSOR_EMC.h"
+#include "SENSOR_RAZOR.h"
 #include <Gescom_MEGA2560_V3.h>
 #include <Gescom_MEGA2560_V3_CMD.h>
 
 
-
-
 // ---------------------------------------------------------
 //
-//         Definicion de Clases y variable GLOBALES
+//         Definicion de Clases y variables GLOBALES
 //
 //
 // . uf_sys       Objeto de manejo de  funcionalidades basicas
 // . mDer         Objeto de manejo del motor derecho
 // . mIzq         Objeto de manejo del motor izquierdo
 // . myDisplay    Objeto para manejear el display de estado
-// . sensor_US    Objeto para manejo de los sensores de US
+// . sensor_USS   Objeto para manejo de los sensores de US
+// . sensor_EMC   Objeto para manejo de la estacion climatica
+// . sensor_GPS   Objeto para manejo del GPS
+// . sensor_RAZOR Objeto para manejo del RAZOR
 // . sensor_mlx   Objeto para manejar el sensor MLX90614
 // . rtc          Objeto para manejar el reloj de tiempo real 
 // . gc           Objeto que implementa el gestor de comandos
 //
-// . flgPower_OFF Flag para control  del  flujo  principal en 
-//                la funcion loop.
+// . GLOBAL_FlgPower_OFF Flag para control del flujo principal
+//                       en la funcion loop.
 //
 //
 // ---------------------------------------------------------
 
-UF_SYS            uf_sys    = UF_SYS();                         // Implementa la funcionalidad relacionada con la UF_SYS
+UF_SYS            uf_sys    = UF_SYS();                            // Implementa la funcionalidad relacionada con la UF_SYS
 
-//MOTOR_FDS5672     mDer      = MOTOR_FDS5672( PIN_HW_MDER_DIR , // Implementa el control del motor derecho
-//                                             PIN_HW_MDER_PWM ,
-//                                             PIN_HW_MDER_RST ,
-//                                             PIN_HW_MDER_FF1 ,
-//                                             PIN_HW_MDER_FF2 ,
-//                                             PIN_HW_MDER_ICC
-//                                           );                   
-//MOTOR_FDS5672     mIzq      = MOTOR_FDS5672( PIN_HW_MIZQ_DIR ,  // Implementa el control del motor izquierdo
-//                                             PIN_HW_MIZQ_PWM ,
-//                                             PIN_HW_MIZQ_RST ,
-//                                             PIN_HW_MIZQ_FF1 ,
-//                                             PIN_HW_MIZQ_FF2 ,
-//                                             PIN_HW_MIZQ_ICC
-//                                           );                   
+MOTOR_FDS5672     mDer      = MOTOR_FDS5672( PIN_HW_MTD_DIR ,      // Implementa el control del motor derecho
+                                             PIN_HW_MTD_RST ,
+                                             PIN_HW_MTD_PWM 
+                                           );                   
 
-LedDisplay        myDisplay = LedDisplay( PIN_HW_HCMS_DATA  ,     // Implementa el control del display
+MOTOR_FDS5672     mIzq      = MOTOR_FDS5672( PIN_HW_MTI_DIR ,      // Implementa el control del motor izquierdo
+                                             PIN_HW_MTI_RST ,
+                                             PIN_HW_MTI_PWM 
+                                           );                   
+
+LedDisplay        myDisplay = LedDisplay( PIN_HW_HCMS_DATA  ,      // Implementa el control del display
                                           PIN_HW_HCMS_RS    ,
                                           PIN_HW_HCMS_CLK   ,
                                           PIN_HW_HCMS_CE    ,
@@ -93,19 +91,22 @@ SENSOR_USS       sensor_USS = SENSOR_USS( PIN_HW_USR_DER_TRIGGER , // Implementa
                                           PIN_HW_USR_DER_ECHO    ,
                                           PIN_HW_USR_IZQ_ECHO    ,
                                           PIN_HW_SUPERFICIE
-                                        );                      
+                                        );         
+SENSOR_EMC      sensor_EMC = SENSOR_EMC( PIN_HW_SEN_MET_LUZ);      // Implementa el control de los sensores de la estacion climatica                                                    
+SENSOR_GPS      sensor_GPS;                                        // Implementa el modulo de GPS                                        
+SENSOR_RAZOR    sensor_RAZOR;                                      // Implementa el modulo de sensores AHRS                                        
 
-//Adafruit_MLX90614 sensor_MLX = Adafruit_MLX90614();             // Implementa el sensor de temperatura MELEXIS 90614
-//RTC_DS1307        rtc;                                          // Reloj de tiempo real
-//GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
-//                                       false               ,
-//                                       IDE_DISPOSITIVO_R00 ,
-//                                       IDE_SERIAL_TRX_9600
-//                                     );                         // Gestor de comandos
-volatile byte     flgPower_OFF;                                 // Flag actualizado desde la funcion asociada a la INT 0 (peticion de OFF), ver funcion void INT_power_OFF(void)
+GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
+                                       false               ,
+                                       IDE_DISPOSITIVO_R00 ,
+                                       IDE_SERIAL_TRX_9600
+                                     );                            // Gestor de comandos
 
+volatile byte     GLOBAL_FlgPower_OFF;                             // Flag global actualizado desde la funcion asociada a la INT 0 (peticion de OFF), ver funcion void INT_power_OFF(void)
 
-
+byte              GLOBAL_FlgDebug;                                 // Flag global que indica si se deben generar trazas por el puerto de Debug o no
+                                                                   
+  
 // ---------------------------------------------------------
 //
 // void setup()
@@ -116,11 +117,6 @@ volatile byte     flgPower_OFF;                                 // Flag actualiz
 
 void setup(void)
 {
-  #ifdef APP_MODO_DEBUG
-  unsigned long int t;
-  t = millis();
-  #endif
-
   // ---------------------------------------------------------
   //
   // ATENCIÓN:
@@ -177,6 +173,8 @@ void setup(void)
 
   pinMode( PIN_HW_SERVO_HOR,OUTPUT);
   pinMode( PIN_HW_SERVO_VER,OUTPUT);
+  
+  pinMode( PIN_HW_FAN,OUTPUT);
 
   pinMode( PIN_HW_LED_POS,OUTPUT);
   pinMode( PIN_HW_LED_DER,OUTPUT);
@@ -203,35 +201,35 @@ void setup(void)
   //
   // ---------------------------------------------------------
 
-
+  analogReference(DEFAULT);
+  
   // ---------------------------------------------------------
   // Inicio:
-  // .  Wire.begin()
-  // .  rtc.begin()
-  // .   gc.begin()
-  // .  sensor_MLX.begin()
-  // .  sensor_US.begin()
-  // .  myDisplay.begin()
-  // .  flgPower_OFF
+  //
   //
   // ---------------------------------------------------------
      
   Wire.begin();
-  
- // rtc.begin();
- // sensor_MLX.begin();  
- //   gc.begin();
-  sensor_USS.begin();
+  mDer.begin();
+  mIzq.begin();
   myDisplay.begin();
   myDisplay.setBrightness(15);
-
-  flgPower_OFF = false;
+  sensor_USS.begin();
+  sensor_GPS.begin();
+  sensor_EMC.begin();
+  sensor_RAZOR.begin();
+   
+  gc.begin();
+ 
 
   // ---------------------------------------------------------
   // Interrupciones:
-  // INT 0  --> Boton Power OFF
+  // INT 0:    Boton Power OFF
+  // Funcion:  INT_power_OFF()
+  // Variable: GLOBAL_FlgPower_OFF
+  //           Variable actualizada por esta funcion
   // ---------------------------------------------------------
-  
+  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_NO_PERMITIDO;
   attachInterrupt(0, INT_power_OFF, RISING);
 
   // ---------------------------------------------------------
@@ -239,49 +237,54 @@ void setup(void)
   //
   // ---------------------------------------------------------
 
-
+  GLOBAL_FlgDebug = false;  
+     
   // ---------------------------------------------------------
   //
-  // Inicializacion de puertos serie:
+  //        Inicializacion de puertos serie
   //
-  // . Serial0 ESTÁ asociado con el gestor de comandos y se
-  //           inicializa con gc->begin()
-  // . Serial1
-  // . Serial2
-  // . Serial3 9600, Puerto DEBUG
+  // . Serial0 Gestor de comandos, se inicializa en gc->begin()
+  //           Comunicacion entre Arduino y PC
+  // . Serial1 GPS  , se inicializa en sensor_GPS.begin()
+  // . Serial2 RAZOR, se inicializa en sensor_RAZOR.begin()
+  // . Serial3 9600 , puerto de DEBUG, 9600
   //
   // ---------------------------------------------------------
   
-  Serial3.begin(IDE_SERIAL_TRX_9600);   // Puerto de DEBUG
+  Serial3.begin(IDE_SERIAL_TRX_9600);   // Puerto de DEBUG, ver comentario de la variable GLOBAL_FlgDebug
     
  
 
   // ---------------------------------------------------------
   //                        IMPORTANTE
-  //
+  // !!! NO mover de aqui estas inicializaciones
   // Para  version  Funcional, comentar  todas  las lineas que 
   // puedan aparecer debajo de este comentario y dejar SOLO:
   //
-  //       uf_sys.inicio();
+  //       uf_sys.begin();
   //
   // ---------------------------------------------------------  
-
-  uf_sys.inicio();                                          
+ 
+  uf_sys.begin();                                          
 
   // ---------------------------------------------------------  
-  // QUITAR LUEGO DE QUE SE EJECUTE UNA VEZ
-  //uf_sys.set_RECARGAS(0);
+  // Utilidad para escanear el bus I2C
+  // DESCOMENTAR para probar los sensore conectados por I2C
   // ---------------------------------------------------------  
+  
+  // UTIL_Scanner_I2C();
 
+  // ---------------------------------------------------------  
+  // Atencion:
+  // Cuando se instala un  nuevo Arduino MEGA, es  conveniente
+  // descomentar  esta  llamada  UNA SOLA  VEZ para iniciar la
+  // Variable EEPROM a  un  valor  conocido, despues  se  DEBE 
+  // dejar comentada
+  // ---------------------------------------------------------  
+  
+  // uf_sys.set_NUM_RC(1);
 
-
-  #ifdef APP_MODO_DEBUG
-  t = millis() - t;
-  Serial3.print(IDE_STR_DEBUG_EXE);
-  Serial3.print(t,DEC);
-  Serial3.println(IDE_STR_MSEG);
-  #endif
-       
+     
  }
 
 
@@ -297,7 +300,7 @@ void setup(void)
 
 void loop(void)
 {
- 
+char sBuff[20];
 
   // ---------------------------------------------------------
   // A) Actualizacion de Timers etc de uf_sys
@@ -305,15 +308,15 @@ void loop(void)
   
   uf_sys.timers();
   
-  if ( flgPower_OFF==false )
+  if ( GLOBAL_FlgPower_OFF==IDE_INT_POWER_OFF_SI_PERMITIDO )
      { // ---------------------------------------------------------
        //
        //                BLOQUE GENERAL DE PROGRAMA
        //
        //
        // ---------------------------------------------------------
-       
-       if (uf_sys.get_FlgDebug()==true) 
+                    
+       if (uf_sys.get_FlgDebug()==IDE_DEBUG_ON) 
           { // ---------------------------------------------------------
             // Conectado conector EXTERNO de depuracion
             // ---------------------------------------------------------
@@ -342,7 +345,12 @@ void loop(void)
        // -------------------------------------------------------
 
        
-       //gc.exeGesComando();
+       if ( gc.exeGesComando()==IDE_BUFF_RX_OK )
+          {
+
+
+        
+          }
        
       
      
@@ -369,7 +377,6 @@ void loop(void)
        // ---------------------------------------------------------
        // Mensaje de sistema --> Down
        // ---------------------------------------------------------
-       Serial3.println(IDE_STR_INICIO_POWER_DOWN);
        FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_DOWN,(IDE_PAUSA_GENERAL*4));
 
 
@@ -398,9 +405,12 @@ void loop(void)
 
 void INT_power_OFF(void)
 {
-  
-  flgPower_OFF = true;
-  
+
+  if ( GLOBAL_FlgPower_OFF==IDE_INT_POWER_OFF_SI_PERMITIDO )
+     {
+       GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_SOLICITADO;
+     }
+ 
 }
 
 
@@ -506,4 +516,54 @@ void FNG_Pausa(unsigned int pausa)
              }
 
         }
+}
+
+
+
+// ---------------------------------------------------------
+//
+// void UTIL_Scanner_I2C (void)
+//
+// ---------------------------------------------------------
+
+void UTIL_Scanner_I2C (void)
+{
+
+  byte error;
+  byte address;
+  int  nDevices;
+  
+  
+  Serial3.println("Scanning I2C...");
+
+ while(1)
+ {
+   nDevices = 0;
+   for ( address = 1; address < 127; address++ )
+       {
+         // The i2c_scanner uses the return value of the Write.endTransmisstion to see if
+         // a device did acknowledge to the address.
+         Wire.beginTransmission(address);
+         error = Wire.endTransmission();
+   
+         if ( error==0 )
+            {
+              Serial3.print("I2C Device found at address 0x");
+              if (address<16) { Serial3.print("0"); }
+              Serial3.println(address,HEX);
+              nDevices++;
+            }
+    else if ( error==4 )
+            {
+              Serial3.print("Unknown error at address 0x");
+              if (address<16) { Serial3.print("0"); }
+              Serial3.println(address,HEX);
+            }    
+       }
+      
+   if (nDevices == 0) { Serial3.println("No I2C devices found\n"); }
+   else               { Serial3.println("Done\n");                 }
+   delay(3000);
+ }
+ 
 }

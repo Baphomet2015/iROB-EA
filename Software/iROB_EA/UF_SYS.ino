@@ -5,7 +5,7 @@
 // Fichero:        UF_SYS.ino
 // Autor:
 // Hardware:       Arduino MEGA 2560
-// Fecha:          Abril 2015
+// Fecha:          Enero 2021
 //
 // Funcionalidad:  Implmentacion de la clase UF_SYS
 //
@@ -13,11 +13,6 @@
 //
 // ---------------------------------------------------------
 
-#include <Arduino.h>
-#include <stdlib.h>
-#include <WString.h> 
-#include <EEPROM.h>
-#include "iROB_EA.h"
 #include "UF_SYS.h"
 
 
@@ -45,12 +40,12 @@ UF_SYS::UF_SYS(void)
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::inicio(void)
+// void UF_SYS::begin(void)
 // 
 //
 // ---------------------------------------------------------
 
-void UF_SYS::inicio(void)
+void UF_SYS::begin(void)
 {
    
 
@@ -59,7 +54,8 @@ void UF_SYS::inicio(void)
   // Inicio de componentes e interfaces Arduino
   //
   // ---------------------------------------------------------
-  
+
+    
   // ---------------------------------------------------------
   // Inicio del sistema de encendido/intermitencias de los leds
   // ---------------------------------------------------------
@@ -68,25 +64,79 @@ void UF_SYS::inicio(void)
   led_DER   = IDE_LED_OFF;     // Led apagado
   led_IZQ   = IDE_LED_OFF;     // Led apagado
   led_POS   = IDE_LED_OFF;     // Led apagado
-
+ 
+  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_NO_PERMITIDO;
+  
   digitalWrite(PIN_HW_LED_DER,LOW);
   digitalWrite(PIN_HW_LED_IZQ,LOW);
   digitalWrite(PIN_HW_LED_POS,LOW);
 
   // ---------------------------------------------------------
-  // Inicio del sistema de medida de corriente ACS714
+  // Inicio del sistema de flags HW de control de los motores
+  // ---------------------------------------------------------
+  
+  digitalWrite(PIN_HW_MTDI_SEL_A,HIGH);
+  digitalWrite(PIN_HW_MTDI_SEL_B,HIGH);
+  digitalWrite(PIN_HW_MTDI_SEL_C,HIGH);
+  
+  // ---------------------------------------------------------
+  // Inicio del sistema de medida de corriente ACS714, la
+  // funcion calibra_ACS714() DESCONECTA los reles:
+  // IDE_RELE_12P
+  // IDE_RELE_5VP
   // ---------------------------------------------------------
  
   calibra_ACS714();
 
- 
+  // ---------------------------------------------------------
+  // Asegura el apagado del PC
+  // ---------------------------------------------------------
+
+  power_PC(IE_PC_POWER_OFF);
+
+  // ---------------------------------------------------------
+  // Inicializa y posiciona servos X/Y de la camara
+  // ---------------------------------------------------------
+
+  servo_X.attach(PIN_HW_SERVO_HOR);
+  servo_Y.attach(PIN_HW_SERVO_VER);
+  posiciona_servo_X(IDE_SERVO_X_POS_DEFECTO);
+  posiciona_servo_Y(IDE_SERVO_Y_POS_DEFECTO);
+  
+  // ---------------------------------------------
+  // Inicializacion del Reloj de Tiempo Real
+  // ---------------------------------------------
+  if (rtc.begin())
+     {
+       if (rtc.lostPower())
+          { // ---------------------------------------------
+            // Se ha perdido la hora, puede  ser  porque  el
+            // robot lleva mucho tiempo apagado y la  pila
+            // se ha agotado.
+            // Pone al reloj una fecha/hora por  defecto,
+            // esta fecha/hora es la de cuando se hizo el
+            // programa
+            // ---------------------------------------------
+            rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));  // Esta linea coge la fecha y hora del programa y la carga en el Reloj
+          }
+       // ---------------------------------------------
+       // Activar generacion de señal de 1Hz SQW
+       // ---------------------------------------------
+       rtc.writeSqwPinMode(DS3231_SquareWave1Hz);
+       rtc_Flg = true;
+     }
+  else
+     {
+       rtc_Flg = false; 
+     }     
+     
   // ---------------------------------------------------------
   //
   //
   //
   // ---------------------------------------------------------
-       
-  switch( secuenciaInicio() )
+
+  switch( secuenciaInicio() )       
         {
            case ( IDE_SEC_INICIO_OK ):
                 { // ---------------------------------------------------------
@@ -100,14 +150,14 @@ void UF_SYS::inicio(void)
    
             
                   FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,0);
+                  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_SI_PERMITIDO;
                   break;
                 }
                 
            case ( IDE_SEC_INICIO_ER_CLV ):   
                 { // ---------------------------------------------------------
-                  // Clave introducida erroena en max numero de intentos --> Power OFF
+                  // Clave introducida erronea en max numero de intentos --> Power OFF
                   // ---------------------------------------------------------
-                  Serial3.println(IDE_STR_INICIO_POWER_OFF);
                   FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_OFF,(IDE_PAUSA_GENERAL*4));                
                   power_OFF();        
                   break;
@@ -118,10 +168,13 @@ void UF_SYS::inicio(void)
                   // NO se puede arrancar bloqueado, queda en un bulcle 
                   // indefinido para que se pueda recargar el programa
                   // ---------------------------------------------------------
+                  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_SI_PERMITIDO;
                   while( 1 );
                   break;
                 }          
         }
+
+        
 }
 
 
@@ -208,7 +261,6 @@ byte UF_SYS::secuenciaInicio(void)
          // ---------------------------------------------------------
 
          nIntentos = get_NUM_RC();
-         display_Clave(nIntentos);
                           
          if ( nIntentos<IDE_CLV_MAX_INTENTOS )
             { // ---------------------------------------------------------
@@ -289,7 +341,6 @@ byte UF_SYS::secuenciaInicio(void)
                    resultado  = IDE_SEC_INICIO_ER_BLK;
                    flgProceso = true;
                    FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_BLK,(IDE_PAUSA_GENERAL*8));
-                   Serial3.println(IDE_STR_LOCK);
                  }
             }
        }
@@ -445,6 +496,20 @@ byte UF_SYS::get_DTMF(void)
 
 
 
+// ---------------------------------------------------------
+//
+// void UF_SYS::power_PC(byte modo)
+// Activa o desactiva el pulsador de encendido del PC
+//
+// ---------------------------------------------------------
+
+void UF_SYS::power_PC(byte modo)
+{
+  if (modo==IE_PC_POWER_ON)  { digitalWrite(PIN_HW_POW_PC_1,HIGH); }
+  if (modo==IE_PC_POWER_OFF) { digitalWrite(PIN_HW_POW_PC_1,LOW);  }
+}
+
+
 
 // ---------------------------------------------------------
 //
@@ -462,7 +527,7 @@ void UF_SYS::power_OFF(void)
   // del power OFF
   // ---------------------------------------------------------
   
-  rele(IDE_RELE_PC ,IDE_RELE_DESACTIVAR);
+  rele(IDE_RELE_5VP ,IDE_RELE_DESACTIVAR);
   rele(IDE_RELE_12P,IDE_RELE_DESACTIVAR);
 
   // ---------------------------------------------------------
@@ -488,7 +553,7 @@ void UF_SYS::rele (byte releID,byte estado)
   
   switch( releID )
         {
-          case (IDE_RELE_PC):
+          case (IDE_RELE_5VP):
                {
                  if ( estado==IDE_RELE_ACTIVAR )
                     {
@@ -585,21 +650,6 @@ void UF_SYS::get_CLV_AE(char* valor)
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::set_RECARGAS(int valor)
-// 
-//
-// ---------------------------------------------------------
-
-void UF_SYS::set_RECARGAS(int valor)
-{
-  EEPROM.write(EEPROM_ADDR_RECARGAS  ,highByte(valor));
-  EEPROM.write(EEPROM_ADDR_RECARGAS+1, lowByte(valor));
-}
-
-
-
-// ---------------------------------------------------------
-//
 // byte UF_SYS::get_FlgDebug(void)
 // 
 //
@@ -607,8 +657,8 @@ void UF_SYS::set_RECARGAS(int valor)
 
 byte UF_SYS::get_FlgDebug(void)
 {
-  if ( digitalRead(PIN_HW_CNX_DEBUG)==HIGH) { return (true);  }
-  else                                      { return (false); } 
+  if ( digitalRead(PIN_HW_CNX_DEBUG)==HIGH) { return (IDE_DEBUG_ON);  }
+  else                                      { return (IDE_DEBUG_OFF); } 
 }
 
 
@@ -657,61 +707,61 @@ void UF_SYS::set_CLV_AE(char* valor)
 
 float UF_SYS::get_Corriente(int sensorID)
 {
-  int      nMedidas;
-  int      pinID;
-  long int vMedida;
-  float    sensedVoltage;
-  float    sensedCurrent;
-  float    offset;
+  
+  float vSensor    = 0;
+  int   numMedidas = 0;
+  float vMedida    = 0.0;
+  float iMedida    = 0.0;
+  float offset;
 
-  nMedidas      = 0;
-  vMedida       = 0L;
-  sensedCurrent = 0.0;
-  sensedVoltage = 0.0;
 
   if ( sensorID==IDE_ICC_5VP )
-     { 
-       offset = offset_5VP;
-       pinID  = PIN_HW_ICC_SENSE_5VP;
+     { offset    = offset_5VP;
+       sensorID  = PIN_HW_ICC_SENSE_5VP;
      }
   else
-     {
-       offset = offset_12P;
-       pinID  = PIN_HW_ICC_SENSE_12P;
+     { offset    = offset_12P;
+       sensorID  = PIN_HW_ICC_SENSE_12P;
      }
-    
-  for (;nMedidas<IDE_ICC_NUM_MEDIDAS_OBTENER;nMedidas++ )
-      { // ---------------------------------------------------------
-        //
-        // ---------------------------------------------------------
-        vMedida += analogRead(pinID);
+  
+  for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_OBTENER ; numMedidas++ )
+      {
+        vSensor += analogRead(sensorID);
+        delayMicroseconds(1000);
       }
-  vMedida       /= IDE_ICC_NUM_MEDIDAS_OBTENER;
-  sensedVoltage  = vMedida * adc_vConversion;
-  sensedCurrent = (sensedVoltage - offset) / IDE_ICC_SENSIBILIDAD;
+   
+  vSensor = (vSensor / IDE_ICC_NUM_MEDIDAS_OBTENER) * (float)4.88;
+  vMedida = abs(offset - vSensor);
+  iMedida = (vMedida / IDE_ICC_SENSIBILIDAD) / 2; 
+  
+  if ( GLOBAL_FlgDebug==true )
+     {
+       Serial3.println("");
 
-  #ifdef APP_MODO_DEBUG
-  Serial3.print("offset: ");
-  Serial3.print(offset);
-  Serial3.print("V, voltaje medido: ");
-  Serial3.print(sensedVoltage,2);
-  Serial3.print("V, corriente medida: ");
-  Serial3.print(sensedCurrent,2);
-  Serial3.println("A");
-  #endif
+       Serial3.print("offset: ");
+       Serial3.print(offset);
+       Serial3.println("mV");
 
-  return(sensedCurrent);
+       Serial3.print("vMedida Arduino: ");
+       Serial3.print(vSensor);
+       Serial3.println("mV");
+
+       Serial3.print("vMedida ACS723: ");
+       Serial3.print(vMedida);
+       Serial3.println("mV");
+      
+       Serial3.print("iMedida ACS723: ");
+       Serial3.print(iMedida);
+       Serial3.println("mA");
+     }
+
+  return(iMedida);
 }
-
-
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::calibra_ACS714(void)
+// void UF_SYS::calibra_ACS723(void)
 //
-// Desconecta los dos reles (12P y 5VP) y mide la tension de
-// salida de los dos sensores de corriente para determinar la
-// tension de offset real de ambos sensores.
 // Actualiza los offsets medidos en dos variables de la clase
 // . offset_12P
 // . offset_5VP
@@ -720,40 +770,32 @@ float UF_SYS::get_Corriente(int sensorID)
 
 void UF_SYS::calibra_ACS714(void)
 {
-  int      nMedidas;
-  long int vMedida;
-
+  int numMedidas;
   
-  rele(IDE_RELE_PC ,IDE_RELE_DESACTIVAR);
+    
+  offset_12P = 0.0;
+  offset_5VP = 0.0;
+
+  rele(IDE_RELE_5VP,IDE_RELE_DESACTIVAR);
   rele(IDE_RELE_12P,IDE_RELE_DESACTIVAR);
-
-  adc_vConversion = ((float)5.0) / ((float)1024.0);   // Tension equivalente por paso de conversion, voltios
   
-  nMedidas = 0;
-  vMedida  = 0L; 
-  for (;nMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR;nMedidas++ )
-      { // ---------------------------------------------------------
-        //
-        // ---------------------------------------------------------
-        vMedida += analogRead(PIN_HW_ICC_SENSE_12P);
+  for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR ; numMedidas++ )
+      {
+        offset_5VP += analogRead(PIN_HW_ICC_SENSE_5VP);
+        delayMicroseconds(1000);
       }
-  vMedida    /= IDE_ICC_NUM_MEDIDAS_CALIBRAR;
-  offset_12P  = vMedida * adc_vConversion;
+  offset_5VP = (offset_5VP / IDE_ICC_NUM_MEDIDAS_CALIBRAR) * (float)4.88;
 
-  nMedidas = 0;
-  vMedida  = 0L; 
-  for (;nMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR;nMedidas++ )
-      { // ---------------------------------------------------------
-        //
-        // ---------------------------------------------------------
-        vMedida += analogRead(PIN_HW_ICC_SENSE_5VP);
+
+  for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR ; numMedidas++ )
+      {
+        offset_12P += analogRead(PIN_HW_ICC_SENSE_12P);
+        delayMicroseconds(1000);
       }
-  vMedida    /= IDE_ICC_NUM_MEDIDAS_CALIBRAR;
-  offset_5VP  = vMedida * adc_vConversion;
-   
+  offset_12P = (offset_12P / IDE_ICC_NUM_MEDIDAS_CALIBRAR) * (float)4.88;
+
+  
 }
-
-
 
 // ---------------------------------------------------------
 //
@@ -771,6 +813,23 @@ byte UF_SYS::set_Led(byte ledID,byte modo)
           case(IDE_LED_POS): { led_POS = modo; break; } 
         }
 
+  return(modo);
+}
+
+
+
+// ---------------------------------------------------------
+//
+// byte UF_SYS::set_Fan(byte modo)
+//         
+//
+// ---------------------------------------------------------
+
+byte UF_SYS::set_Fan(byte modo)
+{
+  if ( modo==true ) { digitalWrite(PIN_HW_FAN,HIGH); }
+  else              { digitalWrite(PIN_HW_FAN,LOW);  }
+  
   return(modo);
 }
 
@@ -799,18 +858,176 @@ int UF_SYS::get_Bateria(void)
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::display_Clave(byte nIntentos)
+// int UF_SYS::get_MotorEstado(int motorID)
 //         
 //
 // ---------------------------------------------------------
 
-void UF_SYS::display_Clave(byte nIntentos)
+int UF_SYS::get_MotorEstado(int motorID)
 {
+  int test;
+  int ff1;
+  int ff2;
 
- Serial3.print("Reintentos: ");
- Serial3.println(nIntentos,DEC);
- Serial3.print("Clave: ");
- Serial3.println(IDE_CLV_AP);
- Serial3.flush();
+  test = IDE_MOTOR_ER;
   
+  if ( motorID==IDE_MOTOR_DERECHO )
+     {
+       digitalWrite(PIN_HW_MTDI_SEL_C,LOW);
+       
+       digitalWrite(PIN_HW_MTDI_SEL_A,HIGH);
+       digitalWrite(PIN_HW_MTDI_SEL_B,LOW);
+       ff2 = analogRead(PIN_HW_MTDI_INFO);
+       delayMicroseconds(IDE_MOTOR_FF1FF2_DELAY);
+
+       digitalWrite(PIN_HW_MTDI_SEL_A,LOW);
+       digitalWrite(PIN_HW_MTDI_SEL_B,HIGH);
+       ff1 = analogRead(PIN_HW_MTDI_INFO);
+       delayMicroseconds(IDE_MOTOR_FF1FF2_DELAY);
+
+            if ( ff1<=IDE_MOTOR_ESTADO_0 && ff2<=IDE_MOTOR_ESTADO_0 ) { test = IDE_MOTOR_OK;            }
+       else if ( ff1<=IDE_MOTOR_ESTADO_0 && ff2>=IDE_MOTOR_ESTADO_1 ) { test = IDE_MOTOR_CORTOCIRCUITO; }
+       else if ( ff1>=IDE_MOTOR_ESTADO_1 && ff2<=IDE_MOTOR_ESTADO_0 ) { test = IDE_MOTOR_TEMPERATURA;   }
+       else                                                           { test = IDE_MOTOR_TENSION;       }
+  
+     }
+     
+   if ( motorID==IDE_MOTOR_IZQUIERDO )
+     {
+       digitalWrite(PIN_HW_MTDI_SEL_C,HIGH);
+       
+       digitalWrite(PIN_HW_MTDI_SEL_A,LOW);
+       digitalWrite(PIN_HW_MTDI_SEL_B,LOW);
+       ff2 = analogRead(PIN_HW_MTDI_INFO);
+       delayMicroseconds(IDE_MOTOR_FF1FF2_DELAY);
+       
+       digitalWrite(PIN_HW_MTDI_SEL_A,HIGH);
+       digitalWrite(PIN_HW_MTDI_SEL_B,LOW);
+       ff1 = analogRead(PIN_HW_MTDI_INFO);
+       delayMicroseconds(IDE_MOTOR_FF1FF2_DELAY);
+
+            if ( ff1<=IDE_MOTOR_ESTADO_0 && ff2<=IDE_MOTOR_ESTADO_0 ) { test = IDE_MOTOR_OK;            }
+       else if ( ff1<=IDE_MOTOR_ESTADO_0 && ff2>=IDE_MOTOR_ESTADO_1 ) { test = IDE_MOTOR_CORTOCIRCUITO; }
+       else if ( ff1>=IDE_MOTOR_ESTADO_1 && ff2<=IDE_MOTOR_ESTADO_0 ) { test = IDE_MOTOR_TEMPERATURA;   }
+       else                                                           { test = IDE_MOTOR_TENSION;       }
+    
+     }  
+
+  return(test);
+}
+
+
+// ---------------------------------------------------------
+//
+// int posiciona_servo_X (unsigned int pos)
+// Admite valores de 0 ... 180
+// Retorna:
+// . El mismo valor recibido si es correcto       
+// . 255 Si el valor recibido es incorrecto
+//
+// ---------------------------------------------------------
+
+unsigned int UF_SYS::posiciona_servo_X(unsigned int pos)
+{ 
+  if ( pos<=180 )
+     {
+       servo_X.write(pos);  
+     }
+  else
+     {
+       pos = 255;         
+     }
+  return( pos );   
+}
+
+
+// ---------------------------------------------------------
+//
+// int posiciona_servo_Y (unsigned int pos)
+// Admite valores de 0 ... 180
+// Retorna:
+// . El mismo valor recibido si es correcto       
+// . 255 Si el valor recibido es incorrecto
+//
+// ---------------------------------------------------------
+
+unsigned int UF_SYS::posiciona_servo_Y(unsigned int pos)
+{
+  if ( pos<=180 )
+     {
+       servo_Y.write(pos);  
+     }
+  else
+     {
+       pos = 255;         
+     }
+  return( pos );   
+}
+
+
+// ----------------------------------------------------
+//
+// DateTime UF_SYS::get_RTC_D(int* estado)
+//
+//
+// ----------------------------------------------------
+DateTime UF_SYS::get_RTC_D(int* estado)
+{
+  *estado = rtc_Flg;
+  
+  if ( rtc_Flg==true )
+     {
+       return( rtc.now() );
+     }
+  else
+     {
+       return(NULL);
+     }
+}
+
+
+
+// ----------------------------------------------------
+//
+// void UF_SYS::get_RTC_S(int* estado,char* sBuffer)
+// Devuelve string en formato:
+// AAAAMMDD-HH:MM, 14 caracteres
+// 
+// ----------------------------------------------------
+
+void UF_SYS::get_RTC_S(int* estado,char* sBuffer)
+{
+  *estado = rtc_Flg;
+  
+  if ( rtc_Flg==true )
+     { // -------------------------------------------
+       // Devuelve Fecha/Hora
+       // -------------------------------------------
+       DateTime dt;
+       dt = rtc.now();
+       sprintf(sBuffer,"%04d%02d%02d-%02d:%02d",dt.year(),dt.month(),dt.day(),dt.hour(),dt.minute());
+     }
+  else
+     {
+       sBuffer[0] = '\0';
+     }
+}
+
+
+
+// ----------------------------------------------------
+//
+// void UF_SYS::set_RTC_D(int* estado,DateTime dt)
+// 
+// 
+// ----------------------------------------------------
+
+void UF_SYS::set_RTC_D(int* estado,DateTime dt)
+{
+  *estado = rtc_Flg;
+  
+  if ( rtc_Flg==true )
+     {
+       rtc.adjust(dt);
+     }
 }

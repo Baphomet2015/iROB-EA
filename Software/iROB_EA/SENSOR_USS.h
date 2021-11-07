@@ -5,7 +5,7 @@
 // Fichero:        SNESOR_US.h
 // Autor:
 // Hardware:       Arduino MEGA 2560
-// Fecha:          Abril 2015
+// Fecha:          Enero 2021
 //
 // Funcionalidad:  Definicion de la clase SENSOR_US
 //                 Maneja los sensores:

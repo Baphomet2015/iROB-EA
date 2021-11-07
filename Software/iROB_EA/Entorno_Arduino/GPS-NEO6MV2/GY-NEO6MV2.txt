@@ -1,0 +1,7 @@
+https://leantec.es/tutorial-arduino-modulo-gps-gps6mv2/
+https://solectroshop.com/es/content/35-modulos-gps-de-arduino-tutorial-arduino-modulo-neo6mv2
+https://www.luisllamas.es/localizacion-gps-con-arduino-y-los-modulos-gps-neo-6/
+
+Libreria TinyGPS:
+
+https://github.com/mikalhart/TinyGPS/releases/tag/v13
