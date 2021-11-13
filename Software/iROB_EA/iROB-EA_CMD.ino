@@ -244,6 +244,26 @@ void cmd_Comando_C_LEDS(GESCOM_DATA* gd)
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);   
                 break;
               }
+
+          case(IDE_PARAM_LD3):
+              {
+                if ( gd->cnv_Param02==IDE_PARAM_OFF )
+                   {
+                     uf_sys.set_Led(IDE_LED_FOCO,IDE_LED_OFF );            
+                   }
+                else if ( gd->cnv_Param02==IDE_PARAM__ON )
+                   {
+                     uf_sys.set_Led(IDE_LED_FOCO,IDE_LED_ON );
+                   }
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);   
+                break;
+              }    
+
+          default:
+              {
+               sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+               break;
+              }
         }
  
 }
@@ -432,7 +452,8 @@ void cmd_Comando_C_SRVX(GESCOM_DATA* gd)
                 // . El mismo valor recibido si es correcto       
                 // . 255 Si el valor recibido es incorrecto
                 // ----------------------------------------
-                sprintf(gd->buffRespCmd,"%03d",uf_sys.posiciona_servo_X(gd->cnv_Param02));
+                if ( uf_sys.posiciona_servo_X(gd->cnv_Param02)!=-1 ) { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK); }
+                else                                                 { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER); } 
                 break;
               }
         }
@@ -459,7 +480,8 @@ void cmd_Comando_C_SRVY(GESCOM_DATA* gd)
                 // . El mismo valor recibido si es correcto       
                 // . 255 Si el valor recibido es incorrecto
                 // ----------------------------------------
-                sprintf(gd->buffRespCmd,"%03d",uf_sys.posiciona_servo_Y(gd->cnv_Param02));
+                if ( uf_sys.posiciona_servo_Y(gd->cnv_Param02)!=-1 ) { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK); }
+                else                                                 { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER); } 
                 break;
               }
         }

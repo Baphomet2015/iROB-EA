@@ -64,12 +64,14 @@ void UF_SYS::begin(void)
   led_DER   = IDE_LED_OFF;     // Led apagado
   led_IZQ   = IDE_LED_OFF;     // Led apagado
   led_POS   = IDE_LED_OFF;     // Led apagado
+  led_FOCO  = IDE_LED_FOCO;    // Led apagado
  
   GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_NO_PERMITIDO;
   
-  digitalWrite(PIN_HW_LED_DER,LOW);
-  digitalWrite(PIN_HW_LED_IZQ,LOW);
-  digitalWrite(PIN_HW_LED_POS,LOW);
+  digitalWrite(PIN_HW_LED_DER ,LOW);
+  digitalWrite(PIN_HW_LED_IZQ ,LOW);
+  digitalWrite(PIN_HW_LED_POS ,LOW);
+  digitalWrite(PIN_HW_LED_FOCO,LOW);
 
   // ---------------------------------------------------------
   // Inicio del sistema de flags HW de control de los motores
@@ -223,6 +225,13 @@ void UF_SYS::timers(void)
           case(IDE_LED_OFF): { digitalWrite(PIN_HW_LED_POS,LOW);     break; }
           case(IDE_LED_ON):  { digitalWrite(PIN_HW_LED_POS,HIGH);    break; }
           case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_POS,led_Blk); break; }
+        }
+
+ switch (led_FOCO)
+        { 
+          case(IDE_LED_OFF): { digitalWrite(PIN_HW_LED_FOCO,LOW);     break; }
+          case(IDE_LED_ON):  { digitalWrite(PIN_HW_LED_FOCO,HIGH);    break; }
+          case(IDE_LED_BLK): { digitalWrite(PIN_HW_LED_FOCO,led_Blk); break; }
         }
 
 }
@@ -808,9 +817,10 @@ byte UF_SYS::set_Led(byte ledID,byte modo)
 {
   switch(ledID)
         { 
-          case(IDE_LED_DER): { led_DER = modo; break; }
-          case(IDE_LED_IZQ): { led_IZQ = modo; break; } 
-          case(IDE_LED_POS): { led_POS = modo; break; } 
+          case(IDE_LED_DER):  { led_DER  = modo; break; }
+          case(IDE_LED_IZQ):  { led_IZQ  = modo; break; } 
+          case(IDE_LED_POS):  { led_POS  = modo; break; } 
+          case(IDE_LED_FOCO): { led_FOCO = modo; break; } 
         }
 
   return(modo);
@@ -832,7 +842,6 @@ byte UF_SYS::set_Fan(byte modo)
   
   return(modo);
 }
-
 
 
 // ---------------------------------------------------------
@@ -892,7 +901,7 @@ int UF_SYS::get_MotorEstado(int motorID)
   
      }
      
-   if ( motorID==IDE_MOTOR_IZQUIERDO )
+  if ( motorID==IDE_MOTOR_IZQUIERDO )
      {
        digitalWrite(PIN_HW_MTDI_SEL_C,HIGH);
        
@@ -923,20 +932,28 @@ int UF_SYS::get_MotorEstado(int motorID)
 // Admite valores de 0 ... 180
 // Retorna:
 // . El mismo valor recibido si es correcto       
-// . 255 Si el valor recibido es incorrecto
+// . -1 Si el valor recibido es incorrecto
 //
 // ---------------------------------------------------------
 
-unsigned int UF_SYS::posiciona_servo_X(unsigned int pos)
+int UF_SYS::posiciona_servo_X(unsigned int pos)
 { 
-  if ( pos<=180 )
+  if ( GLOBAL_FlgDebug==true )
+     {
+       Serial3.println("");
+       Serial3.print("Pos X: ");
+       Serial3.print(pos);
+     }
+     
+  if ( (pos>=IDE_SERVO_X_MAX_DERECHA) && (pos<=IDE_SERVO_X_MAX_IZQUIERDA) )
      {
        servo_X.write(pos);  
      }
   else
      {
-       pos = 255;         
+       pos = -1;         
      }
+ 
   return( pos );   
 }
 
@@ -947,20 +964,28 @@ unsigned int UF_SYS::posiciona_servo_X(unsigned int pos)
 // Admite valores de 0 ... 180
 // Retorna:
 // . El mismo valor recibido si es correcto       
-// . 255 Si el valor recibido es incorrecto
+// . -1 Si el valor recibido es incorrecto
 //
 // ---------------------------------------------------------
 
-unsigned int UF_SYS::posiciona_servo_Y(unsigned int pos)
-{
-  if ( pos<=180 )
+int UF_SYS::posiciona_servo_Y(unsigned int pos)
+{  
+  if ( GLOBAL_FlgDebug==true )
+     {
+       Serial3.println("");
+       Serial3.print("Pos Y: ");
+       Serial3.print(pos);
+     }
+ 
+  if ( (pos>=IDE_SERVO_Y_MAX_ABAJO) && (pos<=IDE_SERVO_Y_MAX_ARRIBA) )
      {
        servo_Y.write(pos);  
      }
   else
      {
-       pos = 255;         
+       pos = -1;         
      }
+  
   return( pos );   
 }
 

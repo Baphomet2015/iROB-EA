@@ -46,6 +46,7 @@
 #define IDE_LED_DER                          0  // Leds blancos, derecho
 #define IDE_LED_IZQ                          1  // Leds blancos, izquierdo
 #define IDE_LED_POS                          2  // Leds traseros
+#define IDE_LED_FOCO                         3  // Led  foco camara
 
 #define IDE_LED_OFF                         10  // Led apagado
 #define IDE_LED_ON                          11  // Led encendido
@@ -100,8 +101,14 @@
 
 #define IDE_MAXBUFF_GENERICO                50  // Tamaño para un buffer temporal generico
 
-#define IDE_SERVO_X_POS_DEFECTO            90  // Posicion por defecto del servo que mueve la camara en el eje X 
-#define IDE_SERVO_Y_POS_DEFECTO            90  // Posicion por defecto del servo que mueve la camara en el eje Y 
+#define IDE_SERVO_X_POS_DEFECTO             90  // Posicion por defecto del servo que mueve la camara en el eje X 
+#define IDE_SERVO_X_MAX_IZQUIERDA          180       
+#define IDE_SERVO_X_MAX_DERECHA              0
+
+#define IDE_SERVO_Y_POS_DEFECTO             90  // Posicion por defecto del servo que mueve la camara en el eje Y 
+#define IDE_SERVO_Y_MAX_ABAJO               55       
+#define IDE_SERVO_Y_MAX_ARRIBA             125
+
 
 #define IDE_ICC_NUM_MEDIDAS_CALIBRAR       500  // Numero de medidas que realiza la funcion calibra_ACS714(), ACS741
 #define IDE_ICC_NUM_MEDIDAS_OBTENER        200  // Numero de medidas que realiza la funcion get_Corriente(),  ACS741
@@ -163,8 +170,8 @@ class UF_SYS
      
      int           get_MotorEstado      (int motorID);                      // REVISADA
      
-     unsigned int  posiciona_servo_X    (unsigned int pos);                 // REVISADA
-     unsigned int  posiciona_servo_Y    (unsigned int pos);                 // REVISADA 
+     int           posiciona_servo_X    (unsigned int pos);                 // REVISADA
+     int           posiciona_servo_Y    (unsigned int pos);                 // REVISADA 
                 
      void          get_RTC_S  (int* estado,char* sBuffer);
      DateTime      get_RTC_D  (int* estado);
@@ -184,6 +191,7 @@ class UF_SYS
      byte          led_DER;          // Modo de funcionamiento de los leds balncos delanteros
      byte          led_IZQ;          // Modo de funcionamiento de los leds blancos traseros
      byte          led_POS;          // Modo de funcionamiento de los leds rojos traseros
+     byte          led_FOCO;         // Modo de funcionamiento del foco led de la camara
 
      RTC_DS3231    rtc;              // Reloj de tiempo real
      int           rtc_Flg;          // true:  RTC existe

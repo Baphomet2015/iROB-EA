@@ -175,10 +175,11 @@ void setup(void)
   pinMode( PIN_HW_SERVO_VER,OUTPUT);
   
   pinMode( PIN_HW_FAN,OUTPUT);
-
-  pinMode( PIN_HW_LED_POS,OUTPUT);
-  pinMode( PIN_HW_LED_DER,OUTPUT);
-  pinMode( PIN_HW_LED_IZQ,OUTPUT);
+  
+  pinMode( PIN_HW_LED_POS ,OUTPUT);
+  pinMode( PIN_HW_LED_DER ,OUTPUT);
+  pinMode( PIN_HW_LED_IZQ ,OUTPUT);
+  pinMode( PIN_HW_LED_FOCO,OUTPUT);
 
   pinMode( PIN_HW_MTI_DIR,OUTPUT);
   pinMode( PIN_HW_MTI_RST,OUTPUT);

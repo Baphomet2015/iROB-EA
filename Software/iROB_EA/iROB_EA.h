@@ -58,6 +58,7 @@
 #define PIN_HW_LED_POS                  37  // Leds rojos traseros
 #define PIN_HW_LED_DER                  38  // Leds blancos derecho
 #define PIN_HW_LED_IZQ                  39  // Leds blancos izquierdo
+#define PIN_HW_LED_FOCO                  9  // Led foco de la camara
 
 #define PIN_HW_MTI_DIR                  28  // Motor derecho, Direccion
 #define PIN_HW_MTI_RST                  29  // Motor derecho, Reset

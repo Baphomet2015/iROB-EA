@@ -34,7 +34,7 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 29/10/2021 , 11:18
+ // Fecha Generación: 09/11/2021 , 12:37
 
  // ----------------------------------------------------------
  #define  IDE_CMD_CM_R00    0x00     // Comando Reservado 0
@@ -76,7 +76,7 @@
   // --------------------------------------------------------------
 
  // --------------------------------------------------------------
- // Fecha Generación: 29/10/2021 , 11:18
+ // Fecha Generación: 09/11/2021 , 12:37
  // --------------------------------------------------------------
 
 
@@ -92,7 +92,7 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 29/10/2021 , 11:18
+ // Fecha Generación: 09/11/2021 , 12:37
  // ----------------------------------------------------------
 
  #define IDE_DISPOSITIVO_RSV    0x00     //RSV, RESERVADO
@@ -115,7 +115,7 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 29/10/2021 , 11:18
+ // Fecha Generación: 09/11/2021 , 12:37
  // ----------------------------------------------------------
 
  #define IDE_PARAM_RSV    0x0000     // RSV, RESERVADO
@@ -159,15 +159,16 @@
  #define IDE_PARAM_LD1    0x2001     // LD1, Leds Blancos Delanteros
 
  #define IDE_PARAM_LD2    0x2002     // LD2, Leds Rojos Traseros
+ #define IDE_PARAM_LD3    0x2003     // LD3, Foco led de la camara
  #define IDE_PARAM_SSA    0x3000     // SSA, Subsensor A
  #define IDE_PARAM_SSB    0x3001     // SSB, Subsensor B
- #define IDE_PARAM_SSC    0x3002     // SSC, Subsensor C
 
+ #define IDE_PARAM_SSC    0x3002     // SSC, Subsensor C
  #define IDE_PARAM_SSD    0x3003     // SSD, Subsensor D
  #define IDE_PARAM_CHG    0x4000     // CHG, Nivel de carga (baterias)
  #define IDE_PARAM_12P    0x5000     // 12P, Rele Alimentacion Motores
- #define IDE_PARAM_5VP    0x5001     // 5VP, Rele Alimentacion PC
 
+ #define IDE_PARAM_5VP    0x5001     // 5VP, Rele Alimentacion PC
 
    // ----------------------------------------------------------
    // FUNCIONES: Declaracion  de  funciones para implementar los
@@ -177,40 +178,40 @@
    // ----------------------------------------------------------
 
    // ----------------------------------------------------------
-   // Fecha Generación: 29/10/2021 , 11:18
+   // Fecha Generación: 09/11/2021 , 12:37
+
    // ----------------------------------------------------------
 
  extern  void  cmd_Comando_CM_R00  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_CM_R01  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_CM_DBG  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_CM_RTC  (GESCOM_DATA* gd);
+
+
  extern  void  cmd_Comando_B_PPAK  (GESCOM_DATA* gd);
-
-
  extern  void  cmd_Comando_C_LEDS  (GESCOM_DATA* gd);
- extern  void  cmd_Comando_C_MIZQ  (GESCOM_DATA* gd);
 
+ extern  void  cmd_Comando_C_MIZQ  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_MDER  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_RMOV  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_SRVX  (GESCOM_DATA* gd);
- extern  void  cmd_Comando_C_SRVY  (GESCOM_DATA* gd);
 
+ extern  void  cmd_Comando_C_SRVY  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_TEMP  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_HUMR  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_GLUZ  (GESCOM_DATA* gd);
- extern  void  cmd_Comando_S_SSUP  (GESCOM_DATA* gd);
 
+ extern  void  cmd_Comando_S_SSUP  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_RGPS  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_SICC  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_SEUS  (GESCOM_DATA* gd);
- extern  void  cmd_Comando_S_CFAN  (GESCOM_DATA* gd);
 
+ extern  void  cmd_Comando_S_CFAN  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_SALT  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_PRES  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_RELE  (GESCOM_DATA* gd);
- extern  void  cmd_Comando_C_STPC  (GESCOM_DATA* gd);
 
+ extern  void  cmd_Comando_C_STPC  (GESCOM_DATA* gd);
 
 #endif
 
