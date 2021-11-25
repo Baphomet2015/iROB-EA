@@ -65,9 +65,7 @@ void UF_SYS::begin(void)
   led_IZQ   = IDE_LED_OFF;     // Led apagado
   led_POS   = IDE_LED_OFF;     // Led apagado
   led_FOCO  = IDE_LED_FOCO;    // Led apagado
- 
-  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_NO_PERMITIDO;
-  
+   
   digitalWrite(PIN_HW_LED_DER ,LOW);
   digitalWrite(PIN_HW_LED_IZQ ,LOW);
   digitalWrite(PIN_HW_LED_POS ,LOW);
@@ -88,13 +86,13 @@ void UF_SYS::begin(void)
   // IDE_RELE_5VP
   // ---------------------------------------------------------
  
-  calibra_ACS714();
+  calibra_ACS723();
 
   // ---------------------------------------------------------
   // Asegura el apagado del PC
   // ---------------------------------------------------------
 
-  power_PC(IE_PC_POWER_OFF);
+  digitalWrite(PIN_HW_POW_PC_1,LOW);  
 
   // ---------------------------------------------------------
   // Inicializa y posiciona servos X/Y de la camara
@@ -144,15 +142,7 @@ void UF_SYS::begin(void)
                 { // ---------------------------------------------------------
                   // Operaciones de inicializacion
                   // ---------------------------------------------------------
-                  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_WAIT,(IDE_PAUSA_GENERAL*4));
-
-
-
-
-   
-            
-                  FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_CLS,0);
-                  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_SI_PERMITIDO;
+                  
                   break;
                 }
                 
@@ -170,15 +160,13 @@ void UF_SYS::begin(void)
                   // NO se puede arrancar bloqueado, queda en un bulcle 
                   // indefinido para que se pueda recargar el programa
                   // ---------------------------------------------------------
-                  GLOBAL_FlgPower_OFF = IDE_INT_POWER_OFF_SI_PERMITIDO;
+                 
                   while( 1 );
                   break;
                 }          
         }
 
-        
 }
-
 
 
 // ---------------------------------------------------------
@@ -507,17 +495,33 @@ byte UF_SYS::get_DTMF(void)
 
 // ---------------------------------------------------------
 //
-// void UF_SYS::power_PC(byte modo)
-// Activa o desactiva el pulsador de encendido del PC
+// void UF_SYS::pulsador_PC(byte temporizacion)
+// Activa o desactiva el pulsador de encendido del PC x segundos
 //
 // ---------------------------------------------------------
 
-void UF_SYS::power_PC(byte modo)
+void UF_SYS::pulsador_PC(byte temporizacion)
 {
-  if (modo==IE_PC_POWER_ON)  { digitalWrite(PIN_HW_POW_PC_1,HIGH); }
-  if (modo==IE_PC_POWER_OFF) { digitalWrite(PIN_HW_POW_PC_1,LOW);  }
-}
+  unsigned long int t1;
+  unsigned long int t2;
 
+  t1 = millis();
+  t2 = temporizacion * 1000;
+ 
+  digitalWrite(PIN_HW_POW_PC_1,HIGH);
+
+  while( (millis()-t1)<t2 )
+       {
+       }
+
+  if ( GLOBAL_FlgDebug==true )
+     { 
+       Serial3.print(millis()-t1);
+       Serial3.print("ms");
+       Serial3.println("");
+     }
+  digitalWrite(PIN_HW_POW_PC_1,LOW);   
+}
 
 
 // ---------------------------------------------------------
@@ -536,7 +540,7 @@ void UF_SYS::power_OFF(void)
   // del power OFF
   // ---------------------------------------------------------
   
-  rele(IDE_RELE_5VP ,IDE_RELE_DESACTIVAR);
+  rele(IDE_RELE_5VP,IDE_RELE_DESACTIVAR);
   rele(IDE_RELE_12P,IDE_RELE_DESACTIVAR);
 
   // ---------------------------------------------------------
@@ -736,7 +740,7 @@ float UF_SYS::get_Corriente(int sensorID)
   for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_OBTENER ; numMedidas++ )
       {
         vSensor += analogRead(sensorID);
-        delayMicroseconds(1000);
+        delayMicroseconds(IDE_ICC_DELAY);
       }
    
   vSensor = (vSensor / IDE_ICC_NUM_MEDIDAS_OBTENER) * (float)4.88;
@@ -777,7 +781,7 @@ float UF_SYS::get_Corriente(int sensorID)
 //
 // ---------------------------------------------------------
 
-void UF_SYS::calibra_ACS714(void)
+void UF_SYS::calibra_ACS723(void)
 {
   int numMedidas;
   
@@ -791,7 +795,7 @@ void UF_SYS::calibra_ACS714(void)
   for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR ; numMedidas++ )
       {
         offset_5VP += analogRead(PIN_HW_ICC_SENSE_5VP);
-        delayMicroseconds(1000);
+        delayMicroseconds(IDE_ICC_DELAY);
       }
   offset_5VP = (offset_5VP / IDE_ICC_NUM_MEDIDAS_CALIBRAR) * (float)4.88;
 
@@ -799,7 +803,7 @@ void UF_SYS::calibra_ACS714(void)
   for ( numMedidas=0 ; numMedidas<IDE_ICC_NUM_MEDIDAS_CALIBRAR ; numMedidas++ )
       {
         offset_12P += analogRead(PIN_HW_ICC_SENSE_12P);
-        delayMicroseconds(1000);
+        delayMicroseconds(IDE_ICC_DELAY);
       }
   offset_12P = (offset_12P / IDE_ICC_NUM_MEDIDAS_CALIBRAR) * (float)4.88;
 
@@ -853,12 +857,12 @@ byte UF_SYS::set_Fan(byte modo)
 
 int UF_SYS::get_Bateria(void)
 {
-  int carga = IDE_BAT_MIN;
-
-       if ( digitalRead(PIN_HW_BAT_N100)==LOW ) { carga = IDE_BAT_N100; }
-  else if ( digitalRead(PIN_HW_BAT_N75) ==LOW ) { carga = IDE_BAT_N75;  }
-  else if ( digitalRead(PIN_HW_BAT_N50) ==LOW ) { carga = IDE_BAT_N50;  }
-  else if ( digitalRead(PIN_HW_BAT_N25) ==LOW ) { carga = IDE_BAT_N25;  }
+  int carga = IDE_BAT_N100;
+  
+       if ( digitalRead(PIN_HW_BAT_N100)==LOW ) { carga = IDE_BAT_N75; }
+  else if ( digitalRead(PIN_HW_BAT_N75) ==LOW ) { carga = IDE_BAT_N50; }
+  else if ( digitalRead(PIN_HW_BAT_N50) ==LOW ) { carga = IDE_BAT_N25; }
+  else if ( digitalRead(PIN_HW_BAT_N25) ==LOW ) { carga = IDE_BAT_MIN; }
   
   return( carga );
 }
@@ -987,27 +991,6 @@ int UF_SYS::posiciona_servo_Y(unsigned int pos)
      }
   
   return( pos );   
-}
-
-
-// ----------------------------------------------------
-//
-// DateTime UF_SYS::get_RTC_D(int* estado)
-//
-//
-// ----------------------------------------------------
-DateTime UF_SYS::get_RTC_D(int* estado)
-{
-  *estado = rtc_Flg;
-  
-  if ( rtc_Flg==true )
-     {
-       return( rtc.now() );
-     }
-  else
-     {
-       return(NULL);
-     }
 }
 
 

@@ -735,9 +735,7 @@ Wire Wire Line
 Wire Wire Line
 	700  2050 700  6300
 Wire Wire Line
-	1000 700  1100 700 
-Wire Wire Line
-	1700 700  3000 700 
+	1000 700  3000 700 
 Wire Wire Line
 	1050 1100 2800 1100
 Wire Wire Line
@@ -1054,32 +1052,8 @@ Text GLabel 1600 1700 0    60   Input ~ 0
 ICC-SENSE-12P
 Text GLabel 1600 1850 0    60   Input ~ 0
 ICC-SENSE-5VP
-$Comp
-L Jumper JP?
-U 1 1 606DF3B4
-P 1400 850
-F 0 "JP?" H 1400 1000 50  0001 C CNN
-F 1 "Jumper PC/PROG" H 1350 1000 50  0001 C CNN
-F 2 "" H 1400 850 50  0000 C CNN
-F 3 "" H 1400 850 50  0000 C CNN
-	1    1400 850 
-	1    0    0    -1  
-$EndComp
-$Comp
-L Jumper JP?
-U 1 1 6064BD73
-P 1400 700
-F 0 "JP?" H 1400 850 50  0001 C CNN
-F 1 "Jumper PC/PROG" H 1350 850 50  0000 C CNN
-F 2 "" H 1400 700 50  0000 C CNN
-F 3 "" H 1400 700 50  0000 C CNN
-	1    1400 700 
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
-	1100 850  1000 850 
-Wire Wire Line
-	1700 850  2900 850 
+	1000 850  2900 850 
 Wire Wire Line
 	2700 6700 2900 6700
 Wire Wire Line

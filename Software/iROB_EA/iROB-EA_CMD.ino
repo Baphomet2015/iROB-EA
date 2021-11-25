@@ -2,7 +2,7 @@
 //
 // Proyecto:       iROB-EA
 // Version:        1.0
-// Fichero:        iROB_EA_CMD.ino
+// Fichero:        iROB-EA_CMD.ino
 // Autor:
 // Hardware:       Arduino MEGA 2560
 // Fecha:          Enero 2021
@@ -67,7 +67,8 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
           case(IDE_PARAM_ACT):
               { // --------------------------------------------
                 // Activa la generacion  de  datos de DEBUG por 
-                // el puerto de DEBUG
+                // el puerto de DEBUG, cambiando el valor de la
+                // variable GLOBAL_Flg_Debug 
                 // --------------------------------------------
                 GLOBAL_FlgDebug = true;
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
@@ -76,12 +77,60 @@ void cmd_Comando_CM_DBG(GESCOM_DATA* gd)
           case(IDE_PARAM_DES):
               { // --------------------------------------------
                 // Desactiva la generacion  de  datos de  DEBUG 
-                // por el puerto de DEBUG
+                // el puerto de DEBUG, cambiando el valor de la
+                // variable GLOBAL_Flg_Debug 
                 // --------------------------------------------
                 GLOBAL_FlgDebug = false;
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
+        }
+}
+
+
+// ---------------------------------------------------------
+//
+// cmd_Comando_CM_CTR (GESCOM_DATA* gd)
+//
+// ---------------------------------------------------------
+void cmd_Comando_CM_CTR(GESCOM_DATA* gd)
+{
+  switch( gd->cnv_Param01 )
+        {
+          case(IDE_PARAM_MD1):
+              { // --------------------------------------------
+                // Activar el modo de avance con proteccion
+                // --------------------------------------------
+                GLOBAL_FlgModoAvance       = IDE_MODO_AVANCE_CON_PROTECCION;
+                GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_OK;
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                break;
+              }
+          case(IDE_PARAM_MD2):
+              { // --------------------------------------------
+                // Desactivar el modo de avance con proteccion
+                // --------------------------------------------
+                GLOBAL_FlgModoAvance       = IDE_MODO_AVANCE_SIN_PROTECCION;
+                GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_DESHABILITADO;
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                break;
+              }
+          case(IDE_PARAM_GV1):
+              { // --------------------------------------------
+                // Obtener   el  valor  de  la  variable global
+                // GLOBAL_FlgModoAvanceEvento  que  contiene la
+                // informacion   relativa  a  las   incidencias
+                // detectadas en modo avance, si 
+                // GLOBAL_FlgModoAvance = IDE_MODO_AVANCE_CON_PROTECCION;
+                // --------------------------------------------
+                sprintf(gd->buffRespCmd,"%b",GLOBAL_FlgModoAvanceEvento);
+                break;
+              }
+           default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }             
         }
 }
 
@@ -97,28 +146,32 @@ void cmd_Comando_C_STPC(GESCOM_DATA* gd)
         {
           case(IDE_PARAM_ACT):
               {
-
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                if ( GLOBAL_FlgStatusPC==IDE_STATUS_PC_START )
+                   { // ---------------------------------------
+                     // Arduino esta en espera a que el PC 
+                     // indique que el ha arrancado correctamente
+                     // ---------------------------------------
+                     GLOBAL_FlgStatusPC = IDE_STATUS_PC_ON;
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }
+                else
+                   {   
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
                 break;
               }
           case(IDE_PARAM_DES):
               {
 
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                GLOBAL_FlgStatusPC = IDE_STATUS_PC_INI_OFF;
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
-          case(IDE_PARAM__OK):
+          default:
               {
-
-               sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
-               break;
-              }
-          case(IDE_PARAM__ER):
-              {
-                
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
                 break;
-              }
+              }             
         }
 }
 
@@ -185,6 +238,12 @@ void cmd_Comando_CM_RTC(GESCOM_DATA* gd)
                 uf_sys.get_RTC_S(&estado,gd->buffRespCmd);
                 break;
               }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }
+
         }
 }
 
@@ -319,6 +378,11 @@ void cmd_Comando_C_MIZQ (GESCOM_DATA* gd)
                    }
                 break;
               }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }
         }
 }
 
@@ -371,6 +435,11 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
                    {
                      sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);   
                    }
+                break;
+              }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
                 break;
               }
         }
@@ -428,6 +497,11 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
                    }
                 break;
               }
+         default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }
         }
 }
 
@@ -456,6 +530,11 @@ void cmd_Comando_C_SRVX(GESCOM_DATA* gd)
                 else                                                 { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER); } 
                 break;
               }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }
         }
 }
 
@@ -482,6 +561,11 @@ void cmd_Comando_C_SRVY(GESCOM_DATA* gd)
                 // ----------------------------------------
                 if ( uf_sys.posiciona_servo_Y(gd->cnv_Param02)!=-1 ) { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK); }
                 else                                                 { sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER); } 
+                break;
+              }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
                 break;
               }
         }
@@ -530,7 +614,11 @@ void cmd_Comando_S_TEMP(GESCOM_DATA* gd)
                      dTemp = sensor_EMC.get_Temperatura_MLX90614_O();
                      dtostrf(dTemp,5,1,gd->buffRespCmd);                    
                    }
-
+                break;
+              }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
                 break;
               }
         }
@@ -557,6 +645,11 @@ void cmd_Comando_S_CFAN(GESCOM_DATA* gd)
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }  
         }
 }
 
@@ -749,7 +842,7 @@ void cmd_Comando_S_SICC(GESCOM_DATA* gd)
           
           case(IDE_PARAM_CAL):
               {
-                uf_sys.calibra_ACS714();
+                uf_sys.calibra_ACS723();
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }

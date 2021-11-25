@@ -1530,10 +1530,10 @@ Wire Wire Line
 Connection ~ 3100 6500
 Wire Notes Line
 	550  6700 550  5150
-Text GLabel 1450 5400 0    60   UnSpc ~ 0
-DBG-NC1
-Text GLabel 1450 5250 0    60   UnSpc ~ 0
-DBG-NC2
+Text GLabel 1450 5400 0    60   Output ~ 0
+DBG-RX
+Text GLabel 1450 5250 0    60   Input ~ 0
+DBG-TX
 Wire Notes Line
 	550  5150 1600 5150
 $Comp

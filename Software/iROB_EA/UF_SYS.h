@@ -85,16 +85,19 @@
 #define IDE_MOTOR_ESTADO_1                  255 // Valor leido desde PIN_HW_MTDI_INFO (entrada analogica) para reconocer un 1 logico enviado desde las señales FF1 o FF2
 #define IDE_MOTOR_FF1FF2_DELAY             1000 // Pausa microsegundos para leer las señales FF1 y FF2 de los motores
 
-#define IDE_STR_INICIO_VERSION               F("iROB_EA, version 1.00, Junio 2015")
-#define IDE_STR_INICIO_POWER_OFF             F("Apagando Sistema (Power OFF)...")
-#define IDE_STR_INICIO_POWER_DOWN            F("Iniciando Apagado (Power OFF)...")
-#define IDE_STR_CALIBRAR_SENS_ICC            F("Calibrando Sensores Icc")
-#define IDE_STR_PUNTO                        F(".")
-#define IDE_STR_MSEG                         F(" ms")
-#define IDE_STR_DEBUG_EXE                    F("Tiempo de ejecucion setup: ")
-#define IDE_STR_LOCK                         F("Sistema Bloqueado, cambiar clave en programa fuente y recargar programa")
-#define IDE_STR_MTD                          F("Motor derecho: ")
-#define IDE_STR_MTI                          F("Motor izquierdo: ")
+// --------------------------------------------
+// Actualmente NO SE UTILIZAN
+// --------------------------------------------                    
+//#define IDE_STR_INICIO_VERSION               F("iROB_EA, version 1.00, Enero 2021")
+//#define IDE_STR_INICIO_POWER_OFF             F("Apagando Sistema (Power OFF)...")
+//#define IDE_STR_INICIO_POWER_DOWN            F("Iniciando Apagado (Power OFF)...")
+//#define IDE_STR_CALIBRAR_SENS_ICC            F("Calibrando Sensores Icc")
+//#define IDE_STR_PUNTO                        F(".")
+//#define IDE_STR_MSEG                         F(" ms")
+//#define IDE_STR_DEBUG_EXE                    F("Tiempo de ejecucion setup: ")
+//#define IDE_STR_LOCK                         F("Sistema Bloqueado, cambiar clave en programa fuente y recargar programa")
+//#define IDE_STR_MTD                          F("Motor derecho: ")
+//#define IDE_STR_MTI                          F("Motor izquierdo: ")
 
 #define IDE_DTMF_PAUSA_TONO               300L  // DTMF: Tiempo máximo que puede pasar entre tonos cuando se esta introduciendo una clave
 #define IDE_OFF_PAUSA                     4000  // Pausa antes de apagar el Robot
@@ -109,17 +112,10 @@
 #define IDE_SERVO_Y_MAX_ABAJO               55       
 #define IDE_SERVO_Y_MAX_ARRIBA             125
 
-
 #define IDE_ICC_NUM_MEDIDAS_CALIBRAR       500  // Numero de medidas que realiza la funcion calibra_ACS714(), ACS741
 #define IDE_ICC_NUM_MEDIDAS_OBTENER        200  // Numero de medidas que realiza la funcion get_Corriente(),  ACS741
 #define IDE_ICC_SENSIBILIDAD               0.4  // Sensibilidad del ACS723, version 5A --> 400mV/A
-
-#define IE_PC_POWER_OFF                      0  //  Define relacionado con el encendido del PC, desde el pin PIN_HW_POW_PC_1, UF_SYS::power_PC()
-#define IE_PC_POWER_ON                       1  //  Define relacionado con el apagado   del PC, desde el pin PIN_HW_POW_PC_1, UF_SYS::power_PC()
-
-#define IDE_INT_POWER_OFF_NO_PERMITIDO       0 
-#define IDE_INT_POWER_OFF_SI_PERMITIDO       1
-#define IDE_INT_POWER_OFF_SOLICITADO         2
+#define IDE_ICC_DELAY                     1000  // Pausa ms para realizar medidas de corriente 
 
 #define IDE_DEBUG_ON                         1 // Conector de DEBUG conectado
 #define IDE_DEBUG_OFF                        0 // Conector de DEBUG no presente
@@ -145,7 +141,7 @@ class UF_SYS
      void          timers               (void);                             // REVISADA
   
      void          power_OFF            (void);                             // REVISADA
-     void          power_PC             (byte modo);                        // REVISADA  
+     void          pulsador_PC          (byte temporizacion);               // REVISADA          
      void          rele                 (byte releID,byte estado);          // REVISADA
   
      byte          secuenciaInicio      (void);                             // REVISADA
@@ -166,16 +162,15 @@ class UF_SYS
      int           get_Bateria          (void);                             // REVISADA  
      
      float         get_Corriente        (int sensorID);                     // REVISADA 
-     void          calibra_ACS714       (void);                             // REVISADA  
+     void          calibra_ACS723       (void);                             // REVISADA  
      
      int           get_MotorEstado      (int motorID);                      // REVISADA
      
      int           posiciona_servo_X    (unsigned int pos);                 // REVISADA
      int           posiciona_servo_Y    (unsigned int pos);                 // REVISADA 
                 
-     void          get_RTC_S  (int* estado,char* sBuffer);
-     DateTime      get_RTC_D  (int* estado);
-     void          set_RTC_D  (int* estado,DateTime dt);
+     void          get_RTC_S  (int* estado,char* sBuffer);                  // REVISADA
+     void          set_RTC_D  (int* estado,DateTime dt);                    // REVISADA
      
   // ---------------------------------------------------------
   //
@@ -196,11 +191,11 @@ class UF_SYS
      RTC_DS3231    rtc;              // Reloj de tiempo real
      int           rtc_Flg;          // true:  RTC existe
                                      // false: RTC NO presente
-     
+          
      Servo         servo_X;          // Servo para mover la camara en el eje X
      Servo         servo_Y;          // Servo para mover la camara en el eje Y  
 
-     
+ 
     
 };
 

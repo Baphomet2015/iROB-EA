@@ -1,0 +1,35 @@
+Instalacion de pc_ON.py
+
+Este script en Pyhton se debe ejecutar al iniciar el PC y su mision es enviar por el puerto serie COM3 el comando
+que indica a arduino que el PC se ha iniciado correctamente.
+COM3 es el puerto serie en el que esta instalado el adaptador USB a TTL.
+
+Para que se ejecute este script correctamente cada vez que se inicie el PC hacer:
+
+1 - Crear la carpeta C:\iROB_EA\App_01
+2 - Copiar en ella el fichero pc_ON.py
+3 - Crear en el registro de Windows (con regEdit.exe) la clave:
+
+    Equipo\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iROB_EA_Power_ON  tipo: REG_SZ
+
+     Y poner su valor a: 
+     "C:\Users\Baphomet\AppData\Local\Programs\Python\Python38\python.exe"  "C:\iROB_EA\App_01\pc_ON.py"
+
+     Notas:
+      A) Se asume que python esta instalado en ese directorio, si no es asi, poner el correcto
+         Para Comprobar donde esta realmente instalado python se puede ver haciendo click con el boton derecho
+         del raton sobre el ejecutable de python y seleccionando propiedades.
+    
+      B) Se asume que el script se ha instalado en ese directorio, si no es asi, poner el correcto
+
+
+
+
+SlideToSuthdown.exe
+
+
+
+
+
+
+

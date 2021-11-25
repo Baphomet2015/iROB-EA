@@ -1,0 +1,9 @@
+
+
+                       EJMPLOS DE PUERTO SERIE
+https://www.luisllamas.es/controlar-arduino-con-python-y-la-libreria-pyserial/
+https://julioecheverri.wordpress.com/2018/02/26/comunicacion-serial-y-python/
+
+                            TUTORIALES PYTHON
+
+https://j2logo.com/python/tutorial/#

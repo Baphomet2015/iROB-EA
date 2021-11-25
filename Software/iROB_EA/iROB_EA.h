@@ -94,8 +94,68 @@
 //
 // ---------------------------------------------------------
 
-#define IDE_SERIAL_TRX_9600           9600     // Velocidad 9600 para el puerto serie DEBUG
+#define IDE_SERIAL_TRX_9600          9600      // Velocidad 9600 para el puerto serie DEBUG
 #define IDE_PAUSA_GENERAL             500      // Pausa general de 500ms
+
+#define IDE_PC_POWER_INICIO        10000L      // Tiempo en ms que se debe esperar desde que se activa la alimentacion del PC hasta que
+                                               // se activa el pulsador de encendido, 10 segundos
+                                               
+#define IDE_PC_POWER_OFF_TIMEOUT  120000L      // Tiempo maximo de espera en ms para determinar que el PC se ha apagado,   3 minutos
+#define IDE_PC_POWER_ON_TIMEOUT   120000L      // Tiempo maximo de espera en ms para determinar que el PC se ha encendido, 3 minutos
+#define IDE_PC_POWER_ICC_OFF          100      // Corriente minima medida con el sensor de corriente asociado al PC para determinar que el PC se ha apagado 
+
+#define IDE_PC_POWER_PULSADOR_ON       5       // Tiempo que se mantiene actuado el pulsador del PC para encenderlo, en segundos
+
+#define IDE_PC_POWER_PULSADOR_OFF      1       // Tiempo que se mantiene actuado el pulsador del PC para apagarlo, en segundos
+                                               // Nota:
+                                               // NO colocar un valor MAYOR de 1 o 2 segundos para este define porque 
+                                               // mantener el pulsador accionado por mas de 1 o 2 segundos indica a Windows
+                                               // un apagado forzoso y en Windows 10 aparecera una ventana deslizante solicitando
+                                               // arrastar para apagar
+
+// ---------------------------------------------------------
+//
+// Definiciones relcionadas con el estado del PC
+//
+// ---------------------------------------------------------
+
+#define IDE_STATUS_PC_INI_ON          0         // Inicio encendido del PC
+#define IDE_STATUS_PC_START           1         // PC Inicializando, en espera de que arranque
+#define IDE_STATUS_PC_ON              2         // PC encendido
+#define IDE_STATUS_PC_OK              3         // Finalizado correctamente el proceso de encendido del PC
+#define IDE_STATUS_PC_INI_OFF         4         // Solicitado apagado del Robot, inicio del apagado del PC
+#define IDE_STATUS_PC_DOWN            5         // PC Apagando, en espera de que se apague
+#define IDE_STATUS_PC_OFF             6         // PC Apagado
+#define IDE_STATUS_PC_ON_ERROR        7         // Se ha producido un error al encender el PC                                       
+
+// ---------------------------------------------------------
+//
+// Definiciones relacionadas con el modo general de
+// funcionamiento
+// Estos defines se relacionan con la variable GLOBAL:
+//                  GLOBAL_FlgModoAvance
+//
+// ---------------------------------------------------------
+
+#define IDE_MODO_AVANCE_CON_PROTECCION      0  // El Robot comprueba si durante el avance aparece algun obstaculo ( deteccion de suelo, objetos etc )
+                                               // si aparece algun obstaculo durante el avance, se detiene.
+#define IDE_MODO_AVANCE_SIN_PROTECCION      1  // El Robot no comprueba si existe algun obstaculo durante el avance.
+
+
+// ---------------------------------------------------------
+// Definiciones relacionadas con la deteccion de problemas
+// detectados en modo avance.
+// Estos defines se relacionan con la variable GLOBAL:
+//              GLOBAL_FlgModoAvanceEvento
+//
+// ---------------------------------------------------------
+
+#define IDE_EVENTO_OK                       0b11111111  // NO hay inicencias de avance
+#define IDE_EVENTO_DESHABILITADO            0b11111110  // El modo Anvace con proteccion esta deshabilitado
+#define IDE_EVENTO_SUELO                    0b00000001  // Bit en GLOBAL_FlgModoAvanceEvento que indica detectado falta de suelo -)
+#define IDE_EVENTO_OBJETO_DERECHA           0b00000010  // Bit en GLOBAL_FlgModoAvanceEvento que indica detectado objeto por la derecha que impide el paso
+#define IDE_EVENTO_OBJETO_IZQUIERDA         0b00000100  // Bit en GLOBAL_FlgModoAvanceEvento que indica detectado objeto por la izquierda que impide el paso
+#define IDE_EVENTO_OBJETO_SOBRECARGA        0b00001000  // Bit en GLOBAL_FlgModoAvanceEvento que indica detectado un sobreconsumo en los motores, posible problema en avance
 
 // ---------------------------------------------------------
 //
@@ -127,7 +187,7 @@
                                                // ---------------------------------------------------------                                              
 #define IDE_CLV_MAXL                  4        // Longitud de la clave de arranque
 #define IDE_CLV_MAX_INTENTOS          3        // Numero de intentos máximo de introducir clave de arranque  
-#define IDE_CLV_MAX_TIEMPO            10000    // Tiempo maximo para introducir una clave de inicio (ms)
+#define IDE_CLV_MAX_TIEMPO            10000L   // Tiempo maximo para introducir una clave de inicio (ms)
 
 // ---------------------------------------------------------
 //
@@ -142,15 +202,12 @@ const char IDE_MSG_DISPLAY_DOWN   [] PROGMEM = "DOWN";
 const char IDE_MSG_DISPLAY_PWD    [] PROGMEM = "****";
 const char IDE_MSG_DISPLAY_CLS    [] PROGMEM = "    ";
 const char IDE_MSG_DISPLAY_BLK    [] PROGMEM = "LOCK";
-const char IDE_MSG_DISPLAY_WAIT   [] PROGMEM = "WAIT";
+const char IDE_MSG_DISPLAY_INI_PC [] PROGMEM = ".PC.";
 
-const char IDE_MSG_DISPLAY_ER_000 [] PROGMEM = "E000";  // NO se utiliza 
-const char IDE_MSG_DISPLAY_ER_001 [] PROGMEM = "E001";  // NO se utiliza 
-const char IDE_MSG_DISPLAY_ER_002 [] PROGMEM = "E002";  // NO se utiliza 
-const char IDE_MSG_DISPLAY_ER_003 [] PROGMEM = "E003";  // NO se utiliza 
-const char IDE_MSG_DISPLAY_ER_004 [] PROGMEM = "E004";  // NO se utiliza 
+const char IDE_MSG_DISPLAY_ER_000 [] PROGMEM = "E000";  // Error, activando el PC
+const char IDE_MSG_DISPLAY_ER_001 [] PROGMEM = "E001";  // Error, el PC no se ha apagado 
 
-#define IDE_MAX_DISPLAY_CAR       4                     // Numero de caracteres del display
+#define IDE_MAX_DISPLAY_CAR       4                     // Numero de caracteres del display, NO cambiar, los mensajes IDE_MSG_DISPLAY_xx son de esta longitud
 
 
 // ---------------------------------------------------------

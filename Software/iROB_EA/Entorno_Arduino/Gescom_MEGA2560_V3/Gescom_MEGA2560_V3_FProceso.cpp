@@ -22,7 +22,7 @@
 
 // -------------------------------------------------------------------
 
-// Fecha Generación: 09/11/2021 , 12:36
+// Fecha Generación: 25/11/2021 , 12:00
 // -------------------------------------------------------------------
 
 
@@ -72,6 +72,8 @@ case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
                 case ( IDE_CMD_CM_DBG): {  cmd_Comando_CM_DBG(&gd);  break; }
                 case ( IDE_CMD_CM_RTC): {  cmd_Comando_CM_RTC(&gd);  break; }
 
+                case ( IDE_CMD_CM_CTR): {  cmd_Comando_CM_CTR(&gd);  break; }
+
                 case ( IDE_CMD_B_PPAK): {  cmd_Comando_B_PPAK(&gd);  break; }
 
                 case ( IDE_CMD_C_LEDS): {  cmd_Comando_C_LEDS(&gd);  break; }
@@ -85,8 +87,8 @@ case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
                 case ( IDE_CMD_C_SRVX): {  cmd_Comando_C_SRVX(&gd);  break; }
 
                 case ( IDE_CMD_C_SRVY): {  cmd_Comando_C_SRVY(&gd);  break; }
-
                 case ( IDE_CMD_S_TEMP): {  cmd_Comando_S_TEMP(&gd);  break; }
+
                 case ( IDE_CMD_S_HUMR): {  cmd_Comando_S_HUMR(&gd);  break; }
 
                 case ( IDE_CMD_S_GLUZ): {  cmd_Comando_S_GLUZ(&gd);  break; }
@@ -102,8 +104,8 @@ case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
                 case ( IDE_CMD_S_CFAN): {  cmd_Comando_S_CFAN(&gd);  break; }
 
                 case ( IDE_CMD_S_SALT): {  cmd_Comando_S_SALT(&gd);  break; }
-
                 case ( IDE_CMD_S_PRES): {  cmd_Comando_S_PRES(&gd);  break; }
+
                 case ( IDE_CMD_C_RELE): {  cmd_Comando_C_RELE(&gd);  break; }
 
                 case ( IDE_CMD_C_STPC): {  cmd_Comando_C_STPC(&gd);  break; }
