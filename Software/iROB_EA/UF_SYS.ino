@@ -80,13 +80,22 @@ void UF_SYS::begin(void)
   digitalWrite(PIN_HW_MTDI_SEL_C,HIGH);
   
   // ---------------------------------------------------------
-  // Inicio del sistema de medida de corriente ACS714, la
-  // funcion calibra_ACS714() DESCONECTA los reles:
+  // Inicio del sistema de medida de corriente ACS723, la
+  // funcion calibra_ACS723() DESCONECTA los reles para calibrar:
   // IDE_RELE_12P
   // IDE_RELE_5VP
   // ---------------------------------------------------------
  
   calibra_ACS723();
+
+  // ---------------------------------------------------------
+  // Deja los reles en un estado conocido
+  // Por defecto el rele de alimentacion del PC debe estar APAGADO
+  // Por defecto el rele de 12V debe estar ENCENDIDO
+  // ---------------------------------------------------------
+ 
+  rele(IDE_RELE_5VP,IDE_RELE_DESACTIVAR);
+  rele(IDE_RELE_12P,IDE_RELE_ACTIVAR);
 
   // ---------------------------------------------------------
   // Asegura el apagado del PC
@@ -857,12 +866,21 @@ byte UF_SYS::set_Fan(byte modo)
 
 int UF_SYS::get_Bateria(void)
 {
-  int carga = IDE_BAT_N100;
-  
-       if ( digitalRead(PIN_HW_BAT_N100)==LOW ) { carga = IDE_BAT_N75; }
-  else if ( digitalRead(PIN_HW_BAT_N75) ==LOW ) { carga = IDE_BAT_N50; }
-  else if ( digitalRead(PIN_HW_BAT_N50) ==LOW ) { carga = IDE_BAT_N25; }
-  else if ( digitalRead(PIN_HW_BAT_N25) ==LOW ) { carga = IDE_BAT_MIN; }
+  int carga;
+
+       if ( digitalRead(PIN_HW_BAT_N100)==LOW ) { carga = IDE_BAT_N100; }
+  else if ( digitalRead(PIN_HW_BAT_N75) ==LOW ) { carga = IDE_BAT_N75;  }
+  else if ( digitalRead(PIN_HW_BAT_N50) ==LOW ) { carga = IDE_BAT_N50;  }
+  else if ( digitalRead(PIN_HW_BAT_N25) ==LOW ) { carga = IDE_BAT_N25;  }
+  else                                          { carga = IDE_BAT_MIN;  }
+
+  if ( GLOBAL_FlgDebug==true )
+     {
+       Serial3.print("Carga: ");
+       Serial3.print(carga);
+       Serial3.print("%");
+       Serial3.println("");
+     }
   
   return( carga );
 }

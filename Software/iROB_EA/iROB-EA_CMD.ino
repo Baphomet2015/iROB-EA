@@ -99,19 +99,29 @@ void cmd_Comando_CM_CTR(GESCOM_DATA* gd)
         {
           case(IDE_PARAM_MD1):
               { // --------------------------------------------
-                // Activar el modo de avance con proteccion
+                // Activar el modo de avance con proteccion,
+                // En este modo la velocidad queda limitada
                 // --------------------------------------------
+                
                 GLOBAL_FlgModoAvance       = IDE_MODO_AVANCE_CON_PROTECCION;
                 GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_OK;
+                
+                mDer.limitarVelocidad(true);
+                mIzq.limitarVelocidad(true);
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
           case(IDE_PARAM_MD2):
               { // --------------------------------------------
                 // Desactivar el modo de avance con proteccion
+                // En este modo la velocidad no esta limitada
                 // --------------------------------------------
+                
                 GLOBAL_FlgModoAvance       = IDE_MODO_AVANCE_SIN_PROTECCION;
-                GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_DESHABILITADO;
+                GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_OK;
+                                
+                mDer.limitarVelocidad(false);
+                mIzq.limitarVelocidad(false);
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
@@ -123,7 +133,7 @@ void cmd_Comando_CM_CTR(GESCOM_DATA* gd)
                 // detectadas en modo avance, si 
                 // GLOBAL_FlgModoAvance = IDE_MODO_AVANCE_CON_PROTECCION;
                 // --------------------------------------------
-                sprintf(gd->buffRespCmd,"%b",GLOBAL_FlgModoAvanceEvento);
+                sprintf(gd->buffRespCmd,"%d",GLOBAL_FlgModoAvanceEvento);
                 break;
               }
            default:
@@ -344,19 +354,32 @@ void cmd_Comando_C_MIZQ (GESCOM_DATA* gd)
               }
           case(IDE_PARAM_AVA):
               {
-                mIzq.avance();
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                if ( GLOBAL_FlgModoAvance==IDE_MODO_AVANCE_SIN_PROTECCION )
+                   {
+                     mIzq.avance();
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }
+                else
+                   {
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
+                break;
+              }
+          case(IDE_PARAM_RET):
+              { if ( GLOBAL_FlgModoAvance==IDE_MODO_AVANCE_SIN_PROTECCION )
+                   {
+                     mIzq.retroceso();
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }  
+                else
+                   {
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
                 break;
               }
          case(IDE_PARAM_STO):
               {
                 mIzq.paro();
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
-                break;
-              }
-          case(IDE_PARAM_RET):
-              {
-                mIzq.retroceso();
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
@@ -403,19 +426,32 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
               }            
           case(IDE_PARAM_AVA):
               {
-                mDer.avance();
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
-                break;
-              }      
-         case(IDE_PARAM_STO):
-              {
-                mDer.paro();
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                if ( GLOBAL_FlgModoAvance==IDE_MODO_AVANCE_SIN_PROTECCION )
+                   {
+                     mDer.avance();
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }
+                else
+                   {
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
                 break;
               }
           case(IDE_PARAM_RET):
+              { if ( GLOBAL_FlgModoAvance==IDE_MODO_AVANCE_SIN_PROTECCION )
+                   {
+                     mDer.retroceso();
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }  
+                else
+                   {
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
+                break;
+              }
+         case(IDE_PARAM_STO):
               {
-                mDer.retroceso();
+                mDer.paro();
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
@@ -452,6 +488,8 @@ void cmd_Comando_C_MDER(GESCOM_DATA* gd)
 // ---------------------------------------------------------
 void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
 {
+  byte flgMovimiento;
+  
   switch( gd->cnv_Param01 )
         {
           case(IDE_PARAM_INI):
@@ -463,16 +501,51 @@ void cmd_Comando_C_RMOV(GESCOM_DATA* gd)
               }
           case(IDE_PARAM_AVA):
               {
-                mIzq.avance();
-                mDer.avance();
-                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                flgMovimiento = true;
+                
+                if ( (GLOBAL_FlgModoAvance==IDE_MODO_AVANCE_CON_PROTECCION) && (GLOBAL_FlgModoAvanceEvento!=IDE_EVENTO_OK)  )
+                   { // -------------------------------------
+                     // El modo de avance con proteccion esta
+                     // activado y  ademas  se  ha  producido 
+                     // alguna incidencia NO se puede avanzar
+                     // -------------------------------------
+                     flgMovimiento = false;
+                   }
+
+                if ( flgMovimiento==true )
+                   { // -------------------------------------
+                     // Se puede avanzar
+                     // -------------------------------------
+                     mIzq.avance();
+                     mDer.avance();
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                   }
+                else
+                   { // -------------------------------------
+                     // NO se puede ejecutar el comando
+                     // -------------------------------------
+                     sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                   }
                 break;
-              }
-        
+              }       
          case(IDE_PARAM_STO):
               {
                 mIzq.paro();
                 mDer.paro();
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                break;
+              }
+         case(IDE_PARAM_GIZ):
+              {
+                mIzq.retroceso();
+                mDer.avance();
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
+                break;
+              }    
+          case(IDE_PARAM_GDE):
+              {
+                mIzq.avance();
+                mDer.retroceso();
                 sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_OK);
                 break;
               }
@@ -849,6 +922,8 @@ void cmd_Comando_S_SICC(GESCOM_DATA* gd)
         }
  
 } 
+
+
  
 // ---------------------------------------------------------
 //
@@ -867,6 +942,7 @@ void cmd_Comando_S_SEUS(GESCOM_DATA* gd)
               }
         }
 } 
+
 
 // ---------------------------------------------------------
 //
@@ -898,4 +974,42 @@ void cmd_Comando_C_RELE(GESCOM_DATA* gd)
 }
 
 
- 
+// ---------------------------------------------------------
+//
+// cmd_Comando_S_9DOF (GESCOM_DATA* gd)
+//
+// ---------------------------------------------------------
+void cmd_Comando_S_9DOF(GESCOM_DATA* gd)
+{
+  float fIcc;
+  
+  switch( gd->cnv_Param01 )
+        {
+          case(IDE_PARAM_GV1):
+              {
+                sprintf(gd->buffRespCmd,"%s",sensor_RAZOR.getFrameAcc());
+                break;
+              }
+          case(IDE_PARAM_GV2):
+              {
+                sprintf(gd->buffRespCmd,"%s",sensor_RAZOR.getFrameMag());
+                break;
+              }
+          case(IDE_PARAM_GV3):
+              {
+                sprintf(gd->buffRespCmd,"%s",sensor_RAZOR.getFrameGyr());
+                break;
+              }
+          case(IDE_PARAM_GV4):
+              {
+
+                
+                break;
+              }
+          default:
+              {
+                sprintf(gd->buffRespCmd,"%d",IDE_EXE_CMD_ER);
+                break;
+              }  
+        }
+}  

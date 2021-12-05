@@ -102,12 +102,13 @@ GESCOM3           gc        = GESCOM3( IDE_SERIAL_0        ,
                                        IDE_SERIAL_TRX_PC
                                      );                            // Gestor de comandos
 
-byte GLOBAL_FlgDebug;                                 // Flag global que indica si se deben generar trazas por el puerto de Debug o no
-byte GLOBAL_FlgStatusPC;                              // Flag para control del proceso de encendido/Apagado                   
-byte GLOBAL_FlgModoAvance;                            // Flag que indica el modo de avance, ver defines IDE_MODO_AVANCE_xx                  
-byte GLOBAL_FlgModoAvanceEvento;                      // Flag que indica eventos detectados cuando la variable GLOBAL_FlgModoAvance = IDE_MODO_AVANCE_CON_PROTECCION
-int  GLOBAL_Timer_Ctrl_PC;                            // Timer asociado a los procesos de encendido/apagado del PC
-int  GLOBAL_Timer_Disp_PC;                            // Timer asociado a los procesos de encendido/apagado del PC, para mostrar en el display  
+byte              GLOBAL_FlgDebug;                                 // Flag global que indica si se deben generar trazas por el puerto de Debug o no
+byte              GLOBAL_FlgStatusPC;                              // Flag para control del proceso de encendido/Apagado                   
+byte              GLOBAL_FlgModoAvance;                            // Flag que indica el modo de avance, ver defines IDE_MODO_AVANCE_xx                  
+byte              GLOBAL_FlgModoAvanceEvento;                      // Flag que indica eventos detectados cuando la variable GLOBAL_FlgModoAvance = IDE_MODO_AVANCE_CON_PROTECCION
+unsigned long int GLOBAL_Timer_Ctrl_PC;                            // Timer asociado a los procesos de encendido/apagado del PC
+int               GLOBAL_Timer_DispD_PC;                           // Timer asociado a los procesos de encendido/apagado del PC, para mostrar en el display  
+int               GLOBAL_Timer_DispF_PC;                           // Timer asociado a los procesos de encendido/apagado del PC, para mostrar en el display  
 
 
 
@@ -210,8 +211,9 @@ void setup(void)
   GLOBAL_FlgStatusPC         = IDE_STATUS_PC_INI_ON;
   GLOBAL_FlgModoAvance       = IDE_MODO_AVANCE_CON_PROTECCION;
   GLOBAL_FlgModoAvanceEvento = IDE_EVENTO_OK;
-  GLOBAL_Timer_Ctrl_PC       = 0;
-  GLOBAL_Timer_Disp_PC       = true;
+  GLOBAL_Timer_Ctrl_PC       = 0L;
+  GLOBAL_Timer_DispD_PC      = 0;
+  GLOBAL_Timer_DispF_PC      = true;
 
   
   // ---------------------------------------------------------
@@ -402,7 +404,7 @@ void loop(void)
                  // GLOBAL_FlgStatusPC = IDE_STATUS_PC_ON_ERROR
                  //
                  // ----------------------------------------
-                 if ( GLOBAL_Timer_Ctrl_PC==0 )
+                 if ( (unsigned long int)(millis()-GLOBAL_Timer_Ctrl_PC)>=IDE_PC_POWER_ON_TIMEOUT  )
                     { // ------------------------------------------
                       // Superado el tiempo maximo  de  espera para
                       // que el PC comunique que  se  ha encendido,
@@ -455,7 +457,7 @@ void loop(void)
                  // proceso de apagado del PC , se  pasara a
                  // GLOBAL_FlgStatusPC = IDE_STATUS_PC_OFF
                  // ----------------------------------------
-                 FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_DOWN,(IDE_PAUSA_GENERAL*5));
+                 FNG_DisplayMsgPROGMEM(IDE_MSG_DISPLAY_DOWN,0);
                  pc_OFF();
                  break;
                }          
@@ -464,7 +466,7 @@ void loop(void)
                  // Proceso de apagado del Robot
                  //
                  // ----------------------------------------
-                 if ( GLOBAL_Timer_Ctrl_PC==0 )
+                 if ( (unsigned long int)(millis()-GLOBAL_Timer_Ctrl_PC)>=IDE_PC_POWER_OFF_TIMEOUT  )
                     { // ------------------------------------------
                       // Superado el  tiempo  maximo de espera para
                       // detectar el apagado del PC. 
@@ -480,12 +482,6 @@ void loop(void)
                       // Mide la corriente consumida por el PC para
                       // detectar cuando se apaga
                       // ------------------------------------------
-                    
-                      // ------------------------------------------
-                      // Muestra tiempo de espera restante
-                      // ------------------------------------------
-                      displayTimerInicio_PC();
-                     
                       if ( getIcc5VP()==false )
                          { // ------------------------------------------
                            // La corriente medida con el sensor asociado
@@ -565,9 +561,10 @@ void pc_ON(void)
 
   uf_sys.pulsador_PC(IDE_PC_POWER_PULSADOR_ON);
 
-  GLOBAL_FlgStatusPC   = IDE_STATUS_PC_START;
-  GLOBAL_Timer_Disp_PC = true;
-  GLOBAL_Timer_Ctrl_PC = IDE_PC_POWER_ON_TIMEOUT;
+  GLOBAL_FlgStatusPC    = IDE_STATUS_PC_START;
+  GLOBAL_Timer_DispD_PC = int(IDE_PC_POWER_ON_TIMEOUT / 1000);
+  GLOBAL_Timer_DispF_PC = true;
+  GLOBAL_Timer_Ctrl_PC  = millis();
     
 }
 
@@ -601,9 +598,9 @@ void pc_OFF(void)
        uf_sys.pulsador_PC(IDE_PC_POWER_PULSADOR_OFF);                       
      }
 
-  GLOBAL_FlgStatusPC   = IDE_STATUS_PC_DOWN;
-  GLOBAL_Timer_Disp_PC = true;
-  GLOBAL_Timer_Ctrl_PC = IDE_PC_POWER_OFF_TIMEOUT;
+  GLOBAL_FlgStatusPC = IDE_STATUS_PC_DOWN;
+  
+  GLOBAL_Timer_Ctrl_PC = millis();
 
 }
 
@@ -743,11 +740,8 @@ void INT_power_OFF(void)
 
 void INT_rtc_SQW(void)
 {
-   if ( GLOBAL_Timer_Ctrl_PC>0 )
-      {
-        GLOBAL_Timer_Ctrl_PC--;
-        GLOBAL_Timer_Disp_PC = true;
-      }
+   GLOBAL_Timer_DispF_PC = true;
+  
 }
 
 
@@ -762,11 +756,12 @@ void displayTimerInicio_PC(void)
 {
    char sBuff[IDE_MAX_DISPLAY_CAR+1];
   
-   if ( GLOBAL_Timer_Disp_PC==true ) 
+   if ( (GLOBAL_Timer_DispF_PC==true) && (GLOBAL_Timer_DispD_PC>0) ) 
       {
-        GLOBAL_Timer_Disp_PC = false;
-        sprintf(sBuff,"T%3d",GLOBAL_Timer_Ctrl_PC);
+        GLOBAL_Timer_DispF_PC = false;
+        sprintf(sBuff,"T%3d",GLOBAL_Timer_DispD_PC);
         FNG_DisplayMsg(sBuff,0);
+        GLOBAL_Timer_DispD_PC--;
       }
 }
 

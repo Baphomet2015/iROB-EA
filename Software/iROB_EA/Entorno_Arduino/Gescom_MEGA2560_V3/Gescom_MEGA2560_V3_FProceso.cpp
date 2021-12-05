@@ -22,7 +22,7 @@
 
 // -------------------------------------------------------------------
 
-// Fecha Generación: 25/11/2021 , 12:00
+// Fecha Generación: 01/12/2021 , 13:43
 // -------------------------------------------------------------------
 
 
@@ -109,6 +109,8 @@ case ( IDE_CMD_CM_R00): {  cmd_Comando_CM_R00(&gd);  break; }
                 case ( IDE_CMD_C_RELE): {  cmd_Comando_C_RELE(&gd);  break; }
 
                 case ( IDE_CMD_C_STPC): {  cmd_Comando_C_STPC(&gd);  break; }
+
+                case ( IDE_CMD_S_9DOF): {  cmd_Comando_S_9DOF(&gd);  break; }
 
 
          }

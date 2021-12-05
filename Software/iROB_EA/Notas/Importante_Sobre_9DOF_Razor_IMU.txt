@@ -1,0 +1,31 @@
+                          
+                                 Notas sobre sobre el modulo 9DOF Razor IMU
+
+
+Este modulo de sensores esta implementado entorno a un microporcesador por lo que ANTES de poder utilizarlo
+es preciso "cargar" en dicho modulo el firmware que utiliza.
+Todas las operaciones para cargar este firmware estan explicadas en el pdf "Tutorial-Razor-AHRS-razor-9dof-ahrs Wiki.pdf",
+asi como el propio firmware que esta formado por un conjunto de ficheros .ino se encuentran en la carpeta "Razor_AHRS"
+
+Muy importante:
+El modulo 9DOF Razor IMU se comunica con el exterior a traves de un puerto serie con una velocidad fija de 57600, intercambiando una serie de comandos.
+En el fichero Razor_AHRS.ino estan definidos y explicados los comandos que los autores del firmware han definido para
+comunicarse con este modulo.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

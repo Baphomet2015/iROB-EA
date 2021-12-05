@@ -34,7 +34,7 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 25/11/2021 , 12:00
+ // Fecha Generación: 01/12/2021 , 13:43
 
  // ----------------------------------------------------------
  #define  IDE_CMD_CM_R00    0x00     // Comando Reservado 0
@@ -70,6 +70,7 @@
  #define  IDE_CMD_C_RELE    0x60     // Control de reles
  #define  IDE_CMD_C_STPC    0x70     // Comando relacionados con el PC de control
 
+ #define  IDE_CMD_S_9DOF    0x71     // Sensores gestionados por 9DOF Razor IMU
 
   // --------------------------------------------------------------
   // TIPO COMANDOS: Identificadores de tipos de comandos
@@ -77,9 +78,9 @@
   // --------------------------------------------------------------
 
  // --------------------------------------------------------------
- // Fecha Generación: 25/11/2021 , 12:00
- // --------------------------------------------------------------
+ // Fecha Generación: 01/12/2021 , 13:43
 
+ // --------------------------------------------------------------
 
  #define IDE_T_COMANDO_ENVIO      0x0
  #define IDE_T_COMANDO_RESPUESTA  0x1
@@ -93,20 +94,20 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 25/11/2021 , 12:00
 
+ // Fecha Generación: 01/12/2021 , 13:43
  // ----------------------------------------------------------
 
  #define IDE_DISPOSITIVO_RSV    0x00     //RSV, RESERVADO
  #define IDE_DISPOSITIVO_CTR    0x01     //CTR, Sistema de Control
  #define IDE_DISPOSITIVO_R00    0x10     //R00, iROB-EA-00
- #define IDE_DISPOSITIVO_R01    0x11     //R01, iROB-EA-01
 
+ #define IDE_DISPOSITIVO_R01    0x11     //R01, iROB-EA-01
  #define IDE_DISPOSITIVO_R02    0x12     //R02, iROB-EA-02
  #define IDE_DISPOSITIVO_R03    0x13     //R03, iROB-EA-03
  #define IDE_DISPOSITIVO_R04    0x14     //R04, iROB-EA-04
- #define IDE_DISPOSITIVO_R05    0x15     //R05, iROB-EA-05
 
+ #define IDE_DISPOSITIVO_R05    0x15     //R05, iROB-EA-05
 
  // ----------------------------------------------------------
  // PARAMETROS: Identificadores de parametros reconocidos.
@@ -116,63 +117,63 @@
  // ----------------------------------------------------------
 
  // ----------------------------------------------------------
- // Fecha Generación: 25/11/2021 , 12:00
- // ----------------------------------------------------------
+ // Fecha Generación: 01/12/2021 , 13:43
 
+ // ----------------------------------------------------------
  #define IDE_PARAM_RSV    0x0000     // RSV, RESERVADO
+
  #define IDE_PARAM_NOP    0x0001     // NOP, Nada
 
+
  #define IDE_PARAM_EXE    0x0002     // EXE, Ejecutar
-
-
  #define IDE_PARAM_STO    0x0003     // STO, Detener
- #define IDE_PARAM_OFF    0x0004     // OFF, Apagar
 
+ #define IDE_PARAM_OFF    0x0004     // OFF, Apagar
  #define IDE_PARAM__ON    0x0005     // _ON, Encender
  #define IDE_PARAM_INI    0x0006     // INI, Inicializar
  #define IDE_PARAM_AVA    0x0007     // AVA, Avanzar
- #define IDE_PARAM_RET    0x0008     // RET, Retroceder
 
+ #define IDE_PARAM_RET    0x0008     // RET, Retroceder
  #define IDE_PARAM_GIZ    0x0009     // GIZ, Girar Izquierda
  #define IDE_PARAM_GDE    0x000A     // GDE, Girar derecha
  #define IDE_PARAM_BLK    0x000B     // BLK, Generar Intermitencia
- #define IDE_PARAM_CHK    0x000C     // CHK, Chequear, comprobar
 
+ #define IDE_PARAM_CHK    0x000C     // CHK, Chequear, comprobar
  #define IDE_PARAM_CAL    0x000D     // CAL, Calibrar
  #define IDE_PARAM_ACT    0x000E     // ACT, Activar, Activado
  #define IDE_PARAM_DES    0x000F     // DES, Desactivar, Desactivado
- #define IDE_PARAM_RFS    0x0010     // RFS, Actualizar, refrescar
 
+ #define IDE_PARAM_RFS    0x0010     // RFS, Actualizar, refrescar
  #define IDE_PARAM__OK    0x00FD     // _OK, Dispositivo OK
  #define IDE_PARAM__ER    0x00FE     // _ER, Dispositivo ERROR
  #define IDE_PARAM_DAT    0x00FF     // DAT, Paquete de datos
- #define IDE_PARAM_SV1    0x1001     // SV1, Establecer Valor 1
 
+ #define IDE_PARAM_SV1    0x1001     // SV1, Establecer Valor 1
  #define IDE_PARAM_SV2    0x1002     // SV2, Establecer Valor 2
  #define IDE_PARAM_GV1    0x1101     // GV1, Obtener Valor 1
  #define IDE_PARAM_GV2    0x1102     // GV2, Obtener Valor 2
- #define IDE_PARAM_GV3    0x1103     // GV3, Obtener Valor 3
 
+ #define IDE_PARAM_GV3    0x1103     // GV3, Obtener Valor 3
  #define IDE_PARAM_GV4    0x1104     // GV4, Obtener Valor 4
  #define IDE_PARAM_GV5    0x1105     // GV5, Obtener Valor 5
  #define IDE_PARAM_GV6    0x1106     // GV6, Obtener Valor 6
- #define IDE_PARAM_GV7    0x1107     // GV7, Obtener Valor 7
 
+ #define IDE_PARAM_GV7    0x1107     // GV7, Obtener Valor 7
  #define IDE_PARAM_LD1    0x2001     // LD1, Leds Blancos Delanteros
  #define IDE_PARAM_LD2    0x2002     // LD2, Leds Rojos Traseros
  #define IDE_PARAM_LD3    0x2003     // LD3, Leds, Foco led de la camara
- #define IDE_PARAM_SSA    0x3000     // SSA, Subsensor A
 
+ #define IDE_PARAM_SSA    0x3000     // SSA, Subsensor A
  #define IDE_PARAM_SSB    0x3001     // SSB, Subsensor B
  #define IDE_PARAM_SSC    0x3002     // SSC, Subsensor C
  #define IDE_PARAM_SSD    0x3003     // SSD, Subsensor D
- #define IDE_PARAM_CHG    0x4000     // CHG, Nivel de carga (baterias)
 
+ #define IDE_PARAM_CHG    0x4000     // CHG, Nivel de carga (baterias)
  #define IDE_PARAM_12P    0x5000     // 12P, Rele Alimentacion Motores
  #define IDE_PARAM_5VP    0x5001     // 5VP, Rele Alimentacion PC
  #define IDE_PARAM_MD1    0x6000     // MD1, Modo 1
- #define IDE_PARAM_MD2    0x6001     // MD2, Modo 2
 
+ #define IDE_PARAM_MD2    0x6001     // MD2, Modo 2
 
    // ----------------------------------------------------------
    // FUNCIONES: Declaracion  de  funciones para implementar los
@@ -182,7 +183,8 @@
    // ----------------------------------------------------------
 
    // ----------------------------------------------------------
-   // Fecha Generación: 25/11/2021 , 12:00
+   // Fecha Generación: 01/12/2021 , 13:43
+
    // ----------------------------------------------------------
 
  extern  void  cmd_Comando_CM_R00  (GESCOM_DATA* gd);
@@ -190,33 +192,34 @@
 
  extern  void  cmd_Comando_CM_R01  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_CM_DBG  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_CM_RTC  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_CM_CTR  (GESCOM_DATA* gd);
+
  extern  void  cmd_Comando_B_PPAK  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_LEDS  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_C_MIZQ  (GESCOM_DATA* gd);
+
  extern  void  cmd_Comando_C_MDER  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_RMOV  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_SRVX  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_C_SRVY  (GESCOM_DATA* gd);
+
  extern  void  cmd_Comando_S_TEMP  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_HUMR  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_GLUZ  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_S_SSUP  (GESCOM_DATA* gd);
+
  extern  void  cmd_Comando_S_RGPS  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_SICC  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_SEUS  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_S_CFAN  (GESCOM_DATA* gd);
+
  extern  void  cmd_Comando_S_SALT  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_S_PRES  (GESCOM_DATA* gd);
  extern  void  cmd_Comando_C_RELE  (GESCOM_DATA* gd);
-
  extern  void  cmd_Comando_C_STPC  (GESCOM_DATA* gd);
+
+ extern  void  cmd_Comando_S_9DOF  (GESCOM_DATA* gd);
 
 #endif
 

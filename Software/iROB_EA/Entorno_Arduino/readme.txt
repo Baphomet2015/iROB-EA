@@ -11,7 +11,7 @@ que se esté utilizando.
 
 Atención:
 Es posible que alguna de estas librerias Ya exista en el directorio de "libraries" del IDE,
-en cuyo caso es recomendable reeplazar la que exista por la que se encuentra aquí.
+en cuyo caso es recomendable reemplazar la que exista por la que se encuentra aquí.
 
 
 
